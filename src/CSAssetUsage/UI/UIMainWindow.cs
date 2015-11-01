@@ -222,15 +222,15 @@ namespace CSAssetUsage
             });
 
             PopulateAssets();
-        }
+            }
 
         private void PopulateAssets(SortableAssetEntryField sortField = SortableAssetEntryField.Name)
-        {
+            {
             var assets = AssetMonitor.Instance.GetLoadedAssets();
             _assetSorter.Sort(assets, sortField);
             ModLogger.Debug(assets.First().Metadata.name);
             Enumerable.Range(0, assets.Count).ForEach(i => _assetObjects[i].GetComponent<UIAssetRow>().Load(assets[i]));
-        }
+            }
 
         private void ClearAssets()
         {

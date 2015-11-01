@@ -68,13 +68,12 @@ namespace CSAssetUsage
             base.Update();
 
             //if (string.IsNullOrEmpty( _assetNameLabel.text))
-            _assetNameLabel.text = _assetEntry.Metadata.name;
+                _assetNameLabel.text = _assetEntry.Metadata.name;
             _numberUseLabel.text = _assetEntry.InstanceCount.ToString();
         }
 
         public override void OnDestroy()
         {
-            ModLogger.Debug("Assetrow ondestroy");
             _assetInfoButton.eventClick -= assetInfoButton_eventClick;
             _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
             base.OnDestroy();
@@ -123,7 +122,7 @@ namespace CSAssetUsage
             //Process.Start(assetUrl);
         }
 
-
+        
         private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
         {
             this.Update();

@@ -32,19 +32,41 @@ using System.Text;
 
 namespace CSAssetUsage
 {
+    /// <summary>
+    /// Represents a CS loading extensions responsible for triggering the building monitor using the overwatch control flags
+    /// </summary>
     public class OverwatchLoader : LoadingExtensionBase
     {
+        /// <summary>
+        /// Called when the overwatch loader is created
+        /// </summary>
+        /// <param name="loading">The loading instance</param>
         public override void OnCreated(ILoading loading)
         {
-            OverwatchControl.Instance.GameLoaded = loading.loadingComplete;
+            ModLogger.Debug("OverwatchLoader created");
         }
 
+        /// <summary>
+        /// Called when the overwatch loader is released
+        /// </summary>
+        public override void OnReleased()
+        {
+            ModLogger.Debug("OverwatchLoader Released");
+        }
+
+        /// <summary>
+        /// Called when a new or existing game is loaded, triggers the overwatch monitor by flagging the overwatch control
+        /// </summary>
+        /// <param name="mode">The mode.</param>
         public override void OnLevelLoaded(LoadMode mode)
         {
             if (mode == LoadMode.NewGame || mode == LoadMode.LoadGame)
                 OverwatchControl.Instance.GameLoaded = true;
         }
 
+        /// <summary>
+        /// Called when the game is being unloaded, cancels the overwatch monitof by flagging the overwatch control
+        /// </summary>
         public override void OnLevelUnloading()
         {
             OverwatchControl.Instance.GameLoaded = false;

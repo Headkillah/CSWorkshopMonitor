@@ -31,34 +31,57 @@ using System.Text;
 
 namespace CSAssetUsage
 {
+    /// <summary>
+    /// Represents a class repsonsible for controlling the building monitor
+    /// </summary>
     public class OverwatchControl
     {
         private static readonly OverwatchControl _instance = new OverwatchControl();
 
         private bool _buildingMonitorSpun;
+        private bool _gameLoaded;
 
-        public OverwatchControl()
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OverwatchControl"/> class
+        /// </summary>
+        private OverwatchControl()
         {
-            GameLoaded = false;
+            _gameLoaded = false;
             _buildingMonitorSpun = false;
         }
 
+        /// <summary>
+        /// Gets the singleton instance of the <see cref="OverwatchControl"/> class
+        /// </summary>
         public static OverwatchControl Instance
         {
             get { return _instance; }
         }
 
+        /// <summary>
+        /// Gets or sets a flag indicating whether the building monitor is spinning
+        /// </summary>
         public bool BuildingMonitorSpun
         {
-            get { return BuildingMonitorSpinnable && _buildingMonitorSpun; }
-            set { _buildingMonitorSpun = BuildingMonitorSpinnable ? value : false; }
+            get { return GameLoaded && _buildingMonitorSpun; }
+            set { _buildingMonitorSpun = GameLoaded ? value : false; }
         }
 
-        public bool GameLoaded { get; set; }
-
-        public bool BuildingMonitorSpinnable
+        /// <summary>
+        /// Gets or sets a flag indicating whether a game has been loaded
+        /// </summary>
+        public bool GameLoaded
         {
-            get { return GameLoaded; }
+            get { return _gameLoaded; }
+            set
+            {
+                _gameLoaded = value;
+                if (value)
+                    ModLogger.Debug("Game is marked as loaded by overwatch control");
+                else
+                    ModLogger.Debug("Game is marked as unloaded by overwatch control");
+            }
         }
     }
 }
