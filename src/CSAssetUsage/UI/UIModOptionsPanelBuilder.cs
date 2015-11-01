@@ -48,7 +48,7 @@ namespace CSAssetUsage
             if (_wasVisible && !value)
             {
                 _configuration.SaveConfig();
-                _configuration.Apply();
+                _configuration.ApplyConfig();
             }
             this._wasVisible = value;
         }

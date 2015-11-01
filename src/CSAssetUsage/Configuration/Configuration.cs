@@ -44,13 +44,15 @@ namespace CSAssetUsage
             // Assign the filename to the result. This is used later on when saving the configuration.
             result._filename = filename;
 
+            ModLogger.Debug("Configuration loaded from '{0}'", filename);
+
             return result;
         }
 
         /// <summary>
         /// Applies all configuration options of the configuration object to the mod
         /// </summary>
-        public void Apply()
+        public void ApplyConfig()
         {
             ModLogger.Debug("Applying configuration options");
             ModLogger.DebugLogging = this.DebugLogging;

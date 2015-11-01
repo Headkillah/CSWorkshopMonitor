@@ -49,14 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AssetEntry.cs" />
-    <Compile Include="Assets\AssetCollector.cs" />
     <Compile Include="Assets\AssetMonitor.cs" />
-    <Compile Include="Assets\CustomAssetLoader.cs" />
+    <Compile Include="Assets\AssetMonitorLoader.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Contracts\IUserModConfiguration.cs" />
     <Compile Include="Contracts\IUserModStateChange.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="ModLogger.cs" />
-    <Compile Include="ModGameLoader.cs" />
+    <Compile Include="UI\UILoader.cs" />
+    <Compile Include="ModPaths.cs" />
     <Compile Include="Overwatch\OverwatchEnums.cs" />
     <Compile Include="Overwatch\OverwatchBuilding.cs" />
     <Compile Include="Overwatch\OverwatchBuildingMonitor.cs" />

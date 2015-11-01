@@ -12,8 +12,16 @@ namespace CSAssetUsage
     {
         private const string ModName = "Asset Usage";
         private const string ModDescription = "Displays the usage of custom assets in a game";
-        private string _settingsFileName;
+        private string _settingsFilePath;
         private Configuration _configuration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Mod"/> class.
+        /// </summary>
+        public Mod()
+        {
+            ModLogger.ModLoaded();
+        }
 
         /// <summary>
         /// Gets the name of the mod as displayed in the CS mod configuration window
@@ -36,7 +44,7 @@ namespace CSAssetUsage
         /// </summary>
         public void OnEnabled()
         {
-            _settingsFileName = Path.Combine(DataLocation.modsPath, @"CSAssetUsage\CSAssetUsage.xml");
+            _settingsFilePath = ModPaths.GetConfigurationFilePath();
             Load();
             ModLogger.Debug("AssetUsage mod enabled");
         }
@@ -46,8 +54,8 @@ namespace CSAssetUsage
         /// </summary>
         public void OnDisabled()
         {
-            this.Unload();
             ModLogger.Debug("AssetUsage mod disabled");
+            this.Unload();
         }
 
         /// <summary>
@@ -76,17 +84,20 @@ namespace CSAssetUsage
         {
             try
             {
-                _configuration = Configuration.LoadConfig(_settingsFileName);
+
+                _configuration = Configuration.LoadConfig(_settingsFilePath);
             }
             catch (Exception ex)
             {
-                ModLogger.Warning("An error occured while loading mod configuration from file '{0}', the default configuration will be applied:{1}{2}", _settingsFileName, Environment.NewLine, ex);
+                ModLogger.Warning("An error occured while loading mod configuration from file '{0}', the default configuration will be applied", _settingsFilePath);
+                ModLogger.Exception(ex);
+
                 // Always create a configuration object, even when the file could not be loaded. This way the mod will not crash when the file could not be loaded
                 _configuration = new Configuration();
             }
 
             // Apply the configuration to the running mod
-            _configuration.Apply();
+            _configuration.ApplyConfig();
         }
 
         /// <summary>
@@ -100,7 +111,8 @@ namespace CSAssetUsage
             }
             catch (Exception ex)
             {
-                ModLogger.Warning("An error occured while saving mod configuration to file '{0}', mod configuration is not saved:{1}{2}", _settingsFileName, Environment.NewLine, ex);
+                ModLogger.Warning("An error occured while saving mod configuration to file '{0}', mod configuration is not saved", _settingsFilePath);
+                ModLogger.Exception(ex);
             }
         }
     }

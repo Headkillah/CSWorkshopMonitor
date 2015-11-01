@@ -31,39 +31,54 @@ using System.Text;
 
 namespace CSAssetUsage
 {
+    /// <summary>
+    /// Represents a class responsible for holding the building information as collected by the building monitor
+    /// </summary>
     public class OverwatchData
     {
         private static readonly OverwatchData _instance = new OverwatchData();
 
-        private HashSet<ushort> _buildingsAdded;
-        private HashSet<ushort> _buildingsUpdated;
-        private HashSet<ushort> _buildingsRemoved;
         private Dictionary<ushort, OverwatchBuilding> _buildingCache;
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="OverwatchData"/> class from being created.
+        /// </summary>
         private OverwatchData()
         {
-            _buildingsAdded = new HashSet<ushort>();
-            _buildingsUpdated = new HashSet<ushort>();
-            _buildingsRemoved = new HashSet<ushort>();
             _buildingCache = new Dictionary<ushort, OverwatchBuilding>();
         }
 
+        /// <summary>
+        /// Gets the singleton instance of the <see cref="OverwatchData"/> class
+        /// </summary>
         public static OverwatchData Instance
         {
             get { return _instance; }
         }
 
-        public bool HasBuilding(ushort id)
+        /// <summary>
+        /// Determines whether a building with the specified identifier exists in the data
+        /// </summary>
+        /// <param name="buildingId">The building identifier</param>
+        /// <returns></returns>
+        public bool HasBuilding(ushort buildingId)
         {
-            return _buildingCache.ContainsKey(id);
+            return _buildingCache.ContainsKey(buildingId);
         }
 
+        /// <summary>
+        /// Categorizes and caches a building with a given id. The building is categorized based on its' AI and stored in the building cache for quick retrieval.
+        /// If no category could be determined for the building it is NOT cached.
+        /// </summary>
+        /// <param name="buildingId">The building identifier</param>
+        /// <param name="building">The building</param>
+        /// <returns>True if the building could be categorized and cached, false otherwise</returns>
         public bool CategorizeBuilding(ushort buildingId, Building building)
         {
-            BuildingAI ai = building.Info.m_buildingAI;
-
             BuildingType buildingType = BuildingType.None;
 
+            // Check the AI of the building and determine the building type based on the AI
+            BuildingAI ai = building.Info.m_buildingAI;
             if (ai is PlayerBuildingAI)
             {
                 if (ai is CemeteryAI)
@@ -104,97 +119,35 @@ namespace CSAssetUsage
             if (buildingType == BuildingType.None)
                 return false;
 
+            // Only add the building to the cache if it could be categorized
             _buildingCache.Add(buildingId, new OverwatchBuilding(buildingId, building, buildingType));
 
             return true;
         }
 
-        internal void ClearAll()
+        /// <summary>
+        /// Clears all buildings from the building cache
+        /// </summary>
+        public void ClearAll()
         {
             _buildingCache.Clear();
         }
 
-        public void ClearTrackerSets()
+        /// <summary>
+        /// Removes a building with a given identifier from the building cache
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public void RemoveBuilding(ushort id)
         {
-            _buildingsAdded.Clear();
-            _buildingsUpdated.Clear();
-            _buildingsRemoved.Clear();
+            if (_buildingCache.ContainsKey(id))
+                _buildingCache.Remove(id);
         }
 
-        public void LoadAndClearAdded(HashSet<ushort> added)
-        {
-            foreach (ushort i in added)
-            {
-                _buildingsAdded.Add(i);
-            }
-            added.Clear();
-        }
-
-        internal void LoadAndClearRemoved(HashSet<ushort> removed)
-        {
-            foreach (ushort i in removed)
-            {
-                _buildingsRemoved.Add(i);
-            }
-
-            removed.Clear();
-        }
-
-        internal void LoadUpdated(ushort id)
-        {
-            _buildingsUpdated.Add(id);
-        }
-
-        internal void LoadRemoved(ushort id)
-        {
-            _buildingsRemoved.Add(id);
-        }
-
-        internal void RemoveBuilding(ushort id)
-        {
-            _buildingCache.Remove(id);
-        }
-
-        internal string GetLogString()
-        {
-            StringBuilder log = new StringBuilder();
-            log.AppendLine();
-            log.AppendLine("==== BUILDINGS ====");
-            log.AppendLine();
-            log.AppendLine(String.Format("{0}   Total", _buildingCache.Count));
-            log.AppendLine(String.Format("{0}   Added", _buildingsAdded.Count));
-            log.AppendLine(String.Format("{0}   Updated", _buildingsUpdated.Count));
-            log.AppendLine(String.Format("{0}   Removed", _buildingsRemoved.Count));
-            log.AppendLine();
-            log.AppendLine(String.Format("{0}   Player Building(s)", GetBuildingCount(BuildingType.PlayerBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Cemetery(s)", GetBuildingCount(BuildingType.Cemetery)));
-            log.AppendLine(String.Format(" =>   {0}   LandfillSite(s)", GetBuildingCount(BuildingType.LandfillSite)));
-            log.AppendLine(String.Format(" =>   {0}   FireStation(s)", GetBuildingCount(BuildingType.FireStation)));
-            log.AppendLine(String.Format(" =>   {0}   PoliceStation(s)", GetBuildingCount(BuildingType.PoliceStation)));
-            log.AppendLine(String.Format(" =>   {0}   Hospital(s)", GetBuildingCount(BuildingType.Hospital)));
-            log.AppendLine(String.Format(" =>   {0}   Park(s)", GetBuildingCount(BuildingType.Park)));
-            log.AppendLine(String.Format(" =>   {0}   PowerPlant(s)", GetBuildingCount(BuildingType.PowerPlant)));
-            log.AppendLine(String.Format(" =>   {0}   WaterFacitlity(s)", GetBuildingCount(BuildingType.WaterFacility)));
-            log.AppendLine(String.Format(" =>   {0}   Other", GetBuildingCount(BuildingType.PlayerOther)));
-            log.AppendLine();
-            log.AppendLine(String.Format("{0}   Zoned Building(s)", GetBuildingCount(BuildingType.ZonedBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Residential", GetBuildingCount(BuildingType.ResidentialBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Commercial", GetBuildingCount(BuildingType.CommercialBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Industrial", GetBuildingCount(BuildingType.IndustrialBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Office(s)", GetBuildingCount(BuildingType.OfficeBuilding)));
-            log.AppendLine(String.Format(" =>   {0}   Other", GetBuildingCount(BuildingType.ZonedOther)));
-            log.AppendLine();
-            log.AppendLine(String.Format("{0}   Other Building(s)", GetBuildingCount(BuildingType.Other)));
-            log.AppendLine();
-
-            return log.ToString();
-        }
-
-        public int GetBuildingCount(BuildingType buildingType)
-        {
-            return _buildingCache.Values.Count(b => (b.Type & buildingType) == buildingType);
-        }
-
+        /// <summary>
+        /// Gets the number of buildings which were build from a package with a given package identifier
+        /// </summary>
+        /// <param name="packageId">The package identifier.</param>
+        /// <returns></returns>
         public int GetBuildingCount(string packageId)
         {
             return _buildingCache.Values.Count(b => b.Building.Info.name.StartsWith(packageId));

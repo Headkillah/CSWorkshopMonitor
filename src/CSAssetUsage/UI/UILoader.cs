@@ -1,22 +1,36 @@
 ﻿using ColossalFramework.UI;
 using ICities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace CSAssetUsage
 {
     /// <summary>
-    /// Represents a class responsible for loading/unloading the AssetUsage main window when a game is started or finished
+    /// Represents a class responsible for loading/unloading the AssetUsage main window when a game is started or exited
     /// </summary>
-    public class ModGameLoader : LoadingExtensionBase
+    public class UILoader : LoadingExtensionBase
     {
         private const string AssetUsageMainWindowGameObjectName = "AssetUsageMainWindow";
 
         private LoadMode _mode;
         private UIMainWindow _mainWindow;
+
+        /// <summary>
+        /// Called when the UI loader is created
+        /// </summary>
+        /// <param name="loading">The loading instance</param>
+        public override void OnCreated(ILoading loading)
+        {
+            ModLogger.Debug("UILoader created");
+        }
+
+        /// <summary>
+        /// Called when the UI loader is release
+        /// </summary>
+        public override void OnReleased()
+        {
+            ModLogger.Debug("UILoader Released");
+        }
 
         /// <summary>
         /// Called when a new/existing game has been loaded by the user. Creates the main window object and adds it to CS UI
@@ -47,7 +61,8 @@ namespace CSAssetUsage
             }
             catch (Exception ex)
             {
-                ModLogger.Error(ex.ToString());
+                ModLogger.Error("An error occured while creating the main window");
+                ModLogger.Exception(ex);
             }
         }
 
@@ -60,9 +75,21 @@ namespace CSAssetUsage
             if (_mode != LoadMode.LoadGame && _mode != LoadMode.NewGame)
                 return;
 
-            // Destroy the mainwindow when unloading to make sure a fresh new window is used for the next game
-            if (_mainWindow != null)
-                GameObject.Destroy(_mainWindow.gameObject);
+            try
+            {
+                ModLogger.Debug("Destroying main window");
+
+                // Destroy the mainwindow when unloading to make sure a fresh new window is used for the next game
+                if (_mainWindow != null)
+                    GameObject.Destroy(_mainWindow.gameObject);
+
+                ModLogger.Debug("Main window destroyed");
+            }
+            catch (Exception ex)
+            {
+                ModLogger.Error("An error occured while destroying the main window");
+                ModLogger.Exception(ex);
+            }
         }
     }
 }

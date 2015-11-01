@@ -38,12 +38,7 @@ namespace CSAssetUsage
 {
     public static class ModLogger
     {
-        private static string _prefix;
-
-        public static void Initialize()
-        {
-            _prefix = string.Format("[{0}]", typeof(ModLogger).Assembly.GetName().Name);
-        }
+        private static bool _loaded;
 
         /// <summary>
         /// Gets or sets whether the debug logging is enabled or not.
@@ -51,118 +46,158 @@ namespace CSAssetUsage
         public static bool DebugLogging { get; set; }
 
         /// <summary>
-        /// Logs to the Unity Engine.
+        /// Marks the modlogger as being loaded, clears the existing log file
         /// </summary>
-        /// <param name="logFunc">The Unity Engine log method to use.</param>
-        /// <param name="message">The log message.</param>
-        private static void LogUE(Action<object> logFunc, string message)
+        public static void ModLoaded()
         {
-            logFunc(string.Format("{0} {1}", _prefix, message));
+            if (!_loaded)
+            {
+                _loaded = true;
+                clearLog();
+            }
         }
 
         /// <summary>
-        /// Logs to the default output panel of the game.
+        /// Logs a message to the Unity Engine
         /// </summary>
-        /// <param name="messageType">The message type to use.</param>
-        /// <param name="message">The log message.</param>
-        private static void LogOP(PluginManager.MessageType messageType, string message)
+        /// <param name="logFunc">The Unity Engine log method to use</param>
+        /// <param name="message">The log message</param>
+        private static void LogToUnity(Action<object> logFunc, string message)
         {
-            DebugOutputPanel.AddMessage(messageType, string.Format("{0} {1}", _prefix, message));
+            logFunc(message);
         }
 
-        private static void LogFile(string message)
+        /// <summary>
+        /// Logs a message to the default output panel of the game
+        /// </summary>
+        /// <param name="messageType">The message type to use</param>
+        /// <param name="message">The log message</param>
+        private static void LogToDebugOutputPanel(PluginManager.MessageType messageType, string message)
         {
-            string logFileName = "CSAssetUsage.log";
+            DebugOutputPanel.AddMessage(messageType, message);
+        }
+
+        /// <summary>
+        /// Logs a message to the mod log file
+        /// </summary>
+        /// <param name="message">The log message</param>
+        private static void LogToFile(string message)
+        {
+            string logFileName = ModPaths.GetLogFilePath();
             File.AppendAllText(logFileName, message);
             File.AppendAllText(logFileName, Environment.NewLine);
         }
 
         /// <summary>
-        /// Logs a debug message.
+        /// Logs a debug message
         /// </summary>
-        /// <param name="message">The log message.</param>
+        /// <param name="message">The log message</param>
         public static void Debug(string message)
         {
             if (DebugLogging)
             {
-                message = string.Format("[DEBUG] {0} - {1}", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
-                LogUE(UnityEngine.Debug.Log, message);
-                LogOP(PluginManager.MessageType.Message, message);
-                LogFile(message);
+                // Debug messages are only written to the debug logfile to prevent excessive logging in the UI
+                message = FormatMessage("Debug", message);
+                LogToFile(message);
             }
         }
 
         /// <summary>
-        /// Logs a debug message through the string formatter.
+        /// Logs a debug message by formatting it with the provided arguments
         /// </summary>
-        /// <param name="format">The format.</param>
-        /// <param name="args">The arguments.</param>
-        public static void Debug(string format, params object[] args)
+        /// <param name="message">The formatted log message</param>
+        /// <param name="args">The format arguments</param>
+        public static void Debug(string message, params object[] args)
         {
-            Debug(string.Format(format, args));
+            Debug(string.Format(message, args));
         }
 
         /// <summary>
-        /// Logs an info message.
+        /// Logs an informational message
         /// </summary>
-        /// <param name="message">The log message.</param>
+        /// <param name="message">The log message</param>
         public static void Info(string message)
         {
-            LogUE(UnityEngine.Debug.Log, message);
-            LogOP(PluginManager.MessageType.Message, message);
-            LogFile(message);
+            message = FormatMessage("Info", message);
+
+            LogToUnity(UnityEngine.Debug.Log, message);
+            LogToDebugOutputPanel(PluginManager.MessageType.Message, message);
+            LogToFile(message);
         }
 
         /// <summary>
-        /// Logs an info message through the string formatter.
+        /// Logs a informational message by formatting it with the provided arguments
         /// </summary>
-        /// <param name="format">The format.</param>
-        /// <param name="args">The arguments.</param>
+        /// <param name="message">The formatted log message</param>
+        /// <param name="args">The format arguments</param>
         public static void Info(string format, params object[] args)
         {
             Info(string.Format(format, args));
         }
 
         /// <summary>
-        /// Logs a warning message.
+        /// Logs a warning message
         /// </summary>
-        /// <param name="message">The log message.</param>
+        /// <param name="message">The log message</param>
         public static void Warning(string message)
         {
-            LogUE(UnityEngine.Debug.LogWarning, message);
-            LogOP(PluginManager.MessageType.Warning, message);
-            LogFile(message);
+            message = FormatMessage("Warning", message);
+
+            LogToUnity(UnityEngine.Debug.LogWarning, message);
+            LogToDebugOutputPanel(PluginManager.MessageType.Warning, message);
+            LogToFile(message);
         }
 
         /// <summary>
-        /// Logs a warning message through the string formatter.
+        /// Logs a warning message by formatting it with the provided arguments
         /// </summary>
-        /// <param name="format">The format.</param>
-        /// <param name="args">The arguments.</param>
+        /// <param name="message">The formatted log message</param>
+        /// <param name="args">The format arguments</param>
         public static void Warning(string format, params object[] args)
         {
             Warning(string.Format(format, args));
         }
 
         /// <summary>
-        /// Logs an error message.
+        /// Logs an error message
         /// </summary>
-        /// <param name="message">The log message.</param>
+        /// <param name="message">The log message</param>
         public static void Error(string message)
         {
-            LogUE(UnityEngine.Debug.LogError, message);
-            LogOP(PluginManager.MessageType.Error, message);
-            LogFile(message);
+            message = FormatMessage("Error", message);
+
+            LogToUnity(UnityEngine.Debug.LogError, message);
+            LogToDebugOutputPanel(PluginManager.MessageType.Error, message);
+            LogToFile(message);
         }
 
         /// <summary>
-        /// Logs an error message through the string formatter.
+        /// Logs an error message by formatting it with the provided arguments
         /// </summary>
-        /// <param name="format">The format.</param>
-        /// <param name="args">The arguments.</param>
+        /// <param name="message">The formatted log message</param>
+        /// <param name="args">The format arguments</param>
         public static void Error(string format, params object[] args)
         {
             Error(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs an exception
+        /// </summary>
+        /// <param name="message">The exception</param>
+        public static void Exception(Exception exception)
+        {
+            StringBuilder message = new StringBuilder();
+            message.AppendLine("An unexpected exception occured:");
+
+            Exception currentException = exception;
+            while (currentException != null)
+            {
+                message.AppendLine(exception.ToString());
+                currentException = currentException.InnerException;
+            }
+
+            Error(message.ToString());
         }
 
         public static void DumpObject(object myObject)
@@ -178,5 +213,19 @@ namespace CSAssetUsage
             Debug(objectDetails.ToString());
         }
 
+        private static string FormatMessage(string type, string message)
+        {
+            return string.Format("[AssetUsage] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
+        }
+
+        /// <summary>
+        /// Clears the contents of the log file
+        /// </summary>
+        private static void clearLog()
+        {
+            string fileName = ModPaths.GetLogFilePath();
+            if (File.Exists(fileName))
+                File.WriteAllText(fileName, string.Empty);
+        }
     }
 }

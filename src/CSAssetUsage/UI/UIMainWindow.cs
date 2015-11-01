@@ -205,9 +205,8 @@ namespace CSAssetUsage
 
         private void SetupAssetRows()
         {
-            var loadedAssets = AssetMonitor.Instance.GetLoadedAssets();
-            ModLogger.Debug("{0} assets found", loadedAssets.Count);
-
+            var loadedAssets = AssetMonitor.Instance.GetAssetList();
+            
             _assetSorter.Sort(loadedAssets, SortableAssetEntryField.Name);
 
             foreach (var asset in loadedAssets)

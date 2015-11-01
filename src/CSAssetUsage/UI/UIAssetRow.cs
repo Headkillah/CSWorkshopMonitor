@@ -44,6 +44,7 @@ namespace CSAssetUsage
 
         public void Load(AssetEntry assetEntry)
         {
+
             _assetEntry = assetEntry;
             _assetEntry.InstanceCountUpdated += assetEntry_InstanceCountUpdated;
         }
