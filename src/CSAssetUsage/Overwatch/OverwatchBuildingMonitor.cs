@@ -68,8 +68,8 @@ namespace CSAssetUsage
             OverwatchControl.Instance.BuildingMonitorSpun = false;
 
             // Clear the overwatch data
-            if (OverwatchData.Instance != null)
-                OverwatchData.Instance.ClearAll();
+            if (OverwatchContainer.Instance != null)
+                OverwatchContainer.Instance.ClearCache();
 
             base.OnReleased();
 
@@ -174,6 +174,9 @@ namespace CSAssetUsage
 
             try
             {
+                // Clear any existing data from the overwatch container
+                OverwatchContainer.Instance.ClearCache();
+                
                 // Process the list of existing buildings when initializing to make sure the list is up-to-date
                 var capacity = (ushort)Singleton<BuildingManager>.instance.m_buildings.m_buffer.Length;
                 Enumerable.Range(0, capacity).Do(i => ProcessBuilding((ushort)i));
@@ -202,8 +205,6 @@ namespace CSAssetUsage
         {
             try
             {
-
-
                 // Get a reference to the current frame
                 int end = GetFrame();
 
@@ -221,7 +222,7 @@ namespace CSAssetUsage
 
                         Building building;
                         if (!TryGetBuilding(id, out building))
-                            OverwatchData.Instance.RemoveBuilding(id);
+                            OverwatchContainer.Instance.RemoveBuilding(id);
                     }
                 }
             }
@@ -284,14 +285,14 @@ namespace CSAssetUsage
 
         private bool ProcessBuilding(ushort buildingId)
         {
-            if (OverwatchData.Instance.HasBuilding(buildingId))
-                OverwatchData.Instance.RemoveBuilding(buildingId);
+            if (OverwatchContainer.Instance.HasBuilding(buildingId))
+                OverwatchContainer.Instance.RemoveBuilding(buildingId);
 
             Building building;
             if (!TryGetBuilding(buildingId, out building))
                 return false;
 
-            if (!OverwatchData.Instance.CategorizeBuilding(buildingId, building))
+            if (!OverwatchContainer.Instance.CategorizeBuilding(buildingId, building))
             {
                 ModLogger.Debug("No categories found for building {0}", buildingId);
                 return false;

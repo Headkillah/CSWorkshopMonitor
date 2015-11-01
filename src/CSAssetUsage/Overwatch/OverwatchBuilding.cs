@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CSAssetUsage
 {
@@ -19,7 +20,7 @@ namespace CSAssetUsage
         public OverwatchBuilding(ushort buildingId, Building building, BuildingType type)
         {
             BuildingId = buildingId;
-            Building = building;
+            SourcePackageId = parsePackageId(building);
             Type = type;
         }
 
@@ -29,13 +30,18 @@ namespace CSAssetUsage
         public ushort BuildingId { get; private set; }
 
         /// <summary>
-        /// Gets the building object
+        /// Gets the identifier of the package the building originated from
         /// </summary>
-        public Building Building { get; private set; }
+        public string SourcePackageId { get; private set; }
 
         /// <summary>
         /// Gets the type of the building
         /// </summary>
         public BuildingType Type { get; private set; }
+
+        private string parsePackageId(Building building)
+        {
+            return Regex.Match(building.Info.name, @"^[\d]+").Value;
+        }
     }
 }

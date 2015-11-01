@@ -61,7 +61,7 @@
     <Compile Include="Overwatch\OverwatchEnums.cs" />
     <Compile Include="Overwatch\OverwatchBuilding.cs" />
     <Compile Include="Overwatch\OverwatchBuildingMonitor.cs" />
-    <Compile Include="Overwatch\OverwatchData.cs" />
+    <Compile Include="Overwatch\OverwatchContainer.cs" />
     <Compile Include="Overwatch\OverwatchControl.cs" />
     <Compile Include="Overwatch\OverwatchLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,15 +103,15 @@
       DeployAssembly;
     </AfterBuildDependsOn>
   </PropertyGroup>
-    <PropertyGroup>
+  <PropertyGroup>
     <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\CSAssetUsage</CSModFolder>
-    </PropertyGroup>
+  </PropertyGroup>
   <Target Name="CleanupDeployTarget">
     <ItemGroup>
       <FilesToDelete Include="$(CSModFolder)\Source\*.cs" />
       <FilesToDelete Include="$(CSModFolder)\*.dll" />
     </ItemGroup>
-    <Delete Files="@(FilesToDelete)"  />
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="DeploySources">
     <Copy SourceFiles="@(Compile)" DestinationFolder="$(CSModFolder)\Source" />

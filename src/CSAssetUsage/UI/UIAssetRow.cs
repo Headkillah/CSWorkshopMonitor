@@ -67,9 +67,7 @@ namespace CSAssetUsage
         {
             base.Update();
 
-            //if (string.IsNullOrEmpty( _assetNameLabel.text))
-                _assetNameLabel.text = _assetEntry.Metadata.name;
-            _numberUseLabel.text = _assetEntry.InstanceCount.ToString();
+            setValuesToUI();
         }
 
         public override void OnDestroy()
@@ -117,15 +115,22 @@ namespace CSAssetUsage
 
         private void assetInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            //string assetUrl = string.Format("http://steamcommunity.com/sharedfiles/filedetails/?id={0}", _assetMetadata.PackageId);
-            ////ModLogger.Debug(_asset.PackageId);
-            //Process.Start(assetUrl);
+            string assetUrl = string.Format("http://steamcommunity.com/sharedfiles/filedetails/?id={0}", _assetEntry.PackageId);
+            Process.Start(assetUrl);
         }
 
-        
         private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
         {
-            this.Update();
+            setValuesToUI();
+        }
+
+        private void setValuesToUI()
+        {
+            if (_assetNameLabel.text != _assetEntry.Metadata.name)
+                _assetNameLabel.text = _assetEntry.Metadata.name;
+            string instanceCount = _assetEntry.InstanceCount.ToString();
+            if (_numberUseLabel.text != instanceCount)
+                _numberUseLabel.text = instanceCount;
         }
     }
 }

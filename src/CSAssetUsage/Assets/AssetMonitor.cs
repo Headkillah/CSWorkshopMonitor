@@ -93,14 +93,14 @@ namespace CSAssetUsage
         {
             try
             {
-                ModLogger.Debug("Asset monitor is updating {0} assets", GetAssetCount());
+                int assetCount = GetAssetCount();
 
+                ModLogger.Debug("Asset monitor is updating {0} assets", assetCount);
                 foreach (var asset in _assets)
                 {
-                    asset.SetInstanceCount(OverwatchData.Instance.GetBuildingCount(asset.PackageId));
+                    asset.SetInstanceCount(OverwatchContainer.Instance.GetBuildingCount(asset.PackageId));
                 }
-
-                ModLogger.Debug("Asset monitor updated {0} assets", GetAssetCount());
+                ModLogger.Debug("Asset monitor updated {0} assets", assetCount);
             }
             catch (Exception ex)
             {
