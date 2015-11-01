@@ -79,7 +79,6 @@ namespace CSAssetUsage
 
         public override void OnDestroy()
         {
-            ModLogger.Debug("Assetrow ondestroy");
             _assetInfoButton.eventClick -= assetInfoButton_eventClick;
             _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
             base.OnDestroy();
