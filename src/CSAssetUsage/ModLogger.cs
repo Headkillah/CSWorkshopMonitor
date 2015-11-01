@@ -39,7 +39,6 @@ namespace CSAssetUsage
     public static class ModLogger
     {
         private static string _prefix;
-        private static bool _debugLoggingEnabled;
 
         public static void Initialize()
         {
@@ -49,10 +48,7 @@ namespace CSAssetUsage
         /// <summary>
         /// Gets or sets whether the debug logging is enabled or not.
         /// </summary>
-        public static void EnableDebugLogging()
-        {
-            _debugLoggingEnabled = true;
-        }
+        public static bool DebugLogging { get; set; }
 
         /// <summary>
         /// Logs to the Unity Engine.
@@ -87,7 +83,7 @@ namespace CSAssetUsage
         /// <param name="message">The log message.</param>
         public static void Debug(string message)
         {
-            if (_debugLoggingEnabled)
+            if (DebugLogging)
             {
                 message = string.Format("[DEBUG] {0} - {1}", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
                 LogUE(UnityEngine.Debug.Log, message);
@@ -114,6 +110,7 @@ namespace CSAssetUsage
         {
             LogUE(UnityEngine.Debug.Log, message);
             LogOP(PluginManager.MessageType.Message, message);
+            LogFile(message);
         }
 
         /// <summary>
@@ -134,6 +131,7 @@ namespace CSAssetUsage
         {
             LogUE(UnityEngine.Debug.LogWarning, message);
             LogOP(PluginManager.MessageType.Warning, message);
+            LogFile(message);
         }
 
         /// <summary>
@@ -154,6 +152,7 @@ namespace CSAssetUsage
         {
             LogUE(UnityEngine.Debug.LogError, message);
             LogOP(PluginManager.MessageType.Error, message);
+            LogFile(message);
         }
 
         /// <summary>

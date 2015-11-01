@@ -31,5 +31,15 @@ namespace CSAssetUsage
         {
             get { return "Open in workshop (Note! This will open the steam workshop in your default browser!)"; }
         }
+
+        public static string ModSettingsGroupLabel
+        {
+            get { return "Mod settings"; }
+        }
+
+        public static string ModSettingsDebugLoggingOption
+        {
+            get { return "Enable debug logging (for advanced usage only)"; }
+        }
     }
 }
