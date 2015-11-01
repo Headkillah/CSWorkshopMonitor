@@ -17,7 +17,7 @@ namespace CSAssetUsage
 
         public string Name
         {
-            get { ModLogger.Debug("bla"); return ModName; }
+            get { return ModName; }
         }
 
         public string Description
