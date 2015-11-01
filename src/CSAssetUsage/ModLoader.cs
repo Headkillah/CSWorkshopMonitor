@@ -18,9 +18,9 @@ namespace CSAssetUsage
         public override void OnCreated(ILoading loading)
         {
             base.OnCreated(loading);
-#if DEBUG
+//#if DEBUG
             ModLogger.EnableDebugLogging();
-#endif
+//#endif
         }
 
         public sealed override void OnLevelLoaded(LoadMode mode)

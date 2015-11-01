@@ -12,17 +12,15 @@ namespace CSAssetUsage
 {
     public class Mod : IUserMod
     {
-        private const string ModName = "Asset Usage";
-        private const string ModDescription = "Displays the usage of custom assets in a game";
-
+        
         public string Name
         {
-            get { ModLogger.Debug("bla"); return ModName; }
+            get { return UITexts.ModName; }
         }
 
         public string Description
         {
-            get { return ModDescription; }
+            get { return UITexts.ModDescription; }
         }
     }
 }

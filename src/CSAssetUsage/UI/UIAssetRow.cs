@@ -42,12 +42,6 @@ namespace CSAssetUsage
 
         public bool IsOdd { get; set; }
 
-        public void Load(AssetEntry assetEntry)
-        {
-            _assetEntry = assetEntry;
-            _assetEntry.InstanceCountUpdated += assetEntry_InstanceCountUpdated;
-        }
-
         public override void Awake()
         {
             base.Awake();
@@ -73,8 +67,9 @@ namespace CSAssetUsage
         {
             base.Update();
 
-            if (string.IsNullOrEmpty( _assetNameLabel.text))
-                _assetNameLabel.text = _assetEntry.Metadata.name;
+            //if (string.IsNullOrEmpty( _assetNameLabel.text))
+            _assetNameLabel.text = _assetEntry.Metadata.name;
+            _numberUseLabel.text = _assetEntry.InstanceCount.ToString();
         }
 
         public override void OnDestroy()
@@ -83,6 +78,18 @@ namespace CSAssetUsage
             _assetInfoButton.eventClick -= assetInfoButton_eventClick;
             _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
             base.OnDestroy();
+        }
+
+        public void Load(AssetEntry assetEntry)
+        {
+            _assetEntry = assetEntry;
+            _assetEntry.InstanceCountUpdated += assetEntry_InstanceCountUpdated;
+        }
+
+        public void Unload()
+        {
+            _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
+            _assetEntry = null;
         }
 
         private UILabel createCellLabel(int columnPosition, int rowPosition, string labelText)
@@ -116,10 +123,10 @@ namespace CSAssetUsage
             //Process.Start(assetUrl);
         }
 
-        
+
         private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
         {
-            _numberUseLabel.text = _assetEntry.InstanceCount.ToString();
+            this.Update();
         }
     }
 }

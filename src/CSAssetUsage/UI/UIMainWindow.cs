@@ -44,7 +44,7 @@ namespace CSAssetUsage
         //private UIButtonPanel _buttonPanel;
         private UICaptionPanel _captionPanel;
 
-        private List<GameObject> _assets;
+        private List<GameObject> _assetObjects;
 
         private UIAssetSorter _assetSorter;
 
@@ -54,7 +54,7 @@ namespace CSAssetUsage
 
             base.Start();
 
-            _assets = new List<GameObject>();
+            _assetObjects = new List<GameObject>();
             _assetSorter = new UIAssetSorter();
 
             // Make the window invisible by default
@@ -98,6 +98,7 @@ namespace CSAssetUsage
             if (isActivationKeyUsed())
             {
                 ModLogger.Debug("Showing asset usage window");
+
                 AssetMonitor.Instance.Update();
                 CenterToParent();
                 Show(true);
@@ -205,32 +206,41 @@ namespace CSAssetUsage
 
         private void SetupAssetRows()
         {
-            var loadedAssets = AssetMonitor.Instance.GetLoadedAssets();
-            ModLogger.Debug("{0} assets found", loadedAssets.Count);
+            var assetCount = AssetMonitor.Instance.GetAssetCount();
+            ModLogger.Debug("{0} assets found", assetCount);
 
-            _assetSorter.Sort(loadedAssets, SortableAssetEntryField.Name);
-
-            foreach (var asset in loadedAssets)
+            bool odd = false;
+            Enumerable.Range(0, assetCount).ForEach(i =>
             {
                 //ModLogger.Debug(asset.NumberUsed.ToString());
                 var assetObject = new GameObject("Asset");
                 var assetRow = assetObject.AddComponent<UIAssetRow>();
-                assetRow.Load(asset);
-                _assets.Add(assetObject);
-            }
-
-            bool odd = false;
-            foreach (var assetObject in _assets)
-            {
-                _scrollablePanel.AttachUIComponent(assetObject);
-                assetObject.GetComponent<UIAssetRow>().IsOdd = odd;
+                assetRow.IsOdd = odd;
                 odd = !odd;
-            }
+                _scrollablePanel.AttachUIComponent(assetObject);
+                _assetObjects.Add(assetObject);
+            });
+
+            PopulateAssets();
+        }
+
+        private void PopulateAssets(SortableAssetEntryField sortField = SortableAssetEntryField.Name)
+        {
+            var assets = AssetMonitor.Instance.GetLoadedAssets();
+            _assetSorter.Sort(assets, sortField);
+            ModLogger.Debug(assets.First().Metadata.name);
+            Enumerable.Range(0, assets.Count).ForEach(i => _assetObjects[i].GetComponent<UIAssetRow>().Load(assets[i]));
+        }
+
+        private void ClearAssets()
+        {
+            _assetObjects.ForEach(ao => ao.GetComponent<UIAssetRow>().Unload());
         }
 
         private void SortAssetsMethod(SortableAssetEntryField sortField = SortableAssetEntryField.Name)
         {
-            // TODO: implement sorting
+            ClearAssets();
+            PopulateAssets(sortField);
         }
 
         private bool isActivationKeyUsed()

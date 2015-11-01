@@ -87,22 +87,45 @@
   <PropertyGroup>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>del "C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\CSAssetUsage\*.dll"
-xcopy /D /Q /Y "$(TargetPath)" "C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\CSAssetUsage"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target> 
   -->
-  <!--<Target Name="AfterBuild">
-    <PropertyGroup>
-      <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\CSAssetUsage\Source</CSModFolder>
-    </PropertyGroup>
+  <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)">
+  </Target>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AfterBuildDependsOn>
+      CleanupDeployTarget;
+      DeploySources;
+    </AfterBuildDependsOn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AfterBuildDependsOn>
+      CleanupDeployTarget;
+      DeployAssembly;
+    </AfterBuildDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\CSAssetUsage</CSModFolder>
+  </PropertyGroup>
+  <Target Name="CleanupDeployTarget">
     <ItemGroup>
-      <FilesToDelete Include="$(CSModFolder)\*.*" />
+      <FilesToDelete Include="$(CSModFolder)\Source\*.cs" />
+      <FilesToDelete Include="$(CSModFolder)\*.dll" />
     </ItemGroup>
-    <Delete Files="@(FilesToDelete)" />
-    <Copy SourceFiles="@(Compile)" DestinationFolder="$(CSModFolder)" />
-  </Target>-->
+    <Delete Files="@(FilesToDelete)"  />
+  </Target>
+  <Target Name="DeploySources">
+    <Copy SourceFiles="@(Compile)" DestinationFolder="$(CSModFolder)\Source" />
+  </Target>
+  <Target Name="DeployAssembly">
+    <ItemGroup>
+      <Assemblies Include="$(CSModFolder)\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CSModFolder)" DestinationFolder="$(CSModFolder)" />
+  </Target>
 </Project>

@@ -7,11 +7,21 @@ namespace CSAssetUsage
 {
     public static class UITexts
     {
+        public static string ModName
+        {
+            get { return "Asset Usage"; }
+        }
+
+        public static string ModDescription
+        {
+            get { return "Displays the usage of custom assets in a game"; }
+        }
+
         public static string PackageIdColumnLabel
         {
             get { return "Id"; }
         }
-        
+
         public static string AssetNameColumnLabel
         {
             get { return "Asset Name"; }
