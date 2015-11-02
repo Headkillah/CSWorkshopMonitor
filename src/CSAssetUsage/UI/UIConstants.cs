@@ -12,15 +12,15 @@ namespace CSAssetUsage
         public const int DefaultPanelWidth = MainWindowWidth - 15;
 
         // Columns
-        public const int TextFieldRowPosition = 4;
+        public const int TextFieldRowPosition = 6;
         public const int ButtonFieldRowPosition = 2;
         public const int AssetNameColumnPosition = 10;
         public const int NumberUsedColumnPosition = AssetNameColumnPosition + 500;
         public const int AssetInfoButtonPosition = MainWindowWidth - 50;
-        public const string AssetInfoButtonNormalSprite = "workshop_logo";
-        public const string AssetInfoButtonPressedSprite = "Workshop_logoPressed";
-        public const string AssetInfoButtonHoveredSprite = "Workshop_logoHovered";
-        public const int AssetInfoButtonSize = 17;
+        public const string AssetInfoButtonNormalSprite = "CityInfo";
+        public const string AssetInfoButtonPressedSprite = "CityInfoPressed";
+        public const string AssetInfoButtonHoveredSprite = "CityInfoHovered";
+        public const int AssetInfoButtonSize = 25;
 
         // Main window
         public const int MainWindowMainPanelWidthOffset = 6;
@@ -63,8 +63,8 @@ namespace CSAssetUsage
 
         // Asset row
         public const int AssetRowWidth = DefaultPanelWidth;
-        public const int AssetRowHeight = 20;
-        public const float AssetRowTextScale = 0.8f;
+        public const int AssetRowHeight = 30;
+        public const float AssetRowTextScale = 1f;
         public static Color32 AssetRowTextColor = new Color32(185, 221, 254, 255);
         public static Color32 AssetRowOddColor = new Color32(150, 150, 150, 255);
         public static Color32 AssetRowEvenColor = new Color32(120, 130, 130, 255);

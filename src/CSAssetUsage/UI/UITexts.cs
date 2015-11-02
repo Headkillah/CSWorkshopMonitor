@@ -39,7 +39,7 @@ namespace CSAssetUsage
 
         public static string AssetInfoButtonToolTip
         {
-            get { return "Open in workshop (Note! This will open the steam workshop in your default browser!)"; }
+            get { return "Open in workshop"; }
         }
 
         public static string ModSettingsGroupLabel
