@@ -17,9 +17,9 @@ namespace CSAssetUsage
         public const int AssetNameColumnPosition = 10;
         public const int NumberUsedColumnPosition = AssetNameColumnPosition + 500;
         public const int AssetInfoButtonPosition = MainWindowWidth - 50;
-        public const string AssetInfoButtonNormalSprite = "CityInfo";
-        public const string AssetInfoButtonPressedSprite = "CityInfoPressed";
-        public const string AssetInfoButtonHoveredSprite = "CityInfoHovered";
+        public const string AssetInfoButtonNormalSprite = "workshop_logo";
+        public const string AssetInfoButtonPressedSprite = "Workshop_logoPressed";
+        public const string AssetInfoButtonHoveredSprite = "Workshop_logoHovered";
         public const int AssetInfoButtonSize = 17;
 
         // Main window

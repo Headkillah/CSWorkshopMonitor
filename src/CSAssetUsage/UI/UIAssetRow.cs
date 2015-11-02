@@ -29,6 +29,7 @@ using System;
 using ColossalFramework;
 using UnityEngine;
 using System.Diagnostics;
+using ColossalFramework.Steamworks;
 
 namespace CSAssetUsage
 {
@@ -67,7 +68,7 @@ namespace CSAssetUsage
         {
             base.Update();
 
-            setValuesToUI();
+            SetValuesToUI();
         }
 
         public override void OnDestroy()
@@ -115,16 +116,28 @@ namespace CSAssetUsage
 
         private void assetInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            string assetUrl = string.Format("http://steamcommunity.com/sharedfiles/filedetails/?id={0}", _assetEntry.PackageId);
-            Process.Start(assetUrl);
+            ulong packageId = 0;
+            if (Steam.IsOverlayEnabled() && ulong.TryParse(_assetEntry.PackageId, out packageId))
+                Steam.ActivateGameOverlayToWorkshopItem(new PublishedFileId(packageId));
+            else
+                ConfirmPanel.ShowModal(UITexts.AssetInfoOpenInBrowserTitle, UITexts.AssetInfoOpenInBrowserMessage, ShowModalCallback);
+        }
+
+        private void ShowModalCallback(UIComponent component, int result)
+        {
+            if (result != 0)
+            {
+                string assetUrl = string.Format("http://steamcommunity.com/sharedfiles/filedetails/?id={0}", _assetEntry.PackageId);
+                Process.Start(assetUrl);
+            }
         }
 
         private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
         {
-            setValuesToUI();
+            SetValuesToUI();
         }
 
-        private void setValuesToUI()
+        private void SetValuesToUI()
         {
             if (_assetNameLabel.text != _assetEntry.Metadata.name)
                 _assetNameLabel.text = _assetEntry.Metadata.name;

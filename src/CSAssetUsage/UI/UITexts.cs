@@ -51,5 +51,15 @@ namespace CSAssetUsage
         {
             get { return "Enable debug logging (for advanced usage only)"; }
         }
+
+        public static string AssetInfoOpenInBrowserTitle
+        {
+            get { return "Open in browser"; }
+        }
+
+        public static string AssetInfoOpenInBrowserMessage
+        {
+            get { return "Could not open the asset in the in-game workshop. Do you want to open the asset in a browser?"; }
+        }
     }
 }
