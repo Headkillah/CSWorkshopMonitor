@@ -70,6 +70,7 @@ namespace CSAssetUsage
         public override void OnLevelUnloading()
         {
             OverwatchControl.Instance.GameLoaded = false;
+            OverwatchContainer.Instance.ClearCache();
         }
     }
 }
