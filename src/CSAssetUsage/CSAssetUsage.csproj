@@ -108,18 +108,21 @@
   </PropertyGroup>
   <Target Name="CleanupDeployTarget">
     <ItemGroup>
-      <FilesToDelete Include="$(CSModFolder)\Source\*.cs" />
-      <FilesToDelete Include="$(CSModFolder)\*.dll" />
+      <FilesToDelete Include="$(CSModFolder)\Source\**\*.cs" />
+      <FilesToDelete Include="$(CSModFolder)\**\*.dll" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="DeploySources">
-    <Copy SourceFiles="@(Compile)" DestinationFolder="$(CSModFolder)\Source" />
+    <ItemGroup>
+      <SourceFiles Include=".\**\*.cs" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(CSModFolder)\Source\%(RecursiveDir)" />
   </Target>
   <Target Name="DeployAssembly">
     <ItemGroup>
-      <Assemblies Include="$(CSModFolder)\*.dll" />
+      <Assemblies Include="$(TargetDir)\CSAssetUsage.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(CSModFolder)" DestinationFolder="$(CSModFolder)" />
+    <Copy SourceFiles="@(Assemblies)" DestinationFolder="$(CSModFolder)" />
   </Target>
 </Project>

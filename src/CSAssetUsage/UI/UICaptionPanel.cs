@@ -42,12 +42,13 @@ namespace CSAssetUsage
             
             width = UIConstants.CaptionPanelWidth;
             height = UIConstants.CaptionPanelHeight;
+
         }
 
         private UILabel createLabel(int columnPosition, string text, SortableAssetEntryField sortField)
         {
             var result = AddUIComponent<UILabel>();
-            result.relativePosition = new Vector3(columnPosition, 0);
+            result.relativePosition = new Vector3(columnPosition, UIConstants.CaptionPanelLabelOffset);
             result.textScale = UIConstants.CaptionPanelTextScale;
             result.text = text;
             result.eventClick += (component, param) => SortDelegate(sortField);

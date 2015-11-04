@@ -66,7 +66,6 @@ namespace CSAssetUsage
 
             // Define the window look
             backgroundSprite = UIConstants.MainWindowBackgroundSprite;
-            color = UIConstants.MainWindowColor;
             UITextureAtlas atlas = Resources.FindObjectsOfTypeAll<UITextureAtlas>().FirstOrDefault(a => a.name == "Ingame");
             if (atlas != null)
                 this.atlas = atlas;
@@ -74,8 +73,6 @@ namespace CSAssetUsage
             // Make the window interactive
             canFocus = true;
             isInteractive = true;
-
-            //relativePosition = new Vector3(396, 58);
 
             // Set the layout settings
             autoLayout = true;
@@ -106,8 +103,6 @@ namespace CSAssetUsage
 
                 ModLogger.Debug("Asset usage window showed");
             }
-
-            base.Update();
         }
 
         /// <summary>
@@ -152,11 +147,11 @@ namespace CSAssetUsage
             _mainPanel = AddUIComponent<UIPanel>();
             _mainPanel.gameObject.AddComponent<UICustomControl>();
             _mainPanel.width = width - UIConstants.MainWindowMainPanelWidthOffset;
-            _mainPanel.height = height - _titlePanel.height /*- _buttonPanel.height*/ - 20 - autoLayoutPadding.bottom * 4 - autoLayoutPadding.top * 4;
+            _mainPanel.height = height - UIConstants.TitlePanelHeight - UIConstants.CaptionPanelLabelOffset - UIConstants.CaptionPanelHeight - autoLayoutPadding.bottom * 4 - autoLayoutPadding.top * 4;
 
             // taken from http://www.reddit.com/r/CitiesSkylinesModding/comments/2zrz0k/extended_public_transport_ui_provides_addtional/cpnet5q
             _scrollablePanel = _mainPanel.AddUIComponent<UIScrollablePanel>();
-            _scrollablePanel.width = _scrollablePanel.parent.width - UIConstants.MainWindowScrollablePanelWidthOffset;
+            _scrollablePanel.width = _scrollablePanel.parent.width - UIConstants.MainWindowScrollablePanelWidthOffset - 10;
             _scrollablePanel.height = _scrollablePanel.parent.height;
             _scrollablePanel.autoLayout = true;
             _scrollablePanel.autoLayoutDirection = LayoutDirection.Vertical;
@@ -165,6 +160,7 @@ namespace CSAssetUsage
             _scrollablePanel.clipChildren = true;
             _scrollablePanel.pivot = UIPivotPoint.TopLeft;
             _scrollablePanel.AlignTo(_scrollablePanel.parent, UIAlignAnchor.TopLeft);
+            _scrollablePanel.relativePosition = new Vector3(5, 0);
 
             UIScrollbar scrollbar = _mainPanel.AddUIComponent<UIScrollbar>();
             scrollbar.width = scrollbar.parent.width - _scrollablePanel.width;
