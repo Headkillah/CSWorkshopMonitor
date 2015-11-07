@@ -33,20 +33,18 @@ using UnityEngine;
 
 namespace CSAssetUsage
 {
-    public delegate void SortAssetsDelegate(SortableAssetEntryField sortField = SortableAssetEntryField.Name);
-
     public class UIMainWindow : UIPanel
     {
         private UIPanel _mainPanel;
         private UIScrollablePanel _scrollablePanel;
 
         private UITitlePanel _titlePanel;
-        //private UIButtonPanel _buttonPanel;
+        private UIFilterPanel _filterPanel;
         private UICaptionPanel _captionPanel;
 
         private List<GameObject> _assetObjects;
 
-        private UIAssetSorter _assetSorter;
+        private AssetState _assetState;
 
         public override void Start()
         {
@@ -55,7 +53,7 @@ namespace CSAssetUsage
             base.Start();
 
             _assetObjects = new List<GameObject>();
-            _assetSorter = new UIAssetSorter();
+            _assetState = new AssetState();
 
             // Make the window invisible by default
             Hide();
@@ -85,6 +83,9 @@ namespace CSAssetUsage
             SetupScrollPanel();
             SetupAssetRows();
 
+            // Populate the assetrows with asset data
+            PopulateAssets();
+
             ModLogger.Debug("Asset usage window started");
         }
 
@@ -96,13 +97,21 @@ namespace CSAssetUsage
             {
                 ModLogger.Debug("Showing asset usage window");
 
+                // Always update the asset monitor before showing the main window to ensure that the latest statistics are loaded
                 AssetMonitor.Instance.Update();
-                CenterToParent();
-                Show(true);
-                Focus();
+
+                showWindow();
 
                 ModLogger.Debug("Asset usage window showed");
             }
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            _filterPanel.FilterChanged -= filterPanel_FilterChanged;
+            _captionPanel.Sort -= captionPanel_Sort;
         }
 
         /// <summary>
@@ -131,10 +140,13 @@ namespace CSAssetUsage
             _titlePanel = AddUIComponent<UITitlePanel>();
             _titlePanel.Parent = this;
 
+            // Create and add the filter panel
+            _filterPanel = AddUIComponent<UIFilterPanel>();
+            _filterPanel.FilterChanged += filterPanel_FilterChanged;
+
             // Create and add the caption panel
             _captionPanel = AddUIComponent<UICaptionPanel>();
-            _captionPanel.SortDelegate = SortAssetsMethod;
-
+            _captionPanel.Sort += captionPanel_Sort;
 
             ModLogger.Debug("Panels set up");
         }
@@ -147,7 +159,8 @@ namespace CSAssetUsage
             _mainPanel = AddUIComponent<UIPanel>();
             _mainPanel.gameObject.AddComponent<UICustomControl>();
             _mainPanel.width = width - UIConstants.MainWindowMainPanelWidthOffset;
-            _mainPanel.height = height - UIConstants.TitlePanelHeight - UIConstants.CaptionPanelLabelOffset - UIConstants.CaptionPanelHeight - autoLayoutPadding.bottom * 4 - autoLayoutPadding.top * 4;
+            int[] offsettingItems = new int[] { UIConstants.TitlePanelHeight, UIConstants.CaptionPanelLabelOffset, UIConstants.CaptionPanelHeight, UIConstants.FilterPanelHeight, autoLayoutPadding.bottom * 4, autoLayoutPadding.top * 4 };
+            _mainPanel.height = height - offsettingItems.Sum();
 
             // taken from http://www.reddit.com/r/CitiesSkylinesModding/comments/2zrz0k/extended_public_transport_ui_provides_addtional/cpnet5q
             _scrollablePanel = _mainPanel.AddUIComponent<UIScrollablePanel>();
@@ -216,14 +229,12 @@ namespace CSAssetUsage
                 _scrollablePanel.AttachUIComponent(assetObject);
                 _assetObjects.Add(assetObject);
             });
-
-            PopulateAssets();
         }
 
-        private void PopulateAssets(SortableAssetEntryField sortField = SortableAssetEntryField.Name)
+        private void PopulateAssets()
         {
-            var assets = AssetMonitor.Instance.GetAssetList();
-            _assetSorter.Sort(assets, sortField);
+            //_assetState.Reload();
+            var assets = _assetState.GetCurrentList();
             Enumerable.Range(0, assets.Count).ForEach(i => _assetObjects[i].GetComponent<UIAssetRow>().Load(assets[i]));
         }
 
@@ -232,10 +243,11 @@ namespace CSAssetUsage
             _assetObjects.ForEach(ao => ao.GetComponent<UIAssetRow>().Unload());
         }
 
-        private void SortAssetsMethod(SortableAssetEntryField sortField = SortableAssetEntryField.Name)
+        private void showWindow()
         {
-            ClearAssets();
-            PopulateAssets(sortField);
+            CenterToParent();
+            Show(true);
+            Focus();
         }
 
         private bool isActivationKeyUsed()
@@ -245,6 +257,32 @@ namespace CSAssetUsage
                 Input.GetKey(KeyCode.LeftControl) &&
                 Input.GetKey(KeyCode.LeftShift) &&
                 Input.GetKeyDown(KeyCode.A);
+        }
+
+        private void captionPanel_Sort(object sender, SortEventArgs e)
+        {
+            ModLogger.Debug("Sorting data on {0}", e.SortField);
+            ClearAssets();
+            _assetState.SetSortField(e.SortField);
+            PopulateAssets();
+            ModLogger.Debug("Sorted data on {0}", e.SortField);
+        }
+
+        private void filterPanel_FilterChanged(object sender, FilterChangedEventArgs e)
+        {
+            try
+            {
+                ModLogger.Debug("Changing filter to {0}", e.NewFilter);
+                ClearAssets();
+                _assetState.SetFilter(e.NewFilter);
+                PopulateAssets();
+                ModLogger.Debug("Changed filter to {0}", e.NewFilter);
+            }
+            catch (Exception ex)
+            {
+                ModLogger.Exception(ex);
+                throw;
+            }
         }
     }
 }

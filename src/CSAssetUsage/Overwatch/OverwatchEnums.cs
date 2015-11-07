@@ -8,31 +8,35 @@ namespace CSAssetUsage
     [Flags]
     public enum BuildingType
     {
-        None = 0, 
+        None = 0,
 
         // Player buildings
-        Cemetery = 1,
-        LandfillSite = 2,
-        FireStation = 4,
-        PoliceStation = 8,
-        Hospital = 16,
-        Park = 32,
-        PowerPlant = 64,
-        WaterFacility = 128,
-        PlayerOther = 256,
+        Electricity = 1,
+        WaterAndSewage = 2,
+        Garbage = 4,
+        Healthcare = 8,
+        FireDepartment = 16,
+        Police = 32,
+        Education = 64,
+        PublicTransport = 128,
+        Beautification = 256,
+        Monuments = 512,
+        PlayerOther = 1024,
 
         // Zoned buildings
-        ResidentialBuilding = 512,
-        CommercialBuilding = 1024,
-        IndustrialBuilding = 2048,
-        OfficeBuilding = 4096,
-        ZonedOther = 8192,
+        Residential = 2048,
+        Commercial = 4096,
+        Industrial = 8192,
+        Office = 16384,
+        ZonedOther = 32768,
 
         // Other
+        Other = 65536,
 
-        Other = 16384,
+        // Combinations
+        PlayerBuilding = Electricity | WaterAndSewage | Garbage | Healthcare | FireDepartment | Police | Education | PublicTransport | Beautification | Monuments | PlayerOther,
+        ZonedBuilding = Residential | Commercial | Industrial | Office | ZonedOther,
 
-        PlayerBuilding = Cemetery | LandfillSite | FireStation | PoliceStation | Hospital | Park | PowerPlant | WaterFacility | PlayerOther,
-        ZonedBuilding = ResidentialBuilding | CommercialBuilding | IndustrialBuilding | OfficeBuilding | ZonedOther
+        All = PlayerBuilding | ZonedBuilding | Other
     }
 }

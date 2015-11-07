@@ -25,13 +25,14 @@
 */
 
 using ColossalFramework.UI;
+using System;
 using UnityEngine;
 
 namespace CSAssetUsage
 {
     public class UICaptionPanel : UIPanel
     {
-        public SortAssetsDelegate SortDelegate { get; set; }
+        public event EventHandler<SortEventArgs> Sort;
 
         public override void Start()
         {
@@ -42,7 +43,6 @@ namespace CSAssetUsage
             
             width = UIConstants.CaptionPanelWidth;
             height = UIConstants.CaptionPanelHeight;
-
         }
 
         private UILabel createLabel(int columnPosition, string text, SortableAssetEntryField sortField)
@@ -51,8 +51,15 @@ namespace CSAssetUsage
             result.relativePosition = new Vector3(columnPosition, UIConstants.CaptionPanelLabelOffset);
             result.textScale = UIConstants.CaptionPanelTextScale;
             result.text = text;
-            result.eventClick += (component, param) => SortDelegate(sortField);
+            result.eventClick += (component, param) => OnSort(sortField);
             return result;
+        }
+
+        protected virtual void OnSort(SortableAssetEntryField sortField)
+        {
+            var handler = Sort;
+            if (handler != null)
+                handler.Invoke(this, new SortEventArgs(sortField));
         }
     }
 }

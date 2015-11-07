@@ -34,17 +34,31 @@ using UnityEngine;
 
 namespace CSAssetUsage
 {
+    /// <summary>
+    /// Represents a custom comparer for comparing assetentries, used to sort a list of assetentries on custom fields
+    /// </summary>
     public class UIAssetComparer : Comparer<AssetEntry>
     {
         private SortableAssetEntryField _sortField;
         private bool _descending;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UIAssetComparer"/> class.
+        /// </summary>
+        /// <param name="sortField">The sort field.</param>
+        /// <param name="descending">if set to <c>true</c> [descending].</param>
         public UIAssetComparer(SortableAssetEntryField sortField, bool descending) : base()
         {
             _sortField = sortField;
             _descending = descending;
         }
 
+        /// <summary>
+        /// Compares two instances of the AssetEntry class
+        /// </summary>
+        /// <param name="x">The first asset</param>
+        /// <param name="y">The second asset</param>
+        /// <returns></returns>
         public override int Compare(AssetEntry x, AssetEntry y)
         {
             object xPropertyValue = null;
@@ -94,6 +108,11 @@ namespace CSAssetUsage
             return 0;
         }
 
+        /// <summary>
+        /// Inverts the sort order if the comparer is in descending mode
+        /// </summary>
+        /// <param name="sortResult">The sort result.</param>
+        /// <returns></returns>
         private int InvertIfDescending(int sortResult)
         {
             if (_descending)

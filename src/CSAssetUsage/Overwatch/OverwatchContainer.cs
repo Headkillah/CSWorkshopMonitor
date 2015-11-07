@@ -79,37 +79,44 @@ namespace CSAssetUsage
 
             // Check the AI of the building and determine the building type based on the AI
             BuildingAI ai = building.Info.m_buildingAI;
+            
             if (ai is PlayerBuildingAI)
             {
                 if (ai is CemeteryAI)
-                    buildingType = BuildingType.Cemetery;
+                    buildingType = BuildingType.Healthcare;
                 else if (ai is LandfillSiteAI)
-                    buildingType = BuildingType.LandfillSite;
+                    buildingType = BuildingType.Garbage;
                 else if (ai is FireStationAI)
-                    buildingType = BuildingType.FireStation;
+                    buildingType = BuildingType.FireDepartment;
                 else if (ai is PoliceStationAI)
-                    buildingType = BuildingType.PoliceStation;
+                    buildingType = BuildingType.Police;
                 else if (ai is HospitalAI)
-                    buildingType = BuildingType.Hospital;
+                    buildingType = BuildingType.Healthcare;
                 else if (ai is ParkAI)
-                    buildingType = BuildingType.Park;
+                    buildingType = BuildingType.Beautification;
                 else if (ai is PowerPlantAI)
-                    buildingType = BuildingType.PowerPlant;
+                    buildingType = BuildingType.Electricity;
                 else if (ai is WaterFacilityAI)
-                    buildingType = BuildingType.WaterFacility;
+                    buildingType = BuildingType.WaterAndSewage;
+                else if (ai is CargoStationAI || ai is TaxiStandAI || ai is DepotAI)
+                    buildingType = BuildingType.PublicTransport;
+                else if (ai is MonumentAI)
+                    buildingType = BuildingType.Monuments;
+                else if (ai is SchoolAI)
+                    buildingType = BuildingType.Education;
                 else
                     buildingType = BuildingType.PlayerOther;
             }
             else if (ai is PrivateBuildingAI)
             {
                 if (ai is ResidentialBuildingAI)
-                    buildingType = BuildingType.ResidentialBuilding;
+                    buildingType = BuildingType.Residential;
                 else if (ai is CommercialBuildingAI)
-                    buildingType = BuildingType.CommercialBuilding;
-                else if (ai is IndustrialBuildingAI)
-                    buildingType = BuildingType.IndustrialBuilding;
+                    buildingType = BuildingType.Commercial;
+                else if (ai is IndustrialBuildingAI || ai is IndustrialExtractorAI)
+                    buildingType = BuildingType.Industrial;
                 else if (ai is OfficeBuildingAI)
-                    buildingType = BuildingType.OfficeBuilding;
+                    buildingType = BuildingType.Office;
                 else
                     buildingType = BuildingType.ZonedOther;
             }

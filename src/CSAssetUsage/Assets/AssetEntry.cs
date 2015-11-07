@@ -16,14 +16,16 @@ namespace CSAssetUsage
         public event EventHandler<EventArgs> InstanceCountUpdated;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AssetEntry"/> class.
+        /// Initializes a new instance of the <see cref="AssetEntry" /> class.
         /// </summary>
         /// <param name="packageId">The asset package identifier</param>
         /// <param name="metadata">The asset metadata</param>
-        public AssetEntry(string packageId, CustomAssetMetaData metadata)
+        /// <param name="buildingType">Type of the building.</param>
+        public AssetEntry(string packageId, CustomAssetMetaData metadata, BuildingType buildingType)
         {
             PackageId = packageId;
             Metadata = metadata;
+            BuildingType = buildingType;
         }
 
         /// <summary>
@@ -35,6 +37,11 @@ namespace CSAssetUsage
         /// Gets the asset metadata
         /// </summary>
         public CustomAssetMetaData Metadata { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the building.
+        /// </summary>
+        public BuildingType BuildingType { get; private set; }
 
         /// <summary>
         /// Gets the number of building instances that are created from the asset
@@ -60,24 +67,5 @@ namespace CSAssetUsage
             if (handler != null)
                 handler.Invoke(this, EventArgs.Empty);
         }
-    }
-
-    /// <summary>
-    /// Defines constants identifying the type of field to sort the list of assets on
-    /// </summary>
-    public enum SortableAssetEntryField
-    {
-        /// <summary>
-        /// The default invalid value
-        /// </summary>
-        Invalid = 0,
-        /// <summary>
-        /// Orders by the building instance count
-        /// </summary>
-        InstanceCount,
-        /// <summary>
-        /// Orders by the asset name
-        /// </summary>
-        Name
     }
 }

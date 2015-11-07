@@ -62,6 +62,36 @@ namespace CSAssetUsage
         public const int CaptionPanelHeight = 30;
         public const int CaptionPanelLabelOffset = 5;
 
+        // Filter panel
+        public const int FilterPanelWidth = MainWindowWidth;
+        public const int FilterPanelHeight = 45;
+        public const string FilterSpriteAll = "ToolbarIconZoomOutGlobe";
+        public const string FilterSpriteElectricity = "ToolbarIconElectricity";
+        public const string FilterSpriteWaterAndSewage = "ToolbarIconWaterAndSewage";
+        public const string FilterSpriteGarbage = "ToolbarIconGarbage";
+        public const string FilterSpriteHealthcare = "ToolbarIconHealthcare";
+        public const string FilterSpriteFireDepartment = "ToolbarIconFireDepartment";
+        public const string FilterSpritePolice = "ToolbarIconPolice";
+        public const string FilterSpriteEducation = "ToolbarIconEducation";
+        public const string FilterSpritePublicTransport = "ToolbarIconPublicTransport";
+        public const string FilterSpriteBeautification = "ToolbarIconBeautification";
+        public const string FilterSpriteMonuments = "ToolbarIconMonuments";
+        public const string FilterSpriteResidential = "InfoIconOutsideConnectionsPressed";
+        public const string FilterSpriteCommercial = "InfoIconOutsideConnectionsPressed";
+        public const string FilterSpriteIndustrial = "InfoIconOutsideConnectionsPressed";
+        public const string FilterSpriteOffice = "InfoIconOutsideConnectionsPressed";
+        public static Color FilterColorResidential = Color.green;
+        public static Color FilterColorCommercial = new Color32(100, 100, 255, 255);
+        public static Color FilterColorIndustrial = Color.yellow;
+        public static Color FilterColorOffice = new Color32(0, 255, 255, 255);
+        public const int FilterFirstOptionXOffset = 10;
+        public const int FilterOptionYOffset = 7;
+        public const int FilterCheckBoxSize = 12;
+        public const int FilterCheckBoxYOffset = 10;
+        public const int FilterIconSize = 30;
+        public const int FilterCheckBoxIconDistance = 15;
+        public const int FilterGroupedOptionsOffset = 20;
+
         // Asset row
         public const int AssetRowWidth = DefaultPanelWidth - 17;
         public const int AssetRowHeight = 30;

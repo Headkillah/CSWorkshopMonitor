@@ -33,6 +33,9 @@ using ColossalFramework.Steamworks;
 
 namespace CSAssetUsage
 {
+    /// <summary>
+    /// Represents a uipanel class showing the information of a single asset in a 'row; style
+    /// </summary>
     public class UIAssetRow : UIPanel
     {
         private UILabel _assetNameLabel;
@@ -41,8 +44,14 @@ namespace CSAssetUsage
 
         private AssetEntry _assetEntry;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is on an 'odd' or 'even' position. Used to create 'zebra' like coloring of the rows
+        /// </summary>
         public bool IsOdd { get; set; }
 
+        /// <summary>
+        /// Invoked by the unity engine
+        /// </summary>
         public override void Awake()
         {
             base.Awake();
@@ -51,19 +60,25 @@ namespace CSAssetUsage
             width = UIConstants.AssetRowWidth;
         }
 
+        /// <summary>
+        /// Invoked by the unity engine
+        /// </summary>
         public override void Start()
         {
             base.Start();
 
-            _assetNameLabel = createCellLabel(UIConstants.AssetNameColumnPosition, UIConstants.TextFieldRowPosition, string.Empty);
-            _numberUseLabel = createCellLabel(UIConstants.NumberUsedColumnPosition, UIConstants.TextFieldRowPosition, 0.ToString());
-            _assetInfoButton = createCellButton(UIConstants.AssetInfoButtonPosition, UIConstants.ButtonFieldRowPosition);
+            _assetNameLabel = CreateCellLabel(UIConstants.AssetNameColumnPosition, UIConstants.TextFieldRowPosition, string.Empty);
+            _numberUseLabel = CreateCellLabel(UIConstants.NumberUsedColumnPosition, UIConstants.TextFieldRowPosition, 0.ToString());
+            _assetInfoButton = CreateCellButton(UIConstants.AssetInfoButtonPosition, UIConstants.ButtonFieldRowPosition);
 
             // zebra stripes background
             backgroundSprite = UIConstants.AssetRowBackgroundSprite;
             color = IsOdd ? UIConstants.AssetRowOddColor : UIConstants.AssetRowEvenColor;
         }
 
+        /// <summary>
+        /// Invoked by the unity engine
+        /// </summary>
         public override void Update()
         {
             base.Update();
@@ -71,26 +86,40 @@ namespace CSAssetUsage
             SetValuesToUI();
         }
 
+        /// <summary>
+        /// Invoked by the unity engine
+        /// </summary>
         public override void OnDestroy()
         {
+            // Make sure eventhandlers are destroyed when the panel is destroyed by unity
             _assetInfoButton.eventClick -= assetInfoButton_eventClick;
             _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
             base.OnDestroy();
         }
 
+        /// <summary>
+        /// Loads the specified asset entry into the assetrow
+        /// </summary>
+        /// <param name="assetEntry">The asset entry.</param>
         public void Load(AssetEntry assetEntry)
         {
             _assetEntry = assetEntry;
             _assetEntry.InstanceCountUpdated += assetEntry_InstanceCountUpdated;
+            isVisible = true;
         }
 
+        /// <summary>
+        /// Unloads the assetentry from the asset row
+        /// </summary>
         public void Unload()
         {
-            _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
+            if (_assetEntry != null)
+                _assetEntry.InstanceCountUpdated -= assetEntry_InstanceCountUpdated;
             _assetEntry = null;
+            isVisible = false;
         }
 
-        private UILabel createCellLabel(int columnPosition, int rowPosition, string labelText)
+        private UILabel CreateCellLabel(int columnPosition, int rowPosition, string labelText)
         {
             var result = AddUIComponent<UILabel>();
             result.relativePosition = new Vector3(columnPosition, rowPosition);
@@ -100,7 +129,7 @@ namespace CSAssetUsage
             return result;
         }
 
-        private UIButton createCellButton(int columnPosition, int rowPosition)
+        private UIButton CreateCellButton(int columnPosition, int rowPosition)
         {
             var result = AddUIComponent<UIButton>();
             result.size = new Vector2(UIConstants.AssetInfoButtonSize, UIConstants.AssetInfoButtonSize);
@@ -114,15 +143,7 @@ namespace CSAssetUsage
             return result;
         }
 
-        private void assetInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            ulong packageId = 0;
-            if (Steam.IsOverlayEnabled() && ulong.TryParse(_assetEntry.PackageId, out packageId))
-                Steam.ActivateGameOverlayToWorkshopItem(new PublishedFileId(packageId));
-            else
-                ConfirmPanel.ShowModal(UITexts.AssetInfoOpenInBrowserTitle, UITexts.AssetInfoOpenInBrowserMessage, ShowModalCallback);
-        }
-
+        
         private void ShowModalCallback(UIComponent component, int result)
         {
             if (result != 0)
@@ -132,10 +153,6 @@ namespace CSAssetUsage
             }
         }
 
-        private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
-        {
-            SetValuesToUI();
-        }
 
         private void SetValuesToUI()
         {
@@ -144,6 +161,20 @@ namespace CSAssetUsage
             string instanceCount = _assetEntry.InstanceCount.ToString();
             if (_numberUseLabel.text != instanceCount)
                 _numberUseLabel.text = instanceCount;
+        }
+
+        private void assetInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            ulong packageId = 0;
+            if (Steam.IsOverlayEnabled() && ulong.TryParse(_assetEntry.PackageId, out packageId))
+                Steam.ActivateGameOverlayToWorkshopItem(new PublishedFileId(packageId));
+            else
+                ConfirmPanel.ShowModal(UITexts.AssetInfoOpenInBrowserTitle, UITexts.AssetInfoOpenInBrowserMessage, ShowModalCallback);
+        }
+
+        private void assetEntry_InstanceCountUpdated(object sender, EventArgs e)
+        {
+            SetValuesToUI();
         }
     }
 }
