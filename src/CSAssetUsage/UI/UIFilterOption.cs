@@ -20,11 +20,11 @@ namespace CSAssetUsage
 
         private bool _checked;
 
-        public void Initialize(BuildingType buildingType, string sprite, Color32? iconColor = null)
+        public void Initialize(BuildingType buildingType)
         {
             _buildingType = buildingType;
-            _sprite = sprite;
-            _iconColor = iconColor;
+            _sprite = UIConstants.GetBuildingTypeSprite(buildingType);
+            _iconColor = UIConstants.GetBuildingTypeColor(buildingType);
 
             width = UIConstants.FilterCheckBoxSize + UIConstants.FilterCheckBoxIconDistance + UIConstants.FilterIconSize;
             height = UIConstants.FilterIconSize;

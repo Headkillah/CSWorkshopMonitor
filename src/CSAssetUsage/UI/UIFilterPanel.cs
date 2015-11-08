@@ -29,21 +29,21 @@ namespace CSAssetUsage
             int offset = UIConstants.FilterFirstOptionXOffset;
             //offset = AddFilterOption(offset, BuildingType.All, UIConstants.FilterSpriteAll);
             offset += UIConstants.FilterGroupedOptionsOffset;
-            offset = AddFilterOption(offset, BuildingType.Electricity, UIConstants.FilterSpriteElectricity);
-            offset = AddFilterOption(offset, BuildingType.WaterAndSewage, UIConstants.FilterSpriteWaterAndSewage);
-            offset = AddFilterOption(offset, BuildingType.Garbage, UIConstants.FilterSpriteGarbage);
-            offset = AddFilterOption(offset, BuildingType.Healthcare, UIConstants.FilterSpriteHealthcare);
-            offset = AddFilterOption(offset, BuildingType.FireDepartment, UIConstants.FilterSpriteFireDepartment);
-            offset = AddFilterOption(offset, BuildingType.Police, UIConstants.FilterSpritePolice);
-            offset = AddFilterOption(offset, BuildingType.Education, UIConstants.FilterSpriteEducation);
-            offset = AddFilterOption(offset, BuildingType.PublicTransport, UIConstants.FilterSpritePublicTransport);
-            offset = AddFilterOption(offset, BuildingType.Beautification, UIConstants.FilterSpriteBeautification);
-            offset = AddFilterOption(offset, BuildingType.Monuments, UIConstants.FilterSpriteMonuments);
+            offset = AddFilterOption(offset, BuildingType.Electricity);
+            offset = AddFilterOption(offset, BuildingType.WaterAndSewage);
+            offset = AddFilterOption(offset, BuildingType.Garbage);
+            offset = AddFilterOption(offset, BuildingType.Healthcare);
+            offset = AddFilterOption(offset, BuildingType.FireDepartment);
+            offset = AddFilterOption(offset, BuildingType.Police);
+            offset = AddFilterOption(offset, BuildingType.Education);
+            offset = AddFilterOption(offset, BuildingType.PublicTransport);
+            offset = AddFilterOption(offset, BuildingType.Beautification);
+            offset = AddFilterOption(offset, BuildingType.Monuments);
             offset += UIConstants.FilterGroupedOptionsOffset;
-            offset = AddFilterOption(offset, BuildingType.Residential, UIConstants.FilterSpriteResidential, UIConstants.FilterColorResidential);
-            offset = AddFilterOption(offset, BuildingType.Commercial, UIConstants.FilterSpriteCommercial, UIConstants.FilterColorCommercial);
-            offset = AddFilterOption(offset, BuildingType.Industrial, UIConstants.FilterSpriteIndustrial, UIConstants.FilterColorIndustrial);
-            offset = AddFilterOption(offset, BuildingType.Office, UIConstants.FilterSpriteOffice, UIConstants.FilterColorOffice);
+            offset = AddFilterOption(offset, BuildingType.Residential);
+            offset = AddFilterOption(offset, BuildingType.Commercial);
+            offset = AddFilterOption(offset, BuildingType.Industrial);
+            offset = AddFilterOption(offset, BuildingType.Office);
         }
 
         public override void OnDestroy()
@@ -53,11 +53,11 @@ namespace CSAssetUsage
             _filterOptions.ForEach(c => c.CheckedChanged -= FilterOption_CheckedChanged);
         }
 
-        private int AddFilterOption(int offset, BuildingType buildingType, string sprite, Color32? iconColor = null)
+        private int AddFilterOption(int offset, BuildingType buildingType)
         {
             var filterOption = AddUIComponent<UIFilterOption>();
             filterOption.relativePosition = new Vector3(offset, UIConstants.FilterOptionYOffset);
-            filterOption.Initialize(buildingType, sprite, iconColor);
+            filterOption.Initialize(buildingType);
             filterOption.CheckedChanged += FilterOption_CheckedChanged;
             _currentFilter = _currentFilter | buildingType;
             return offset + (int)filterOption.width;

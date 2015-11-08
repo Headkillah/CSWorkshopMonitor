@@ -15,6 +15,10 @@ namespace CSAssetUsage
         /// </summary>
         Invalid = 0,
         /// <summary>
+        /// Orders by the asset type
+        /// </summary>
+        AssetType,
+        /// <summary>
         /// Orders by the building instance count
         /// </summary>
         InstanceCount,

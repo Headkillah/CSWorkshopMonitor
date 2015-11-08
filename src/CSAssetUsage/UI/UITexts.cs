@@ -22,6 +22,11 @@ namespace CSAssetUsage
             get { return "Id"; }
         }
 
+        public static string AssetTypeColumnLabel
+        {
+            get { return "Type"; }
+        }
+
         public static string AssetNameColumnLabel
         {
             get { return "Asset Name"; }

@@ -62,7 +62,6 @@
     <Compile Include="UI\Events\CheckedChangedEventArgs.cs" />
     <Compile Include="UI\Events\FilterChangedEventArgs.cs" />
     <Compile Include="UI\Events\SortEventArgs.cs" />
-    <Compile Include="UI\UICustomCheckbox.cs" />
     <Compile Include="UI\UIFilterOption.cs" />
     <Compile Include="UI\UIFilterPanel.cs" />
     <Compile Include="UI\UILoader.cs" />
@@ -103,7 +102,8 @@
       CleanupDeployTarget;
       DeploySources;
     </AfterBuildDependsOn>
-    <DocumentationFile>bin\Debug\CSAssetUsage.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <AfterBuildDependsOn>

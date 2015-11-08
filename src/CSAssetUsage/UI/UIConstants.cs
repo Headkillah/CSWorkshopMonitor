@@ -11,16 +11,23 @@ namespace CSAssetUsage
         // Defaults
         public const int DefaultPanelWidth = MainWindowWidth - 15;
 
-        // Columns
-        public const int TextFieldRowPosition = 6;
-        public const int ButtonFieldRowPosition = 3;
-        public const int AssetNameColumnPosition = 10;
-        public const int NumberUsedColumnPosition = AssetNameColumnPosition + 500;
-        public const int AssetInfoButtonPosition = MainWindowWidth - 60;
+        // Columns/rows
+        public const int AssetTypeLabelXOffset = 10;
+        public const int AssetTypeIconXOffset = 18;
+        public const int AssetTypeYOffset = 3;
+        public const int AssetNameLabelXOffset = AssetTypeLabelXOffset + 70;
+        public const int NumberUsedLabelXOffset = AssetNameLabelXOffset + 500;
+        public const int LabelYOffset = 6;
+        public const int AssetInfoButtonXOffset = MainWindowWidth - 60;
+        public const int ButtonFieldYOffset = 3;
         public const string AssetInfoButtonNormalSprite = "CityInfo";
         public const string AssetInfoButtonPressedSprite = "CityInfoPressed";
+
         public const string AssetInfoButtonHoveredSprite = "CityInfoHovered";
         public const int AssetInfoButtonSize = 25;
+
+        public const int AssetTypeIconSize = 25;
+
 
         // Main window
         public const int MainWindowMainPanelWidthOffset = 6;
@@ -100,5 +107,59 @@ namespace CSAssetUsage
         public static Color32 AssetRowOddColor = new Color32(150, 150, 150, 255);
         public static Color32 AssetRowEvenColor = new Color32(120, 130, 130, 255);
         public const string AssetRowBackgroundSprite = "GenericPanelLight";
+
+        public static string GetBuildingTypeSprite(BuildingType buildingType)
+        {
+            switch (buildingType)
+            {
+
+                case BuildingType.Electricity:
+                    return UIConstants.FilterSpriteElectricity;
+                case BuildingType.WaterAndSewage:
+                    return UIConstants.FilterSpriteWaterAndSewage;
+                case BuildingType.Garbage:
+                    return UIConstants.FilterSpriteGarbage;
+                case BuildingType.Healthcare:
+                    return UIConstants.FilterSpriteHealthcare;
+                case BuildingType.FireDepartment:
+                    return UIConstants.FilterSpriteFireDepartment;
+                case BuildingType.Police:
+                    return UIConstants.FilterSpritePolice;
+                case BuildingType.Education:
+                    return UIConstants.FilterSpriteEducation;
+                case BuildingType.PublicTransport:
+                    return UIConstants.FilterSpritePublicTransport;
+                case BuildingType.Beautification:
+                    return UIConstants.FilterSpriteBeautification;
+                case BuildingType.Monuments:
+                    return UIConstants.FilterSpriteMonuments;
+                case BuildingType.Residential:
+                    return UIConstants.FilterSpriteResidential;
+                case BuildingType.Commercial:
+                    return UIConstants.FilterSpriteCommercial;
+                case BuildingType.Industrial:
+                    return UIConstants.FilterSpriteIndustrial;
+                case BuildingType.Office:
+                    return UIConstants.FilterSpriteOffice;
+                default: return string.Empty;
+            }
+        }
+
+        public static Color32 GetBuildingTypeColor(BuildingType buildingType)
+        {
+            switch (buildingType)
+            {
+                case BuildingType.Residential:
+                    return UIConstants.FilterColorResidential;
+                case BuildingType.Commercial:
+                    return UIConstants.FilterColorCommercial;
+                case BuildingType.Industrial:
+                    return UIConstants.FilterColorIndustrial;
+                case BuildingType.Office:
+                    return UIConstants.FilterColorOffice;
+                default:
+                    return new Color32(255, 255, 255, 255);
+            }
+        }
     }
 }

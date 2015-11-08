@@ -38,12 +38,13 @@ namespace CSAssetUsage
     /// </summary>
     public class UIAssetRow : UIPanel
     {
+        private UISprite _assetTypeIcon;
         private UILabel _assetNameLabel;
         private UILabel _numberUseLabel;
         private UIButton _assetInfoButton;
 
         private AssetEntry _assetEntry;
-
+        
         /// <summary>
         /// Gets or sets a value indicating whether this instance is on an 'odd' or 'even' position. Used to create 'zebra' like coloring of the rows
         /// </summary>
@@ -67,13 +68,19 @@ namespace CSAssetUsage
         {
             base.Start();
 
-            _assetNameLabel = CreateCellLabel(UIConstants.AssetNameColumnPosition, UIConstants.TextFieldRowPosition, string.Empty);
-            _numberUseLabel = CreateCellLabel(UIConstants.NumberUsedColumnPosition, UIConstants.TextFieldRowPosition, 0.ToString());
-            _assetInfoButton = CreateCellButton(UIConstants.AssetInfoButtonPosition, UIConstants.ButtonFieldRowPosition);
+            _assetTypeIcon = CreateCellIcon(UIConstants.AssetTypeIconXOffset, UIConstants.AssetTypeYOffset);
+            _assetNameLabel = CreateCellLabel(UIConstants.AssetNameLabelXOffset, UIConstants.LabelYOffset, string.Empty);
+            _numberUseLabel = CreateCellLabel(UIConstants.NumberUsedLabelXOffset, UIConstants.LabelYOffset, 0.ToString());
+            _assetInfoButton = CreateCellButton(UIConstants.AssetInfoButtonXOffset, UIConstants.ButtonFieldYOffset);
 
             // zebra stripes background
             backgroundSprite = UIConstants.AssetRowBackgroundSprite;
             color = IsOdd ? UIConstants.AssetRowOddColor : UIConstants.AssetRowEvenColor;
+        }
+
+        private UISprite CreateCellIcon(object assetTypeIconXOffset, object assetTypeYOffset)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -119,10 +126,18 @@ namespace CSAssetUsage
             isVisible = false;
         }
 
-        private UILabel CreateCellLabel(int columnPosition, int rowPosition, string labelText)
+        private UISprite CreateCellIcon(int xOffset, int yOffset)
+        {
+            var result = AddUIComponent<UISprite>();
+            result.relativePosition = new Vector3(xOffset, yOffset);
+            result.size = new Vector2(UIConstants.AssetTypeIconSize, UIConstants.AssetTypeIconSize);
+            return result;
+        }
+
+        private UILabel CreateCellLabel(int xOffset, int yOffset, string labelText)
         {
             var result = AddUIComponent<UILabel>();
-            result.relativePosition = new Vector3(columnPosition, rowPosition);
+            result.relativePosition = new Vector3(xOffset, yOffset);
             result.textColor = UIConstants.AssetRowTextColor;
             result.textScale = UIConstants.AssetRowTextScale;
             result.text = labelText;
@@ -142,7 +157,6 @@ namespace CSAssetUsage
             result.eventClick += assetInfoButton_eventClick;
             return result;
         }
-
         
         private void ShowModalCallback(UIComponent component, int result)
         {
@@ -153,7 +167,6 @@ namespace CSAssetUsage
             }
         }
 
-
         private void SetValuesToUI()
         {
             if (_assetNameLabel.text != _assetEntry.Metadata.name)
@@ -161,6 +174,8 @@ namespace CSAssetUsage
             string instanceCount = _assetEntry.InstanceCount.ToString();
             if (_numberUseLabel.text != instanceCount)
                 _numberUseLabel.text = instanceCount;
+            _assetTypeIcon.spriteName = UIConstants.GetBuildingTypeSprite(_assetEntry.BuildingType);
+            _assetTypeIcon.color = UIConstants.GetBuildingTypeColor(_assetEntry.BuildingType);
         }
 
         private void assetInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)

@@ -66,6 +66,10 @@ namespace CSAssetUsage
 
             switch (_sortField)
             {
+                case SortableAssetEntryField.AssetType:
+                    xPropertyValue = (int)x.BuildingType;
+                    yPropertyValue = (int)y.BuildingType;
+                    break;
                 case SortableAssetEntryField.InstanceCount:
                     xPropertyValue = x.InstanceCount;
                     yPropertyValue = y.InstanceCount;

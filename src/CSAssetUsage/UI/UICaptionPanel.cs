@@ -38,8 +38,9 @@ namespace CSAssetUsage
         {
             base.Start();
 
-            createLabel(UIConstants.AssetNameColumnPosition, UITexts.AssetNameColumnLabel, SortableAssetEntryField.Name);
-            createLabel(UIConstants.NumberUsedColumnPosition, UITexts.NumberUsedColumnLabel, SortableAssetEntryField.InstanceCount);
+            createLabel(UIConstants.AssetTypeLabelXOffset, UITexts.AssetTypeColumnLabel, SortableAssetEntryField.AssetType);
+            createLabel(UIConstants.AssetNameLabelXOffset, UITexts.AssetNameColumnLabel, SortableAssetEntryField.Name);
+            createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableAssetEntryField.InstanceCount);
             
             width = UIConstants.CaptionPanelWidth;
             height = UIConstants.CaptionPanelHeight;
