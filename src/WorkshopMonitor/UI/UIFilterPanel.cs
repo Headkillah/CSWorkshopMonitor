@@ -39,11 +39,14 @@ namespace WorkshopMonitor
             offset = AddFilterOption(offset, BuildingType.PublicTransport);
             offset = AddFilterOption(offset, BuildingType.Beautification);
             offset = AddFilterOption(offset, BuildingType.Monuments);
+            offset = AddFilterOption(offset, BuildingType.Roads);
             offset += UIConstants.FilterGroupedOptionsOffset;
             offset = AddFilterOption(offset, BuildingType.Residential);
             offset = AddFilterOption(offset, BuildingType.Commercial);
             offset = AddFilterOption(offset, BuildingType.Industrial);
             offset = AddFilterOption(offset, BuildingType.Office);
+            offset += UIConstants.FilterGroupedOptionsOffset;
+            offset = AddFilterOption(offset, BuildingType.Other);
         }
 
         public override void OnDestroy()

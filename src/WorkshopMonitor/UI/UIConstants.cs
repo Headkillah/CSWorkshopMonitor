@@ -83,10 +83,12 @@ namespace WorkshopMonitor
         public const string FilterSpritePublicTransport = "ToolbarIconPublicTransport";
         public const string FilterSpriteBeautification = "ToolbarIconBeautification";
         public const string FilterSpriteMonuments = "ToolbarIconMonuments";
+        public const string FilterSpriteRoads = "ToolbarIconRoads";
         public const string FilterSpriteResidential = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteCommercial = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteIndustrial = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteOffice = "InfoIconOutsideConnectionsPressed";
+        public const string FilterSpriteOther = "ToolbarIconHelp";
         public static Color FilterColorResidential = Color.green;
         public static Color FilterColorCommercial = new Color32(100, 100, 255, 255);
         public static Color FilterColorIndustrial = Color.yellow;
@@ -112,35 +114,38 @@ namespace WorkshopMonitor
         {
             switch (buildingType)
             {
-
                 case BuildingType.Electricity:
-                    return UIConstants.FilterSpriteElectricity;
+                    return FilterSpriteElectricity;
                 case BuildingType.WaterAndSewage:
-                    return UIConstants.FilterSpriteWaterAndSewage;
+                    return FilterSpriteWaterAndSewage;
                 case BuildingType.Garbage:
-                    return UIConstants.FilterSpriteGarbage;
+                    return FilterSpriteGarbage;
                 case BuildingType.Healthcare:
-                    return UIConstants.FilterSpriteHealthcare;
+                    return FilterSpriteHealthcare;
                 case BuildingType.FireDepartment:
-                    return UIConstants.FilterSpriteFireDepartment;
+                    return FilterSpriteFireDepartment;
                 case BuildingType.Police:
-                    return UIConstants.FilterSpritePolice;
+                    return FilterSpritePolice;
                 case BuildingType.Education:
-                    return UIConstants.FilterSpriteEducation;
+                    return FilterSpriteEducation;
                 case BuildingType.PublicTransport:
-                    return UIConstants.FilterSpritePublicTransport;
+                    return FilterSpritePublicTransport;
                 case BuildingType.Beautification:
-                    return UIConstants.FilterSpriteBeautification;
+                    return FilterSpriteBeautification;
                 case BuildingType.Monuments:
-                    return UIConstants.FilterSpriteMonuments;
+                    return FilterSpriteMonuments;
+                case BuildingType.Roads:
+                    return FilterSpriteRoads;
                 case BuildingType.Residential:
-                    return UIConstants.FilterSpriteResidential;
+                    return FilterSpriteResidential;
                 case BuildingType.Commercial:
-                    return UIConstants.FilterSpriteCommercial;
+                    return FilterSpriteCommercial;
                 case BuildingType.Industrial:
-                    return UIConstants.FilterSpriteIndustrial;
+                    return FilterSpriteIndustrial;
                 case BuildingType.Office:
-                    return UIConstants.FilterSpriteOffice;
+                    return FilterSpriteOffice;
+                case BuildingType.Other:
+                    return FilterSpriteOther;
                 default: return string.Empty;
             }
         }
@@ -150,13 +155,13 @@ namespace WorkshopMonitor
             switch (buildingType)
             {
                 case BuildingType.Residential:
-                    return UIConstants.FilterColorResidential;
+                    return FilterColorResidential;
                 case BuildingType.Commercial:
-                    return UIConstants.FilterColorCommercial;
+                    return FilterColorCommercial;
                 case BuildingType.Industrial:
-                    return UIConstants.FilterColorIndustrial;
+                    return FilterColorIndustrial;
                 case BuildingType.Office:
-                    return UIConstants.FilterColorOffice;
+                    return FilterColorOffice;
                 default:
                     return new Color32(255, 255, 255, 255);
             }

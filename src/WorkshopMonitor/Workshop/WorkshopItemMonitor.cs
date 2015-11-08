@@ -159,6 +159,8 @@ namespace WorkshopMonitor
                     return BuildingType.FireDepartment;
                 case ItemClass.Service.PublicTransport:
                     return BuildingType.PublicTransport;
+                case ItemClass.Service.Road:
+                    return BuildingType.Roads;
 
                 case ItemClass.Service.Unused1:
                     return BuildingType.Other;

@@ -22,21 +22,23 @@ namespace WorkshopMonitor
         Beautification = 256,
         Monuments = 512,
         PlayerOther = 1024,
+        Roads = 2048,
 
         // Zoned buildings
-        Residential = 2048,
-        Commercial = 4096,
-        Industrial = 8192,
-        Office = 16384,
-        ZonedOther = 32768,
+        Residential = 4096,
+        Commercial = 8192,
+        Industrial = 16384,
+        Office = 32768,
+        ZonedOther = 65536,
 
         // Other
-        Other = 65536,
+        Other = 131072,
 
         // Combinations
         PlayerBuilding = Electricity | WaterAndSewage | Garbage | Healthcare | FireDepartment | Police | Education | PublicTransport | Beautification | Monuments | PlayerOther,
         ZonedBuilding = Residential | Commercial | Industrial | Office | ZonedOther,
 
-        All = PlayerBuilding | ZonedBuilding | Other
+        All = PlayerBuilding | ZonedBuilding | Other,
+        
     }
 }

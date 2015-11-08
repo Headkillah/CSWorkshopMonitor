@@ -292,11 +292,7 @@ namespace WorkshopMonitor
             if (!TryGetBuilding(buildingId, out building))
                 return false;
 
-            if (!OverwatchContainer.Instance.CategorizeBuilding(buildingId, building))
-            {
-                ModLogger.Debug("No categories found for building {0}", buildingId);
-                return false;
-            }
+            OverwatchContainer.Instance.CacheBuilding(buildingId, building);
 
             return true;
         }

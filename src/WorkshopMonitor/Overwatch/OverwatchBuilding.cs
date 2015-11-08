@@ -16,12 +16,10 @@ namespace WorkshopMonitor
         /// </summary>
         /// <param name="buildingId">The building identifier</param>
         /// <param name="building">The building object</param>
-        /// <param name="type">The type of the building</param>
-        public OverwatchBuilding(ushort buildingId, Building building, BuildingType type)
+        public OverwatchBuilding(ushort buildingId, Building building)
         {
             BuildingId = buildingId;
             SourcePackageId = ParsePackageId(building);
-            Type = type;
         }
 
         /// <summary>
@@ -33,11 +31,6 @@ namespace WorkshopMonitor
         /// Gets the identifier of the package the building originated from
         /// </summary>
         public ulong SourcePackageId { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the building
-        /// </summary>
-        public BuildingType Type { get; private set; }
 
         private ulong ParsePackageId(Building building)
         {
