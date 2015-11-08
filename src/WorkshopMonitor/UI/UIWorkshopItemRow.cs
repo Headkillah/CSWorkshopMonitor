@@ -44,7 +44,7 @@ namespace WorkshopMonitor
         private UIButton _workshopItemInfoButton;
 
         private WorkshopItem _workshopItem;
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is on an 'odd' or 'even' position. Used to create 'zebra' like coloring of the rows
         /// </summary>
@@ -69,15 +69,17 @@ namespace WorkshopMonitor
             backgroundSprite = UIConstants.WorkshopItemRowBackgroundSprite;
             color = IsOdd ? UIConstants.WorkshopItemRowOddColor : UIConstants.WorkshopItemRowEvenColor;
         }
-        
+
         /// <summary>
         /// Invoked by the unity engine
         /// </summary>
         public override void OnDestroy()
         {
             // Make sure eventhandlers are destroyed when the panel is destroyed by unity
-            _workshopItemInfoButton.eventClick -= WorkshopItemInfoButton_eventClick;
-            _workshopItem.InstanceCountUpdated -= WorkshopItemEntry_InstanceCountUpdated;
+            if (_workshopItemInfoButton != null)
+                _workshopItemInfoButton.eventClick -= WorkshopItemInfoButton_eventClick;
+            if (_workshopItem != null)
+                _workshopItem.InstanceCountUpdated -= WorkshopItemEntry_InstanceCountUpdated;
             base.OnDestroy();
         }
 
@@ -135,7 +137,7 @@ namespace WorkshopMonitor
             result.eventClick += WorkshopItemInfoButton_eventClick;
             return result;
         }
-        
+
         private void ShowModalCallback(UIComponent component, int result)
         {
             if (result != 0)

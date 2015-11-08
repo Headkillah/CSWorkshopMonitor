@@ -7,24 +7,32 @@ using UnityEngine;
 
 namespace WorkshopMonitor
 {
-    public class UIFilterPanel : UIPanel
+    public class UIBuildingTypeFilterPanel : UIPanel
     {
+        private enum ButtonAction
+        {
+            SelectAll,
+            SelectNone
+        }
+
         public event EventHandler<FilterChangedEventArgs> FilterChanged;
 
-        private List<UIFilterOption> _filterOptions;
+        private List<UIBuildingTypeFilterOption> _filterOptions;
         private BuildingType _currentFilter;
 
         public override void Start()
         {
             base.Start();
 
-            _filterOptions = new List<UIFilterOption>();
+            _filterOptions = new List<UIBuildingTypeFilterOption>();
 
             width = UIConstants.FilterPanelWidth;
             height = UIConstants.FilterPanelHeight;
 
             //backgroundSprite = "CursorInfoBack";
             backgroundSprite = "CursorInfoBack";
+
+            AddButtons();
 
             int offset = UIConstants.FilterFirstOptionXOffset;
             //offset = AddFilterOption(offset, BuildingType.All, UIConstants.FilterSpriteAll);
@@ -53,17 +61,50 @@ namespace WorkshopMonitor
         {
             base.OnDestroy();
 
-            _filterOptions.ForEach(c => c.CheckedChanged -= FilterOption_CheckedChanged);
+            if (_filterOptions != null)
+            {
+                _filterOptions.ForEach(c =>
+                {
+                    if (c != null)
+                        c.CheckedChanged -= FilterOption_CheckedChanged;
+                });
+            }
         }
 
         private int AddFilterOption(int offset, BuildingType buildingType)
         {
-            var filterOption = AddUIComponent<UIFilterOption>();
+            var filterOption = AddUIComponent<UIBuildingTypeFilterOption>();
             filterOption.relativePosition = new Vector3(offset, UIConstants.FilterOptionYOffset);
             filterOption.Initialize(buildingType);
             filterOption.CheckedChanged += FilterOption_CheckedChanged;
+            _filterOptions.Add(filterOption);
             _currentFilter = _currentFilter | buildingType;
             return offset + (int)filterOption.width;
+        }
+
+        private void AddButtons()
+        {
+            var selectAllButton = createButton();
+            selectAllButton.text = UITexts.FilterButtonSelectAllText;
+            selectAllButton.eventClick += SelectAllButton_eventClick;
+            selectAllButton.relativePosition = new Vector3(UIConstants.FilterPanelWidth - UIConstants.FilterSelectAllButtonXOffset - selectAllButton.width, UIConstants.FilterButtonYOffset); 
+
+            var selectNoneButton = createButton();
+            selectNoneButton.text = UITexts.FilterButtonSelectNoneText;
+            selectNoneButton.eventClick += SelectNoneButton_eventClick;
+            selectNoneButton.relativePosition = new Vector3(selectAllButton.relativePosition.x - UIConstants.FilterSelectNoneButtonXOffset -  selectNoneButton.width, UIConstants.FilterButtonYOffset);
+        }
+
+        private UIButton createButton()
+        {
+            var result = AddUIComponent<UIButton>();
+            result.textScale = UIConstants.FilterButtonTextScale;
+            result.normalBgSprite = UIConstants.FilterButtonNormalSprite;
+            result.hoveredBgSprite = UIConstants.FilterButtonHoveredSprite;
+            result.focusedBgSprite = UIConstants.FilterButtonNormalSprite;
+            result.pressedBgSprite = UIConstants.FilterButtonNormalSprite;
+            result.size = new Vector2(UIConstants.FilterButtenWidth, UIConstants.FilterButtenHeight);
+            return result;
         }
 
         private void FilterOption_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -72,6 +113,24 @@ namespace WorkshopMonitor
                 _currentFilter |= e.BuildingType;
             else
                 _currentFilter &= ~e.BuildingType;
+
+            OnFilterChanged();
+        }
+
+        private void SelectAllButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            applyFilterSelectAction(BuildingType.All);
+        }
+
+        private void SelectNoneButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            applyFilterSelectAction(BuildingType.None);
+        }
+
+        private void applyFilterSelectAction(BuildingType filter)
+        {
+            _filterOptions.ForEach(o => o.SetCheckedSilent(filter == BuildingType.All));
+            _currentFilter = filter;
             OnFilterChanged();
         }
 

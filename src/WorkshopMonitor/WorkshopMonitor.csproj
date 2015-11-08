@@ -61,8 +61,8 @@
     <Compile Include="UI\Events\CheckedChangedEventArgs.cs" />
     <Compile Include="UI\Events\FilterChangedEventArgs.cs" />
     <Compile Include="UI\Events\SortEventArgs.cs" />
-    <Compile Include="UI\UIFilterOption.cs" />
-    <Compile Include="UI\UIFilterPanel.cs" />
+    <Compile Include="UI\UIBuildingTypeFilterOption.cs" />
+    <Compile Include="UI\UIBuildingTypeFilterPanel.cs" />
     <Compile Include="UI\UILoader.cs" />
     <Compile Include="ModPaths.cs" />
     <Compile Include="Overwatch\OverwatchEnums.cs" />

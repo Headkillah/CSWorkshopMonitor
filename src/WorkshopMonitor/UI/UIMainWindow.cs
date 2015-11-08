@@ -39,7 +39,7 @@ namespace WorkshopMonitor
         private UIScrollablePanel _scrollablePanel;
 
         private UITitlePanel _titlePanel;
-        private UIFilterPanel _filterPanel;
+        private UIBuildingTypeFilterPanel _filterPanel;
         private UICaptionPanel _captionPanel;
 
         private List<GameObject> _workshopItemObjects;
@@ -141,7 +141,7 @@ namespace WorkshopMonitor
             _titlePanel.Parent = this;
 
             // Create and add the filter panel
-            _filterPanel = AddUIComponent<UIFilterPanel>();
+            _filterPanel = AddUIComponent<UIBuildingTypeFilterPanel>();
             _filterPanel.FilterChanged += filterPanel_FilterChanged;
 
             // Create and add the caption panel

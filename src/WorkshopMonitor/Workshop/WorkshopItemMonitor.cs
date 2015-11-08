@@ -46,7 +46,7 @@ namespace WorkshopMonitor
                 var workshopAssets = PackageManager
                    .FilterAssets(UserAssetType.CustomAssetMetaData)
                    .Where(a => a.isWorkshopAsset)
-                   .Select(a => new { WorkshopId = ulong.Parse(a.package.packageName), Name = a.name });
+                   .Select(a => new { WorkshopId = ulong.Parse(a.package.packageName), Name = a.Instantiate<CustomAssetMetaData>().name });
 
                 // The PrefabCollection monitors the list of all prefabs available in the game, which includes the default CS prefabs and the custom prefabs from workshop items
                 for (int i = 0; i < PrefabCollection<BuildingInfo>.PrefabCount(); i++)

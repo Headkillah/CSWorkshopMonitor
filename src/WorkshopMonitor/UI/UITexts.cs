@@ -66,5 +66,15 @@ namespace WorkshopMonitor
         {
             get { return "Could not open the workshop item in the in-game workshop. Do you want to open the workshop item in a browser?"; }
         }
+
+        public static string FilterButtonSelectAllText
+        {
+            get { return "all"; }
+        }
+
+        public static string FilterButtonSelectNoneText
+        {
+            get { return "none"; }
+        }
     }
 }

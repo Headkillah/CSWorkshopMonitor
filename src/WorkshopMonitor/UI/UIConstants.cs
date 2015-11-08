@@ -8,6 +8,14 @@ namespace WorkshopMonitor
 {
     public class UIConstants
     {
+        // Main window
+        public const int MainWindowMainPanelWidthOffset = 6;
+        public const float MainWindowScrollablePanelWidthOffset = 5f;
+        public static Color32 MainWindowColor = new Color32(58, 88, 104, 255);
+        public const string MainWindowBackgroundSprite = "MenuPanel2";
+        public const int MainWindowWidth = 1100;
+        public const int MainWindowHeight = 600;
+        
         // Defaults
         public const int DefaultPanelWidth = MainWindowWidth - 15;
 
@@ -22,20 +30,9 @@ namespace WorkshopMonitor
         public const int ButtonFieldYOffset = 3;
         public const string WorkshopItemInfoButtonNormalSprite = "CityInfo";
         public const string WorkshopItemInfoButtonPressedSprite = "CityInfoPressed";
-
         public const string WorkshopItemInfoButtonHoveredSprite = "CityInfoHovered";
         public const int WorkshopItemInfoButtonSize = 25;
-
         public const int WorkshopItemTypeIconSize = 25;
-
-
-        // Main window
-        public const int MainWindowMainPanelWidthOffset = 6;
-        public const float MainWindowScrollablePanelWidthOffset = 5f;
-        public static Color32 MainWindowColor = new Color32(58, 88, 104, 255);
-        public const string MainWindowBackgroundSprite = "MenuPanel2";
-        public const int MainWindowWidth = 1000;
-        public const int MainWindowHeight = 600;
 
         // Scrollbar
         public const int ScrollbarIncrementCount = 50;
@@ -93,13 +90,21 @@ namespace WorkshopMonitor
         public static Color FilterColorCommercial = new Color32(100, 100, 255, 255);
         public static Color FilterColorIndustrial = Color.yellow;
         public static Color FilterColorOffice = new Color32(0, 255, 255, 255);
-        public const int FilterFirstOptionXOffset = 10;
+        public const int FilterFirstOptionXOffset = 5;
         public const int FilterOptionYOffset = 7;
         public const int FilterCheckBoxSize = 12;
         public const int FilterCheckBoxYOffset = 10;
         public const int FilterIconSize = 30;
         public const int FilterCheckBoxIconDistance = 15;
         public const int FilterGroupedOptionsOffset = 20;
+        public const int FilterSelectAllButtonXOffset = 5;
+        public const int FilterSelectNoneButtonXOffset = 5;
+        public const int FilterButtonYOffset = 7;
+        public const string FilterButtonNormalSprite = "ButtonMenu";
+        public const string FilterButtonHoveredSprite = "ButtonMenuHovered";
+        public const float FilterButtonTextScale = 0.85f;
+        public const int FilterButtenWidth = 50;
+        public const int FilterButtenHeight = 30;
 
         // WorkshopItem row
         public const int WorkshopItemRowWidth = DefaultPanelWidth - 17;

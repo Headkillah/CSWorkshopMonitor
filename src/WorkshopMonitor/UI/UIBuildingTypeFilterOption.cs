@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace WorkshopMonitor
 {
-    public class UIFilterOption : UIComponent
+    public class UIBuildingTypeFilterOption : UIComponent
     {
         public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
 
@@ -51,6 +51,17 @@ namespace WorkshopMonitor
             eventClicked += UIFilterOption_eventClicked;
         }
 
+        public void SetCheckedSilent(bool @checked)
+        {
+            _checked = @checked;
+            SetCheckboxSprite();
+        }
+
+        public override void OnDestroy()
+        {
+            eventClicked -= UIFilterOption_eventClicked;
+        }
+
         private void UIFilterOption_eventClicked(UIComponent component, UIMouseEventParameter eventParam)
         {
             _checked = !_checked;
@@ -58,10 +69,6 @@ namespace WorkshopMonitor
             OnCheckedChanged(_checked);
         }
 
-        public override void OnDestroy()
-        {
-            eventClicked -= UIFilterOption_eventClicked;
-        }
 
         protected virtual void OnCheckedChanged(bool isChecked)
         {
