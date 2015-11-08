@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
-    /// Represents a class holding the configuration options for the AssetUsage mod
+    /// Represents a class holding the configuration options for the WorkshopMonitor mod
     /// </summary>
     public class Configuration
     {

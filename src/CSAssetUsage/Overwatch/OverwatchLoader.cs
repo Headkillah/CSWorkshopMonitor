@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents a CS loading extensions responsible for triggering the building monitor using the overwatch control flags

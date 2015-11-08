@@ -31,7 +31,7 @@ using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public class UIMainWindow : UIPanel
     {
@@ -42,18 +42,18 @@ namespace CSAssetUsage
         private UIFilterPanel _filterPanel;
         private UICaptionPanel _captionPanel;
 
-        private List<GameObject> _assetObjects;
+        private List<GameObject> _workshopItemObjects;
 
-        private AssetState _assetState;
+        private WorkshopItemListState _workshopItemListState;
 
         public override void Start()
         {
-            ModLogger.Debug("Starting asset usage window");
+            ModLogger.Debug("Starting WorkshopMonitor window");
 
             base.Start();
 
-            _assetObjects = new List<GameObject>();
-            _assetState = new AssetState();
+            _workshopItemObjects = new List<GameObject>();
+            _workshopItemListState = new WorkshopItemListState();
 
             // Make the window invisible by default
             Hide();
@@ -78,15 +78,15 @@ namespace CSAssetUsage
             autoLayoutPadding = UIConstants.AutoLayoutPadding;
             autoLayoutStart = LayoutStart.TopLeft;
 
-            // Create the window panels, scrollpanel and assetrows
+            // Create the window panels, scrollpanel and workshopitemrows
             SetupPanels();
             SetupScrollPanel();
-            SetupAssetRows();
+            SetupWorkshopItemRows();
 
-            // Populate the assetrows with asset data
-            PopulateAssets();
+            // Populate the workshopitem with workshopitem data
+            PopulateWorkshopItems();
 
-            ModLogger.Debug("Asset usage window started");
+            ModLogger.Debug("WorkshopMonitor window started");
         }
 
         public override void Update()
@@ -95,14 +95,14 @@ namespace CSAssetUsage
 
             if (isActivationKeyUsed())
             {
-                ModLogger.Debug("Showing asset usage window");
+                ModLogger.Debug("Displaying WorkshopMonitor window");
 
-                // Always update the asset monitor before showing the main window to ensure that the latest statistics are loaded
-                AssetMonitor.Instance.Update();
+                // Always update the workshop monitor before showing the main window to ensure that the latest statistics are loaded
+                WorkshopItemMonitor.Instance.Update();
 
                 showWindow();
 
-                ModLogger.Debug("Asset usage window showed");
+                ModLogger.Debug("WorkshopMonitor window displayed");
             }
         }
 
@@ -122,12 +122,12 @@ namespace CSAssetUsage
         {
             if (!p.used && p.keycode == KeyCode.Escape)
             {
-                ModLogger.Debug("Hiding asset usage window");
+                ModLogger.Debug("Hiding WorkshopMonitor window");
                 this.Hide();
                 if (this.parent != null)
                     this.parent.Focus();
                 p.Use();
-                ModLogger.Debug("Asset usage window hidden");
+                ModLogger.Debug("WorkshopMonitor window hidden");
             }
             base.OnKeyDown(p);
         }
@@ -213,34 +213,32 @@ namespace CSAssetUsage
             ModLogger.Debug("Scroll panel set up");
         }
 
-        private void SetupAssetRows()
+        private void SetupWorkshopItemRows()
         {
-            var assetCount = AssetMonitor.Instance.GetAssetCount();
-            ModLogger.Debug("{0} assets found", assetCount);
+            var workshopItemCount = WorkshopItemMonitor.Instance.GetWorkshopItemCount();
+            ModLogger.Debug("{0} workshop items found", workshopItemCount);
 
             bool odd = false;
-            Enumerable.Range(0, assetCount).ForEach(i =>
+            Enumerable.Range(0, workshopItemCount).ForEach(i =>
             {
-                //ModLogger.Debug(asset.NumberUsed.ToString());
-                var assetObject = new GameObject("Asset");
-                var assetRow = assetObject.AddComponent<UIAssetRow>();
-                assetRow.IsOdd = odd;
+                var workshopItemObject = new GameObject("WorkshopItemObject");
+                var workshopItemRow = workshopItemObject.AddComponent<UIWorkshopItemRow>();
+                workshopItemRow.IsOdd = odd;
                 odd = !odd;
-                _scrollablePanel.AttachUIComponent(assetObject);
-                _assetObjects.Add(assetObject);
+                _scrollablePanel.AttachUIComponent(workshopItemObject);
+                _workshopItemObjects.Add(workshopItemObject);
             });
         }
 
-        private void PopulateAssets()
+        private void PopulateWorkshopItems()
         {
-            //_assetState.Reload();
-            var assets = _assetState.GetCurrentList();
-            Enumerable.Range(0, assets.Count).ForEach(i => _assetObjects[i].GetComponent<UIAssetRow>().Load(assets[i]));
+            var workshopItems = _workshopItemListState.GetCurrentList();
+            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i]));
         }
 
-        private void ClearAssets()
+        private void ClearWorkshopItems()
         {
-            _assetObjects.ForEach(ao => ao.GetComponent<UIAssetRow>().Unload());
+            _workshopItemObjects.ForEach(ao => ao.GetComponent<UIWorkshopItemRow>().Unload());
         }
 
         private void showWindow()
@@ -262,9 +260,9 @@ namespace CSAssetUsage
         private void captionPanel_Sort(object sender, SortEventArgs e)
         {
             ModLogger.Debug("Sorting data on {0}", e.SortField);
-            ClearAssets();
-            _assetState.SetSortField(e.SortField);
-            PopulateAssets();
+            ClearWorkshopItems();
+            _workshopItemListState.SetSortField(e.SortField);
+            PopulateWorkshopItems();
             ModLogger.Debug("Sorted data on {0}", e.SortField);
         }
 
@@ -273,9 +271,9 @@ namespace CSAssetUsage
             try
             {
                 ModLogger.Debug("Changing filter to {0}", e.NewFilter);
-                ClearAssets();
-                _assetState.SetFilter(e.NewFilter);
-                PopulateAssets();
+                ClearWorkshopItems();
+                _workshopItemListState.SetFilter(e.NewFilter);
+                PopulateWorkshopItems();
                 ModLogger.Debug("Changed filter to {0}", e.NewFilter);
             }
             catch (Exception ex)

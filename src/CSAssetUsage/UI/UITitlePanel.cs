@@ -28,7 +28,7 @@ using ColossalFramework.UI;
 using System;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public class UITitlePanel : UIPanel
     {

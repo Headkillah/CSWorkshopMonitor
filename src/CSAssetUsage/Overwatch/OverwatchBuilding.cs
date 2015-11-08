@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents a class holding information about a single building instance as collected by the building monitor
@@ -20,7 +20,7 @@ namespace CSAssetUsage
         public OverwatchBuilding(ushort buildingId, Building building, BuildingType type)
         {
             BuildingId = buildingId;
-            SourcePackageId = parsePackageId(building);
+            SourcePackageId = ParsePackageId(building);
             Type = type;
         }
 
@@ -32,16 +32,20 @@ namespace CSAssetUsage
         /// <summary>
         /// Gets the identifier of the package the building originated from
         /// </summary>
-        public string SourcePackageId { get; private set; }
+        public ulong SourcePackageId { get; private set; }
 
         /// <summary>
         /// Gets the type of the building
         /// </summary>
         public BuildingType Type { get; private set; }
 
-        private string parsePackageId(Building building)
+        private ulong ParsePackageId(Building building)
         {
-            return Regex.Match(building.Info.name, @"^[\d]+").Value;
+            ulong result = 0;
+            var packageIdString = Regex.Match(building.Info.name, @"^[\d]+").Value;
+            if (!string.IsNullOrEmpty(packageIdString))
+                result = ulong.Parse(packageIdString);
+            return result;
         }
     }
 }

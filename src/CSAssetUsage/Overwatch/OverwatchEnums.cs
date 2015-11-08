@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     [Flags]
     public enum BuildingType

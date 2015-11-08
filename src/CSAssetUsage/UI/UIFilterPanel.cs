@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public class UIFilterPanel : UIPanel
     {

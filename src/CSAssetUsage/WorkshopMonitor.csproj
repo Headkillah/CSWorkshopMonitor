@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2A218291-F740-46E9-86A3-D877977C3E0A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkshopMonitor</RootNamespace>
+    <AssemblyName>WorkshopMonitor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="ColossalManaged, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="ICities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Workshop\WorkshopItem.cs" />
+    <Compile Include="Workshop\WorkshopItemMonitor.cs" />
+    <Compile Include="Workshop\WorkshopItemMonitorLoader.cs" />
+    <Compile Include="Workshop\WorkshopItemList.cs" />
+    <Compile Include="Workshop\WorkshopEnums.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Contracts\IUserModConfiguration.cs" />
+    <Compile Include="Contracts\IUserModStateChange.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="ModLogger.cs" />
+    <Compile Include="UI\Events\CheckedChangedEventArgs.cs" />
+    <Compile Include="UI\Events\FilterChangedEventArgs.cs" />
+    <Compile Include="UI\Events\SortEventArgs.cs" />
+    <Compile Include="UI\UIFilterOption.cs" />
+    <Compile Include="UI\UIFilterPanel.cs" />
+    <Compile Include="UI\UILoader.cs" />
+    <Compile Include="ModPaths.cs" />
+    <Compile Include="Overwatch\OverwatchEnums.cs" />
+    <Compile Include="Overwatch\OverwatchBuilding.cs" />
+    <Compile Include="Overwatch\OverwatchBuildingMonitor.cs" />
+    <Compile Include="Overwatch\OverwatchContainer.cs" />
+    <Compile Include="Overwatch\OverwatchControl.cs" />
+    <Compile Include="Overwatch\OverwatchLoader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mod.cs" />
+    <Compile Include="UI\UIModOptionsPanelBuilder.cs" />
+    <Compile Include="UI\UIMainWindow.cs" />
+    <Compile Include="Workshop\WorkshopItemComparer.cs" />
+    <Compile Include="UI\UICaptionPanel.cs" />
+    <Compile Include="UI\UIConstants.cs" />
+    <Compile Include="UI\UITexts.cs" />
+    <Compile Include="UI\UITitlePanel.cs" />
+    <Compile Include="UI\UIWorkshopItemRow.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> 
+  -->
+  <Target Name="AfterBuild" DependsOnTargets="$(AfterBuildDependsOn)">
+  </Target>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AfterBuildDependsOn>
+      CleanupDeployTarget;
+      DeploySources;
+    </AfterBuildDependsOn>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AfterBuildDependsOn>
+      CleanupDeployTarget;
+      DeployAssembly;
+    </AfterBuildDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CSModFolder>C:\Users\gstulp\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\WorkshopMonitor</CSModFolder>
+  </PropertyGroup>
+  <Target Name="CleanupDeployTarget">
+    <ItemGroup>
+      <FilesToDelete Include="$(CSModFolder)\Source\**\*.cs" />
+      <FilesToDelete Include="$(CSModFolder)\**\*.dll" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  <Target Name="DeploySources">
+    <ItemGroup>
+      <SourceFiles Include=".\**\*.cs" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(CSModFolder)\Source\%(RecursiveDir)" />
+  </Target>
+  <Target Name="DeployAssembly">
+    <ItemGroup>
+      <Assemblies Include="$(TargetDir)\WorkshopMonitor.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Assemblies)" DestinationFolder="$(CSModFolder)" />
+  </Target>
+</Project>

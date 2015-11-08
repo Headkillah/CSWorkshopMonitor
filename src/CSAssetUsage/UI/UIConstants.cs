@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public class UIConstants
     {
@@ -12,21 +12,21 @@ namespace CSAssetUsage
         public const int DefaultPanelWidth = MainWindowWidth - 15;
 
         // Columns/rows
-        public const int AssetTypeLabelXOffset = 10;
-        public const int AssetTypeIconXOffset = 18;
-        public const int AssetTypeYOffset = 3;
-        public const int AssetNameLabelXOffset = AssetTypeLabelXOffset + 70;
-        public const int NumberUsedLabelXOffset = AssetNameLabelXOffset + 500;
+        public const int WorkshopItemTypeLabelXOffset = 10;
+        public const int WorkshopItemTypeIconXOffset = 18;
+        public const int WorkshopItemTypeYOffset = 3;
+        public const int WorkshopItemNameLabelXOffset = WorkshopItemTypeLabelXOffset + 70;
+        public const int NumberUsedLabelXOffset = WorkshopItemNameLabelXOffset + 500;
         public const int LabelYOffset = 6;
-        public const int AssetInfoButtonXOffset = MainWindowWidth - 60;
+        public const int WorkshopItemInfoButtonXOffset = MainWindowWidth - 60;
         public const int ButtonFieldYOffset = 3;
-        public const string AssetInfoButtonNormalSprite = "CityInfo";
-        public const string AssetInfoButtonPressedSprite = "CityInfoPressed";
+        public const string WorkshopItemInfoButtonNormalSprite = "CityInfo";
+        public const string WorkshopItemInfoButtonPressedSprite = "CityInfoPressed";
 
-        public const string AssetInfoButtonHoveredSprite = "CityInfoHovered";
-        public const int AssetInfoButtonSize = 25;
+        public const string WorkshopItemInfoButtonHoveredSprite = "CityInfoHovered";
+        public const int WorkshopItemInfoButtonSize = 25;
 
-        public const int AssetTypeIconSize = 25;
+        public const int WorkshopItemTypeIconSize = 25;
 
 
         // Main window
@@ -99,14 +99,14 @@ namespace CSAssetUsage
         public const int FilterCheckBoxIconDistance = 15;
         public const int FilterGroupedOptionsOffset = 20;
 
-        // Asset row
-        public const int AssetRowWidth = DefaultPanelWidth - 17;
-        public const int AssetRowHeight = 30;
-        public const float AssetRowTextScale = 1f;
-        public static Color32 AssetRowTextColor = new Color32(185, 221, 254, 255);
-        public static Color32 AssetRowOddColor = new Color32(150, 150, 150, 255);
-        public static Color32 AssetRowEvenColor = new Color32(120, 130, 130, 255);
-        public const string AssetRowBackgroundSprite = "GenericPanelLight";
+        // WorkshopItem row
+        public const int WorkshopItemRowWidth = DefaultPanelWidth - 17;
+        public const int WorkshopItemRowHeight = 30;
+        public const float WorkshopItemRowTextScale = 1f;
+        public static Color32 WorkshopItemRowTextColor = new Color32(185, 221, 254, 255);
+        public static Color32 WorkshopItemRowOddColor = new Color32(150, 150, 150, 255);
+        public static Color32 WorkshopItemRowEvenColor = new Color32(120, 130, 130, 255);
+        public const string WorkshopItemRowBackgroundSprite = "GenericPanelLight";
 
         public static string GetBuildingTypeSprite(BuildingType buildingType)
         {

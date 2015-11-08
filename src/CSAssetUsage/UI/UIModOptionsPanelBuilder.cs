@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
-    /// Represents a class responsible for building the UI components for editing the AssetUsage mod options
+    /// Represents a class responsible for building the UI components for editing the WorkshopMonitor mod options
     /// </summary>
     public class UIModOptionsPanelBuilder
     {

@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents a class responsible for holding the building information as collected by the building monitor
@@ -79,7 +79,9 @@ namespace CSAssetUsage
 
             // Check the AI of the building and determine the building type based on the AI
             BuildingAI ai = building.Info.m_buildingAI;
+
             
+
             if (ai is PlayerBuildingAI)
             {
                 if (ai is CemeteryAI)
@@ -155,9 +157,9 @@ namespace CSAssetUsage
         /// </summary>
         /// <param name="packageId">The package identifier.</param>
         /// <returns></returns>
-        public int GetBuildingCount(string packageId)
+        public int GetBuildingCount(ulong packageId)
         {
-            return _buildingCache.Values.Count(b => b.SourcePackageId.Equals(packageId, StringComparison.OrdinalIgnoreCase));
+            return _buildingCache.Values.Count(b => b.SourcePackageId == packageId);
         }
 
         /// <summary>

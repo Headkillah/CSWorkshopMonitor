@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents a class containing extension methods for the Enumerable and IEnumerable types

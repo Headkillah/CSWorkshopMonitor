@@ -3,7 +3,7 @@ using ICities;
 using System;
 using System.IO;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents the main entrypoint of the mod that is loaded by CS
@@ -44,7 +44,7 @@ namespace CSAssetUsage
         {
             _settingsFilePath = ModPaths.GetConfigurationFilePath();
             Load();
-            ModLogger.Debug("AssetUsage mod enabled");
+            ModLogger.Debug("WorkshopMonitor mod enabled");
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace CSAssetUsage
         /// </summary>
         public void OnDisabled()
         {
-            ModLogger.Debug("AssetUsage mod disabled");
+            ModLogger.Debug("WorkshopMonitor mod disabled");
             this.Unload();
         }
 
@@ -76,7 +76,7 @@ namespace CSAssetUsage
         }
 
         /// <summary>
-        /// Loads the configuration from the fixed AssetUsage configuration file
+        /// Loads the configuration from the fixed WorkshopMonitor configuration file
         /// </summary>
         private void Load()
         {
@@ -99,7 +99,7 @@ namespace CSAssetUsage
         }
 
         /// <summary>
-        /// Unloads the configuration by saving it to the fixed AssetUsage configuration file
+        /// Unloads the configuration by saving it to the fixed WorkshopMonitor configuration file
         /// </summary>
         private void Unload()
         {

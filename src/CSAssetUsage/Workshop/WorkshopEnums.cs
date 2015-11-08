@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
-    /// Defines constants identifying the type of field to sort the list of assets on
+    /// Defines constants identifying the type of field to sort the list of workshop items on
     /// </summary>
-    public enum SortableAssetEntryField
+    public enum SortableWorkshopItemField
     {
         /// <summary>
         /// The default invalid value
         /// </summary>
         Invalid = 0,
         /// <summary>
-        /// Orders by the asset type
+        /// Orders by the item type
         /// </summary>
-        AssetType,
+        ItemType,
         /// <summary>
         /// Orders by the building instance count
         /// </summary>
         InstanceCount,
         /// <summary>
-        /// Orders by the asset name
+        /// Orders by the item name
         /// </summary>
         Name
     }

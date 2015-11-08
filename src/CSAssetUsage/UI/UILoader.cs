@@ -3,14 +3,14 @@ using ICities;
 using System;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
-    /// Represents a class responsible for loading/unloading the AssetUsage main window when a game is started or exited
+    /// Represents a class responsible for loading/unloading the WorkshopMonitor main window when a game is started or exited
     /// </summary>
     public class UILoader : LoadingExtensionBase
     {
-        private const string AssetUsageMainWindowGameObjectName = "AssetUsageMainWindow";
+        private const string WorkshopMonitorMainWindowGameObjectName = "WorkshopMonitorMainWindow";
 
         private LoadMode _mode;
         private UIMainWindow _mainWindow;
@@ -53,7 +53,7 @@ namespace CSAssetUsage
                 UIView aView = UIView.GetAView(); 
 
                 // Create the gameobject and attach a mainwindow instance
-                GameObject goMainWindow = new GameObject(AssetUsageMainWindowGameObjectName);
+                GameObject goMainWindow = new GameObject(WorkshopMonitorMainWindowGameObjectName);
                 _mainWindow = goMainWindow.AddComponent<UIMainWindow>();
                 _mainWindow.transform.parent = aView.transform;
 
@@ -67,7 +67,7 @@ namespace CSAssetUsage
         }
 
         /// <summary>
-        /// Called when the user exits the game. Destroys the AssetUsage main window
+        /// Called when the user exits the game. Destroys the WorkshopMonitor main window
         /// </summary>
         public override void OnLevelUnloading()
         {

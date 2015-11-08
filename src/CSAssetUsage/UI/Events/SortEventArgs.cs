@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
     /// Represents an eventargs class for the Sort event
@@ -14,7 +14,7 @@ namespace CSAssetUsage
         /// Initializes a new instance of the <see cref="SortEventArgs"/> class.
         /// </summary>
         /// <param name="sortField">The sort field.</param>
-        public SortEventArgs(SortableAssetEntryField sortField)
+        public SortEventArgs(SortableWorkshopItemField sortField)
         {
             SortField = sortField;
         }
@@ -22,6 +22,6 @@ namespace CSAssetUsage
         /// <summary>
         /// Gets the sort field.
         /// </summary>
-        public SortableAssetEntryField SortField { get; private set; }
+        public SortableWorkshopItemField SortField { get; private set; }
     }
 }

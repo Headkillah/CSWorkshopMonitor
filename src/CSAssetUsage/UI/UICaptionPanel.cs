@@ -28,7 +28,7 @@ using ColossalFramework.UI;
 using System;
 using UnityEngine;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public class UICaptionPanel : UIPanel
     {
@@ -38,15 +38,15 @@ namespace CSAssetUsage
         {
             base.Start();
 
-            createLabel(UIConstants.AssetTypeLabelXOffset, UITexts.AssetTypeColumnLabel, SortableAssetEntryField.AssetType);
-            createLabel(UIConstants.AssetNameLabelXOffset, UITexts.AssetNameColumnLabel, SortableAssetEntryField.Name);
-            createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableAssetEntryField.InstanceCount);
+            createLabel(UIConstants.WorkshopItemTypeLabelXOffset, UITexts.WorkshopItemTypeColumnLabel, SortableWorkshopItemField.ItemType);
+            createLabel(UIConstants.WorkshopItemNameLabelXOffset, UITexts.WorkshopItemNameColumnLabel, SortableWorkshopItemField.Name);
+            createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableWorkshopItemField.InstanceCount);
             
             width = UIConstants.CaptionPanelWidth;
             height = UIConstants.CaptionPanelHeight;
         }
 
-        private UILabel createLabel(int columnPosition, string text, SortableAssetEntryField sortField)
+        private UILabel createLabel(int columnPosition, string text, SortableWorkshopItemField sortField)
         {
             var result = AddUIComponent<UILabel>();
             result.relativePosition = new Vector3(columnPosition, UIConstants.CaptionPanelLabelOffset);
@@ -56,7 +56,7 @@ namespace CSAssetUsage
             return result;
         }
 
-        protected virtual void OnSort(SortableAssetEntryField sortField)
+        protected virtual void OnSort(SortableWorkshopItemField sortField)
         {
             var handler = Sort;
             if (handler != null)

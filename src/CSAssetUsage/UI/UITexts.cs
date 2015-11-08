@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public static class UITexts
     {
         public static string ModName
         {
-            get { return "Asset Usage"; }
+            get { return "Workshop Monitor"; }
         }
 
         public static string ModDescription
         {
-            get { return "Displays the usage of custom assets in a game"; }
+            get { return "Displays an overview of workshop item usage in a game"; }
         }
 
         public static string PackageIdColumnLabel
@@ -22,14 +22,14 @@ namespace CSAssetUsage
             get { return "Id"; }
         }
 
-        public static string AssetTypeColumnLabel
+        public static string WorkshopItemTypeColumnLabel
         {
             get { return "Type"; }
         }
 
-        public static string AssetNameColumnLabel
+        public static string WorkshopItemNameColumnLabel
         {
-            get { return "Asset Name"; }
+            get { return "Workshop Name"; }
         }
 
         public static string NumberUsedColumnLabel
@@ -39,10 +39,10 @@ namespace CSAssetUsage
 
         public static string WindowTitle
         {
-            get { return "Asset Usage"; }
+            get { return "Workshop Monitor"; }
         }
 
-        public static string AssetInfoButtonToolTip
+        public static string WorkshopItemInfoButtonToolTip
         {
             get { return "Open in workshop"; }
         }
@@ -57,14 +57,14 @@ namespace CSAssetUsage
             get { return "Enable debug logging (for advanced usage only)"; }
         }
 
-        public static string AssetInfoOpenInBrowserTitle
+        public static string WorkshopItemInfoOpenInBrowserTitle
         {
             get { return "Open in browser"; }
         }
 
-        public static string AssetInfoOpenInBrowserMessage
+        public static string WorkshopItemInfoOpenInBrowserMessage
         {
-            get { return "Could not open the asset in the in-game workshop. Do you want to open the asset in a browser?"; }
+            get { return "Could not open the workshop item in the in-game workshop. Do you want to open the workshop item in a browser?"; }
         }
     }
 }

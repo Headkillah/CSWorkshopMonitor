@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSAssetUsage", "src\CSAssetUsage\CSAssetUsage.csproj", "{2A218291-F740-46E9-86A3-D877977C3E0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkshopMonitor", "src\CSAssetUsage\WorkshopMonitor.csproj", "{2A218291-F740-46E9-86A3-D877977C3E0A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9C8FA9E-040C-444A-AD84-80C89D2BD09B}"
 	ProjectSection(SolutionItems) = preProject

@@ -34,7 +34,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     public static class ModLogger
     {
@@ -215,7 +215,7 @@ namespace CSAssetUsage
 
         private static string FormatMessage(string type, string message)
         {
-            return string.Format("[AssetUsage] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
+            return string.Format("[WorkshopMonitor] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
         }
 
         /// <summary>

@@ -4,34 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSAssetUsage
+namespace WorkshopMonitor
 {
     /// <summary>
-    /// Represents a class responsible for starting/stopping the asset monitor when a game is started or exited
+    /// Represents a class responsible for starting/stopping the WorkshopItemMonitor when a game is started or exited
     /// </summary>
-    public class AssetMonitorLoader : LoadingExtensionBase
+    public class WorkshopItemMonitorLoader : LoadingExtensionBase
     {
         private LoadMode _mode;
 
         /// <summary>
-        /// Called when the asset monitor loader is created
+        /// Called when the WorkshopItemMonitor loader is created
         /// </summary>
         /// <param name="loading">The loading instance</param>
         public override void OnCreated(ILoading loading)
         {
-            ModLogger.Debug("AssetMonitorLoader created");
+            ModLogger.Debug("WorkshopItemMonitorLoader created");
         }
 
         /// <summary>
-        /// Called when the asset monitor loader is release
+        /// Called when the WorkshopItemMonitor loader is release
         /// </summary>
         public override void OnReleased()
         {
-            ModLogger.Debug("AssetMonitorLoader Released");
+            ModLogger.Debug("WorkshopItemMonitorLoader Released");
         }
 
         /// <summary>
-        /// Called when a new/existing game has been loaded by the user, starts the asset monitor
+        /// Called when a new/existing game has been loaded by the user, starts the WorkshopItemMonitor
         /// </summary>
         /// <param name="mode">The mode</param>
         public override void OnLevelLoaded(LoadMode mode)
@@ -45,20 +45,20 @@ namespace CSAssetUsage
 
             try
             {
-                // Start the asset monitor
-                ModLogger.Debug("Starting asset monitor");
-                AssetMonitor.Instance.Start();
-                ModLogger.Debug("Asset monitor started");
+                // Start the WorkshopItemMonitor
+                ModLogger.Debug("Starting WorkshopItemMonitor");
+                WorkshopItemMonitor.Instance.Start();
+                ModLogger.Debug("WorkshopItemMonitor started");
             }
             catch (Exception ex)
             {
-                ModLogger.Error("An error occured while starting the asset monitor");
+                ModLogger.Error("An error occured while starting the WorkshopItemMonitor");
                 ModLogger.Exception(ex);
             }
         }
 
         /// <summary>
-        /// Called when the user exits the game, stops the asset monitor
+        /// Called when the user exits the game, stops the WorkshopItemMonitor
         /// </summary>
         public override void OnLevelUnloading()
         {
@@ -68,14 +68,14 @@ namespace CSAssetUsage
 
             try
             {
-                // Stop the asset monitor
-                ModLogger.Debug("Stopping asset monitor");
-                AssetMonitor.Instance.Stop();
-                ModLogger.Debug("Asset monitor stopped");
+                // Stop the WorkshopItemMonitor
+                ModLogger.Debug("Stopping WorkshopItemMonitor");
+                WorkshopItemMonitor.Instance.Stop();
+                ModLogger.Debug("WorkshopItemMonitor stopped");
             }
             catch (Exception ex)
             {
-                ModLogger.Error("An error occured while stopping the asset monitor");
+                ModLogger.Error("An error occured while stopping the WorkshopItemMonitor");
                 ModLogger.Exception(ex);
             }
         }
