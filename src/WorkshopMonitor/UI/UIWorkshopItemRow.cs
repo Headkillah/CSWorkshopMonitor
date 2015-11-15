@@ -149,8 +149,8 @@ namespace WorkshopMonitor
 
         private void SetValuesToUI()
         {
-            if (_workshopItemNameLabel.text != _workshopItem.Name)
-                _workshopItemNameLabel.text = _workshopItem.Name;
+            if (_workshopItemNameLabel.text != _workshopItem.ReadableName)
+                _workshopItemNameLabel.text = _workshopItem.ReadableName;
             string instanceCount = _workshopItem.InstanceCount.ToString();
             if (_numberUseLabel.text != instanceCount)
                 _numberUseLabel.text = instanceCount;

@@ -20,12 +20,18 @@ namespace WorkshopMonitor
         {
             BuildingId = buildingId;
             SourcePackageId = ParsePackageId(building);
+            TechincalName = building.Info.name;
         }
 
         /// <summary>
         /// Gets the building identifier
         /// </summary>
         public ushort BuildingId { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the building.
+        /// </summary>
+        public string TechincalName { get; private set; }
 
         /// <summary>
         /// Gets the identifier of the package the building originated from
@@ -35,9 +41,9 @@ namespace WorkshopMonitor
         private ulong ParsePackageId(Building building)
         {
             ulong result = 0;
-            var packageIdString = Regex.Match(building.Info.name, @"^[\d]+").Value;
-            if (!string.IsNullOrEmpty(packageIdString))
-                result = ulong.Parse(packageIdString);
+            var match = Regex.Match(building.Info.name, @"^[\d]+");
+            if (match.Success && !string.IsNullOrEmpty(match.Value)) 
+                result = ulong.Parse(match.Value);
             return result;
         }
     }

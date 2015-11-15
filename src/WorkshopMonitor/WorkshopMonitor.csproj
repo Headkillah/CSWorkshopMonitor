@@ -48,6 +48,7 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Misc\Regex.cs" />
     <Compile Include="Workshop\WorkshopItem.cs" />
     <Compile Include="Workshop\WorkshopItemMonitor.cs" />
     <Compile Include="Workshop\WorkshopItemMonitorLoader.cs" />

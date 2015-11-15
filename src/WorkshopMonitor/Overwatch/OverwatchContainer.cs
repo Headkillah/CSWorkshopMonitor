@@ -95,13 +95,13 @@ namespace WorkshopMonitor
         }
 
         /// <summary>
-        /// Gets the number of buildings which were build from a package with a given package identifier
+        /// Gets the number of buildings which were build from a package with a given the technical name of the building
         /// </summary>
-        /// <param name="packageId">The package identifier.</param>
+        /// <param name="technicalName">The techincal name of the building</param>
         /// <returns></returns>
-        public int GetBuildingCount(ulong packageId)
+        public int GetBuildingCount(string technicalName)
         {
-            return _buildingCache.Values.Count(b => b.SourcePackageId == packageId);
+            return _buildingCache.Values.Count(b => b.TechincalName == technicalName);
         }
     }
 }

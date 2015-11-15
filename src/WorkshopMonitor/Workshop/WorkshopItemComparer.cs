@@ -75,8 +75,8 @@ namespace WorkshopMonitor
                     yPropertyValue = y.InstanceCount;
                     break;
                 case SortableWorkshopItemField.Name:
-                    xPropertyValue = x.Name;
-                    yPropertyValue = y.Name;
+                    xPropertyValue = x.ReadableName;
+                    yPropertyValue = y.ReadableName;
                     break;
                 default:
                     break;

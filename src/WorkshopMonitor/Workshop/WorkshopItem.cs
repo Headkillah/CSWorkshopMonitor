@@ -19,14 +19,23 @@ namespace WorkshopMonitor
         /// Initializes a new instance of the <see cref="WorkshopItem" /> class.
         /// </summary>
         /// <param name="workshopId">The identifier of the workshop item</param>
-        /// <param name="name">The name of the workshop item</param>
+        /// <param name="readableName">The readable name of the building</param>
+        /// <param name="technicalName">The technical name of the building</param>
         /// <param name="buildingType">Type of the building.</param>
-        public WorkshopItem(ulong workshopId, string name, BuildingType buildingType)
+        public WorkshopItem(ulong workshopId, string readableName, string technicalName, BuildingType buildingType)
         {
             WorkshopId = workshopId;
-            Name = name;
+            ReadableName = readableName;
+            TechnicalName = technicalName;
             BuildingType = buildingType;
+
+            Id = Guid.NewGuid();
         }
+
+        /// <summary>
+        /// Gets or sets the identifier, used for internal reference
+        /// </summary>
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets the workshop identifier.
@@ -34,9 +43,14 @@ namespace WorkshopMonitor
         public ulong WorkshopId { get; private set; }
 
         /// <summary>
-        /// Gets the name.
+        /// Gets the readable name.
         /// </summary>
-        public string Name { get; private set; }
+        public string ReadableName { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the technical.
+        /// </summary>
+        public string TechnicalName { get; private set; }
 
         /// <summary>
         /// Gets the type of the building.
@@ -47,7 +61,7 @@ namespace WorkshopMonitor
         /// Gets the number of building instances that are created from the workshop item
         /// </summary>
         public int InstanceCount { get; private set; }
-
+        
         /// <summary>
         /// Gets the number of building instances that are created from the workshop item
         /// </summary>

@@ -2,6 +2,7 @@
 using ICities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,10 +44,12 @@ namespace WorkshopMonitor
                 ModLogger.Debug("WorkshopItemMonitor is loading workshop items");
 
                 // The package manager monitors the list of workshop items, so retrieve the packageid and item name from each item
-                var workshopAssets = PackageManager
+                var workshopIds = PackageManager
                    .FilterAssets(UserAssetType.CustomAssetMetaData)
                    .Where(a => a.isWorkshopAsset)
-                   .Select(a => new { WorkshopId = ulong.Parse(a.package.packageName), Name = a.Instantiate<CustomAssetMetaData>().name });
+                   .Select(a => new { Asset = a, Metadata = a.Instantiate<CustomAssetMetaData>() })
+                   .Select(a => ulong.Parse(a.Asset.package.packageName))
+                   .Distinct();
 
                 // The PrefabCollection monitors the list of all prefabs available in the game, which includes the default CS prefabs and the custom prefabs from workshop items
                 for (int i = 0; i < PrefabCollection<BuildingInfo>.PrefabCount(); i++)
@@ -54,13 +57,12 @@ namespace WorkshopMonitor
                     BuildingInfo prefab = PrefabCollection<BuildingInfo>.GetPrefab((uint)i);
                     if (prefab != null)
                     {
-                        var workshopMatch = Regex.Match(prefab.name, @"^[\d]+");
+                        var workshopMatch = Regex.Match(prefab.name, RegexExpression.BuildingName, RegexOptions.IgnoreCase);
                         if (workshopMatch.Success)
                         {
-                            var workshopId = ulong.Parse(workshopMatch.Value);
-                            var workshopAsset = workshopAssets.FirstOrDefault(a => a.WorkshopId == workshopId);
-                            if (workshopAsset != null)
-                                _workshopItems.Add(new WorkshopItem(workshopId, workshopAsset.Name, GetBuildingType(prefab.GetService())));
+                            var workshopId = ulong.Parse(workshopMatch.Groups["packageid"].Value);
+                            if (workshopIds.Any(id => id == workshopId))
+                                _workshopItems.Add(new WorkshopItem(workshopId, workshopMatch.Groups["prefabname"].Value, prefab.name, GetBuildingType(prefab.GetService())));
                         }
                     }
                 }
@@ -114,7 +116,7 @@ namespace WorkshopMonitor
                 ModLogger.Debug("WorkshopItemMonitor is updating {0} workshop items", workshopItemCount);
                 foreach (var item in _workshopItems)
                 {
-                    item.SetInstanceCount(OverwatchContainer.Instance.GetBuildingCount(item.WorkshopId));
+                    item.SetInstanceCount(OverwatchContainer.Instance.GetBuildingCount(item.TechnicalName));
                 }
                 ModLogger.Debug("WorkshopMonitorr updated {0} workshop items", workshopItemCount);
             }
