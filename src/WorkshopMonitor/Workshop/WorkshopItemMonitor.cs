@@ -1,17 +1,14 @@
 ﻿using ColossalFramework.Packaging;
-using ICities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using WorkshopMonitor.Overwatch;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Workshop
 {
-    /// <summary>
-    /// Represents a class responsible for monitoring the list of available workshop items in the game
-    /// </summary>
     public class WorkshopItemMonitor
     {
         private static readonly WorkshopItemMonitor _instance = new WorkshopItemMonitor();
@@ -34,16 +31,13 @@ namespace WorkshopMonitor
             get { return _instance; }
         }
 
-        /// <summary>
-        /// Starts the workshop monitor by loading all available workshop items from the CS package manager and matching them with the list of available prefabs in the game
-        /// </summary>
         public void Start()
         {
             try
             {
                 ModLogger.Debug("WorkshopItemMonitor is loading workshop items");
 
-                // The package manager monitors the list of workshop items, so retrieve the packageid and item name from each item
+                // The package manager monitors the list of workshop items, so retrieve the packageid from each item
                 var workshopIds = PackageManager
                    .FilterAssets(UserAssetType.CustomAssetMetaData)
                    .Where(a => a.isWorkshopAsset)
@@ -52,6 +46,7 @@ namespace WorkshopMonitor
                    .Distinct();
 
                 // The PrefabCollection monitors the list of all prefabs available in the game, which includes the default CS prefabs and the custom prefabs from workshop items
+                // Try to match the prefabs with the workshop packageid list to make sure only workshopitems are loaded.
                 for (int i = 0; i < PrefabCollection<BuildingInfo>.PrefabCount(); i++)
                 {
                     BuildingInfo prefab = PrefabCollection<BuildingInfo>.GetPrefab((uint)i);
@@ -76,9 +71,6 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Stops the workshop monitor by clearing all loaded workshop items
-        /// </summary>
         public void Stop()
         {
             int itemCount = GetWorkshopItemCount();
@@ -86,27 +78,16 @@ namespace WorkshopMonitor
             ModLogger.Debug("WorkshopItemMonitor unloaded {0} workshop items", itemCount);
         }
 
-        /// <summary>
-        /// Gets number of workshop items loaded by the workshop monitor
-        /// </summary>
-        /// <returns></returns>
         public int GetWorkshopItemCount()
         {
             return _workshopItems.Count;
         }
 
-        /// <summary>
-        /// Gets a list of workshop items loaded by the workshop monitor
-        /// </summary>
-        /// <returns></returns>
         public IEnumerable<WorkshopItem> GetWorkshopItems()
         {
             return _workshopItems.AsEnumerable();
         }
 
-        /// <summary>
-        /// Updates the list of workshop items by recalculating the number of usages for each item in the game
-        /// </summary>
         public void Update()
         {
             try

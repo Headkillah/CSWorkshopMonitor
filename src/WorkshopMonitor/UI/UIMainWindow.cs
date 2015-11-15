@@ -30,8 +30,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using WorkshopMonitor.Workshop;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
     public class UIMainWindow : UIPanel
     {
@@ -114,10 +115,6 @@ namespace WorkshopMonitor
             _captionPanel.Sort -= captionPanel_Sort;
         }
 
-        /// <summary>
-        /// Called when a key is pressed.
-        /// </summary>
-        /// <param name="p">The event parameter.</param>
         protected override void OnKeyDown(UIKeyEventParameter p)
         {
             if (!p.used && p.keycode == KeyCode.Escape)
@@ -218,13 +215,10 @@ namespace WorkshopMonitor
             var workshopItemCount = WorkshopItemMonitor.Instance.GetWorkshopItemCount();
             ModLogger.Debug("{0} workshop items found", workshopItemCount);
 
-            bool odd = false;
             Enumerable.Range(0, workshopItemCount).ForEach(i =>
             {
                 var workshopItemObject = new GameObject("WorkshopItemObject");
                 var workshopItemRow = workshopItemObject.AddComponent<UIWorkshopItemRow>();
-                workshopItemRow.IsOdd = odd;
-                odd = !odd;
                 _scrollablePanel.AttachUIComponent(workshopItemObject);
                 _workshopItemObjects.Add(workshopItemObject);
             });
@@ -233,7 +227,7 @@ namespace WorkshopMonitor
         private void PopulateWorkshopItems()
         {
             var workshopItems = _workshopItemListState.GetCurrentList();
-            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i]));
+            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i], i / 2 == 0));
         }
 
         private void ClearWorkshopItems()

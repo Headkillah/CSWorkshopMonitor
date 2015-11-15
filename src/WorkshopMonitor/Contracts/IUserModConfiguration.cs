@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Contracts
 {
     /// <summary>
     /// Defines methods for displaying custom configuration UI for a mod

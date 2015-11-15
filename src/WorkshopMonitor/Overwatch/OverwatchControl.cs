@@ -29,7 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Overwatch
 {
     /// <summary>
     /// Represents a class repsonsible for controlling the building monitor
@@ -41,9 +41,8 @@ namespace WorkshopMonitor
         private bool _buildingMonitorSpun;
         private bool _gameLoaded;
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="OverwatchControl"/> class
+        /// Prevents a default instance of the <see cref="OverwatchControl"/> class from being created.
         /// </summary>
         private OverwatchControl()
         {
@@ -59,29 +58,27 @@ namespace WorkshopMonitor
             get { return _instance; }
         }
 
-        /// <summary>
-        /// Gets or sets a flag indicating whether the building monitor is spinning
-        /// </summary>
         public bool BuildingMonitorSpun
         {
             get { return GameLoaded && _buildingMonitorSpun; }
             set { _buildingMonitorSpun = GameLoaded ? value : false; }
         }
 
-        /// <summary>
-        /// Gets or sets a flag indicating whether a game has been loaded
-        /// </summary>
+        public void StartGame()
+        {
+            _gameLoaded = true;
+            ModLogger.Debug("Game is marked as loaded by overwatch control");
+        }
+
+        public void StopGame()
+        {
+            _gameLoaded = false;
+            ModLogger.Debug("Game is marked as unloaded by overwatch control");
+        }
+
         public bool GameLoaded
         {
             get { return _gameLoaded; }
-            set
-            {
-                _gameLoaded = value;
-                if (value)
-                    ModLogger.Debug("Game is marked as loaded by overwatch control");
-                else
-                    ModLogger.Debug("Game is marked as unloaded by overwatch control");
-            }
         }
     }
 }

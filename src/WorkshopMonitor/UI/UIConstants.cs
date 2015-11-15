@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using WorkshopMonitor.Overwatch;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
     public class UIConstants
     {
@@ -114,6 +115,13 @@ namespace WorkshopMonitor
         public static Color32 WorkshopItemRowOddColor = new Color32(150, 150, 150, 255);
         public static Color32 WorkshopItemRowEvenColor = new Color32(120, 130, 130, 255);
         public const string WorkshopItemRowBackgroundSprite = "GenericPanelLight";
+
+        // Filter option
+        public const string CheckboxCheckedSprite = "AchievementCheckedTrue";
+        public const string CheckboxUnCheckedSprite = "AchievementCheckedFalse";
+
+        // Filter panel
+        public const string FilterPanelBackgroundSprite = "CursorInfoBack";
 
         public static string GetBuildingTypeSprite(BuildingType buildingType)
         {

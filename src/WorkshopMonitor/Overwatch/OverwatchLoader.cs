@@ -30,46 +30,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Overwatch
 {
-    /// <summary>
-    /// Represents a CS loading extensions responsible for triggering the building monitor using the overwatch control flags
-    /// </summary>
     public class OverwatchLoader : LoadingExtensionBase
     {
-        /// <summary>
-        /// Called when the overwatch loader is created
-        /// </summary>
-        /// <param name="loading">The loading instance</param>
+        private LoadMode _mode;
+
         public override void OnCreated(ILoading loading)
         {
             ModLogger.Debug("OverwatchLoader created");
         }
 
-        /// <summary>
-        /// Called when the overwatch loader is released
-        /// </summary>
         public override void OnReleased()
         {
             ModLogger.Debug("OverwatchLoader Released");
         }
 
-        /// <summary>
-        /// Called when a new or existing game is loaded, triggers the overwatch monitor by flagging the overwatch control
-        /// </summary>
-        /// <param name="mode">The mode.</param>
         public override void OnLevelLoaded(LoadMode mode)
         {
-            if (mode == LoadMode.NewGame || mode == LoadMode.LoadGame)
-                OverwatchControl.Instance.GameLoaded = true;
+            _mode = mode;
+            if (mode != LoadMode.NewGame && mode != LoadMode.LoadGame) return;
+            OverwatchControl.Instance.StartGame();
         }
 
-        /// <summary>
-        /// Called when the game is being unloaded, cancels the overwatch monitof by flagging the overwatch control
-        /// </summary>
         public override void OnLevelUnloading()
         {
-            OverwatchControl.Instance.GameLoaded = false;
+            if (_mode != LoadMode.NewGame && _mode != LoadMode.LoadGame) return;
+
+            OverwatchControl.Instance.StopGame();
             OverwatchContainer.Instance.ClearCache();
         }
     }

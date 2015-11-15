@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Overwatch
 {
     [Flags]
     public enum BuildingType
@@ -39,6 +39,5 @@ namespace WorkshopMonitor
         ZonedBuilding = Residential | Commercial | Industrial | Office | ZonedOther,
 
         All = PlayerBuilding | ZonedBuilding | Other,
-        
     }
 }

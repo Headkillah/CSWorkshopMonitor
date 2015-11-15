@@ -4,17 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using WorkshopMonitor.Overwatch;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
     public class UIBuildingTypeFilterPanel : UIPanel
     {
-        private enum ButtonAction
-        {
-            SelectAll,
-            SelectNone
-        }
-
         public event EventHandler<FilterChangedEventArgs> FilterChanged;
 
         private List<UIBuildingTypeFilterOption> _filterOptions;
@@ -29,13 +24,11 @@ namespace WorkshopMonitor
             width = UIConstants.FilterPanelWidth;
             height = UIConstants.FilterPanelHeight;
 
-            //backgroundSprite = "CursorInfoBack";
-            backgroundSprite = "CursorInfoBack";
+            backgroundSprite = UIConstants.FilterPanelBackgroundSprite;
 
             AddButtons();
 
             int offset = UIConstants.FilterFirstOptionXOffset;
-            //offset = AddFilterOption(offset, BuildingType.All, UIConstants.FilterSpriteAll);
             offset += UIConstants.FilterGroupedOptionsOffset;
             offset = AddFilterOption(offset, BuildingType.Electricity);
             offset = AddFilterOption(offset, BuildingType.WaterAndSewage);
@@ -139,6 +132,12 @@ namespace WorkshopMonitor
             var handler = this.FilterChanged;
             if (handler != null)
                 handler.Invoke(this, new FilterChangedEventArgs(_currentFilter));
+        }
+
+        private enum ButtonAction
+        {
+            SelectAll,
+            SelectNone
         }
     }
 }

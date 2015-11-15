@@ -31,21 +31,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Overwatch
 {
-    /// <summary>
-    /// Represents a class responsible for monitoring a running game and collecting building information as the game runs. 
-    /// </summary>
     public class OverwatchBuildingMonitor : ThreadingExtensionBase
     {
         private bool _initialized;
         private bool _terminated;
         private int _lastProcessedFrame;
 
-        /// <summary>
-        /// Called when the monitor is created by CS
-        /// </summary>
-        /// <param name="threading">The threading.</param>
         public override void OnCreated(IThreading threading)
         {
             _initialized = false;
@@ -56,9 +49,6 @@ namespace WorkshopMonitor
             ModLogger.Debug("Building monitor created");
         }
 
-        /// <summary>
-        /// Called when the monitor is release by CS
-        /// </summary>
         public override void OnReleased()
         {
             _initialized = false;
@@ -76,11 +66,6 @@ namespace WorkshopMonitor
             ModLogger.Debug("Building monitor released");
         }
 
-        /// <summary>
-        /// Called when CS is about to perform a simulation tick, handles creation of new buildings and reallocation of existing buildings.
-        /// Note: This needs to happen before simulation TICK; otherwise, we might miss the building update tracking.The building update 
-        /// record gets cleared whether the simulation is paused or not.
-        /// </summary>
         public override void OnBeforeSimulationTick()
         {
             // Exit if the monitor was terminated because of an error occured when updating overwatch data
@@ -96,12 +81,11 @@ namespace WorkshopMonitor
             // Exit if the building monitor has not been initialized yet (initialization happens in OnUpdate)
             if (!_initialized) return;
 
-            // Exit if not building changes occured since the previous tick
+            // Exit if no building changes occured since the previous tick
             if (!Singleton<BuildingManager>.instance.m_buildingsUpdated) return;
 
             try
             {
-                // Collect the list of added and removed building
                 for (int i = 0; i < Singleton<BuildingManager>.instance.m_updatedBuildings.Length; i++)
                 {
                     ulong updatedBuildingId = Singleton<BuildingManager>.instance.m_updatedBuildings[i];
@@ -128,14 +112,6 @@ namespace WorkshopMonitor
             base.OnBeforeSimulationTick();
         }
 
-        /// <summary>
-        /// Called when the monitor is being updated by the game, handles removal of buildings and status changes
-        /// Note: Just because a building has been removed visually, it does not mean it is removed as far as the 
-        /// game is concerned. The building is only truly removed when the frame covers the building's id, and that's 
-        /// when we will remove the building from our records.
-        /// </summary>
-        /// <param name="realTimeDelta">The real time delta</param>
-        /// <param name="simulationTimeDelta">The simulation time delta</param>
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
             // Exit if the monitor was terminated because of an error occured when updating overwatch data
@@ -164,10 +140,6 @@ namespace WorkshopMonitor
         }
 
 
-        /// <summary>
-        /// Initializes the monitor by processing the initial set of buildings in the currently running game. After initialization a frame marker is
-        /// set so that during the next update cycle only the buildings between this marker frame and the then active frame are processed.
-        /// </summary>
         private void InitializeMonitor()
         {
             ModLogger.Debug("Initializing building monitor");
@@ -179,7 +151,7 @@ namespace WorkshopMonitor
                 
                 // Process the list of existing buildings when initializing to make sure the list is up-to-date
                 var capacity = (ushort)Singleton<BuildingManager>.instance.m_buildings.m_buffer.Length;
-                Enumerable.Range(0, capacity).Do(i => ProcessBuilding((ushort)i));
+                Enumerable.Range(0, capacity).DoAll(i => ProcessBuilding((ushort)i));
 
                 // Store a reference to the current frame index so we know from which frame we need to process on the next update cycle
                 _lastProcessedFrame = GetFrame();
@@ -198,9 +170,6 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Runs the update cycle by checking the changes between the previously updated and the current frame. Buildings that can no longer be found are removed.
-        /// </summary>
         private void RunUpdateCycle()
         {
             try
@@ -234,18 +203,11 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Gets the current frame
-        /// </summary>
         public int GetFrame()
         {
             return GetFrame((int)Singleton<SimulationManager>.instance.m_currentFrameIndex);
         }
 
-        /// <summary>
-        /// Gets the frame for the given frame index
-        /// </summary>
-        /// <param name="index">The frame index</param>
         private int GetFrame(int index)
         {
             return (int)(index & 255);
@@ -260,12 +222,6 @@ namespace WorkshopMonitor
             return new int[2] { frame_first, frame_last };
         }
 
-        /// <summary>
-        /// Tries to the get a building given its' identifier
-        /// </summary>
-        /// <param name="buildingId">The building identifier</param>
-        /// <param name="building">A reference to the building if it was found</param>
-        /// <returns>True if the buildig was found, false otherwise</returns>
         private bool TryGetBuilding(ushort buildingId, out Building building)
         {
             bool result = false;

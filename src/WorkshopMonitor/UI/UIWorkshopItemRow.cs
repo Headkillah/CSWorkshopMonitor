@@ -30,12 +30,10 @@ using ColossalFramework;
 using UnityEngine;
 using System.Diagnostics;
 using ColossalFramework.Steamworks;
+using WorkshopMonitor.Workshop;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
-    /// <summary>
-    /// Represents a uipanel class showing the information of a single workshop item in a 'row; style
-    /// </summary>
     public class UIWorkshopItemRow : UIPanel
     {
         private UISprite _workshopItemTypeIcon;
@@ -45,14 +43,6 @@ namespace WorkshopMonitor
 
         private WorkshopItem _workshopItem;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is on an 'odd' or 'even' position. Used to create 'zebra' like coloring of the rows
-        /// </summary>
-        public bool IsOdd { get; set; }
-
-        /// <summary>
-        /// Invoked by the unity engine
-        /// </summary>
         public override void Awake()
         {
             base.Awake();
@@ -67,7 +57,6 @@ namespace WorkshopMonitor
 
             // zebra stripes background
             backgroundSprite = UIConstants.WorkshopItemRowBackgroundSprite;
-            color = IsOdd ? UIConstants.WorkshopItemRowOddColor : UIConstants.WorkshopItemRowEvenColor;
         }
 
         /// <summary>
@@ -87,11 +76,12 @@ namespace WorkshopMonitor
         /// Loads the specified workshop item into the workshopitemrow
         /// </summary>
         /// <param name="workshopItem">The workshop item entry.</param>
-        public void Load(WorkshopItem workshopItem)
+        public void Load(WorkshopItem workshopItem, bool isOdd)
         {
             _workshopItem = workshopItem;
             _workshopItem.InstanceCountUpdated += WorkshopItemEntry_InstanceCountUpdated;
             SetValuesToUI();
+            color = isOdd ? UIConstants.WorkshopItemRowOddColor : UIConstants.WorkshopItemRowEvenColor;
             isVisible = true;
         }
 

@@ -29,11 +29,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Overwatch
 {
-    /// <summary>
-    /// Represents a class responsible for holding the building information as collected by the building monitor
-    /// </summary>
     public class OverwatchContainer
     {
         private static readonly OverwatchContainer _instance = new OverwatchContainer();
@@ -56,49 +53,28 @@ namespace WorkshopMonitor
             get { return _instance; }
         }
 
-        /// <summary>
-        /// Determines whether a building with the specified identifier exists in the data
-        /// </summary>
-        /// <param name="buildingId">The building identifier</param>
-        /// <returns></returns>
         public bool HasBuilding(ushort buildingId)
         {
             return _buildingCache.ContainsKey(buildingId);
         }
 
-        /// <summary>
-        /// Adds a building to the internal building cache
-        /// </summary>
-        /// <param name="buildingId">The building identifier</param>
-        /// <param name="building">The building</param>
         public void CacheBuilding(ushort buildingId, Building building)
         {
-            _buildingCache.Add(buildingId, new OverwatchBuilding(buildingId, building));
+            var overwatchBuilding = new OverwatchBuilding(buildingId, building);
+            _buildingCache.Add(buildingId, overwatchBuilding);
         }
 
-        /// <summary>
-        /// Clears all buildings from the building cache
-        /// </summary>
         public void ClearCache()
         {
             _buildingCache.Clear();
         }
 
-        /// <summary>
-        /// Removes a building with a given identifier from the building cache
-        /// </summary>
-        /// <param name="id">The identifier.</param>
         public void RemoveBuilding(ushort id)
         {
             if (_buildingCache.ContainsKey(id))
                 _buildingCache.Remove(id);
         }
 
-        /// <summary>
-        /// Gets the number of buildings which were build from a package with a given the technical name of the building
-        /// </summary>
-        /// <param name="technicalName">The techincal name of the building</param>
-        /// <returns></returns>
         public int GetBuildingCount(string technicalName)
         {
             return _buildingCache.Values.Count(b => b.TechincalName == technicalName);

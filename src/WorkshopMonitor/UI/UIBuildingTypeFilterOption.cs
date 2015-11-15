@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using WorkshopMonitor.Overwatch;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
     public class UIBuildingTypeFilterOption : UIComponent
     {
@@ -79,7 +80,7 @@ namespace WorkshopMonitor
 
         private void SetCheckboxSprite()
         {
-            _checkBox.spriteName = _checked ? "AchievementCheckedTrue" : "AchievementCheckedFalse";
+            _checkBox.spriteName = _checked ? UIConstants.CheckboxCheckedSprite : UIConstants.CheckboxUnCheckedSprite;
         }
     }
 }

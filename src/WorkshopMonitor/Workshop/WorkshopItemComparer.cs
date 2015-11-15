@@ -30,35 +30,20 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using UnityEngine;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.Workshop
 {
-    /// <summary>
-    /// Represents a custom comparer for comparing workshop items, used to sort a list of workshop items on custom fields
-    /// </summary>
     public class WorkshopItemComparer : Comparer<WorkshopItem>
     {
         private SortableWorkshopItemField _sortField;
         private bool _descending;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorkshopItemComparer"/> class.
-        /// </summary>
-        /// <param name="sortField">The sort field.</param>
-        /// <param name="descending">if set to <c>true</c> [descending].</param>
         public WorkshopItemComparer(SortableWorkshopItemField sortField, bool descending) : base()
         {
             _sortField = sortField;
             _descending = descending;
         }
 
-        /// <summary>
-        /// Compares two instances of the WorkshopItem class
-        /// </summary>
-        /// <param name="x">The first workshop item</param>
-        /// <param name="y">The second workshop item</param>
-        /// <returns></returns>
         public override int Compare(WorkshopItem x, WorkshopItem y)
         {
             object xPropertyValue = null;
@@ -112,18 +97,13 @@ namespace WorkshopMonitor
             return 0;
         }
 
-        /// <summary>
-        /// Inverts the sort order if the comparer is in descending mode
-        /// </summary>
-        /// <param name="sortResult">The sort result.</param>
-        /// <returns></returns>
         private int InvertIfDescending(int sortResult)
         {
+            // Invert the sort order if the comparer is in descending mode
             if (_descending)
                 return sortResult * -1;
             else
                 return sortResult;
         }
-
     }
 }

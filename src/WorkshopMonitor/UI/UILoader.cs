@@ -3,11 +3,8 @@ using ICities;
 using System;
 using UnityEngine;
 
-namespace WorkshopMonitor
+namespace WorkshopMonitor.UI
 {
-    /// <summary>
-    /// Represents a class responsible for loading/unloading the WorkshopMonitor main window when a game is started or exited
-    /// </summary>
     public class UILoader : LoadingExtensionBase
     {
         private const string WorkshopMonitorMainWindowGameObjectName = "WorkshopMonitorMainWindow";
@@ -15,30 +12,18 @@ namespace WorkshopMonitor
         private LoadMode _mode;
         private UIMainWindow _mainWindow;
 
-        /// <summary>
-        /// Called when the UI loader is created
-        /// </summary>
-        /// <param name="loading">The loading instance</param>
         public override void OnCreated(ILoading loading)
         {
             ModLogger.Debug("UILoader created");
         }
 
-        /// <summary>
-        /// Called when the UI loader is release
-        /// </summary>
         public override void OnReleased()
         {
             ModLogger.Debug("UILoader Released");
         }
 
-        /// <summary>
-        /// Called when a new/existing game has been loaded by the user. Creates the main window object and adds it to CS UI
-        /// </summary>
-        /// <param name="mode">The mode.</param>
         public sealed override void OnLevelLoaded(LoadMode mode)
         {
-            // Store the mode (used when unloading again)
             _mode = mode;
 
             // Don't load in asset and map editor
@@ -66,9 +51,6 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Called when the user exits the game. Destroys the WorkshopMonitor main window
-        /// </summary>
         public override void OnLevelUnloading()
         {
             // Don't unload in asset and map editor

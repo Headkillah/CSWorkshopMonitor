@@ -40,14 +40,8 @@ namespace WorkshopMonitor
     {
         private static bool _loaded;
 
-        /// <summary>
-        /// Gets or sets whether the debug logging is enabled or not.
-        /// </summary>
         public static bool DebugLogging { get; set; }
 
-        /// <summary>
-        /// Marks the modlogger as being loaded, clears the existing log file
-        /// </summary>
         public static void ModLoaded()
         {
             if (!_loaded)
@@ -57,41 +51,6 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Logs a message to the Unity Engine
-        /// </summary>
-        /// <param name="logFunc">The Unity Engine log method to use</param>
-        /// <param name="message">The log message</param>
-        private static void LogToUnity(Action<object> logFunc, string message)
-        {
-            logFunc(message);
-        }
-
-        /// <summary>
-        /// Logs a message to the default output panel of the game
-        /// </summary>
-        /// <param name="messageType">The message type to use</param>
-        /// <param name="message">The log message</param>
-        private static void LogToDebugOutputPanel(PluginManager.MessageType messageType, string message)
-        {
-            DebugOutputPanel.AddMessage(messageType, message);
-        }
-
-        /// <summary>
-        /// Logs a message to the mod log file
-        /// </summary>
-        /// <param name="message">The log message</param>
-        private static void LogToFile(string message)
-        {
-            string logFileName = ModPaths.GetLogFilePath();
-            File.AppendAllText(logFileName, message);
-            File.AppendAllText(logFileName, Environment.NewLine);
-        }
-
-        /// <summary>
-        /// Logs a debug message
-        /// </summary>
-        /// <param name="message">The log message</param>
         public static void Debug(string message)
         {
             if (DebugLogging)
@@ -102,20 +61,11 @@ namespace WorkshopMonitor
             }
         }
 
-        /// <summary>
-        /// Logs a debug message by formatting it with the provided arguments
-        /// </summary>
-        /// <param name="message">The formatted log message</param>
-        /// <param name="args">The format arguments</param>
         public static void Debug(string message, params object[] args)
         {
             Debug(string.Format(message, args));
         }
 
-        /// <summary>
-        /// Logs an informational message
-        /// </summary>
-        /// <param name="message">The log message</param>
         public static void Info(string message)
         {
             message = FormatMessage("Info", message);
@@ -125,20 +75,11 @@ namespace WorkshopMonitor
             LogToFile(message);
         }
 
-        /// <summary>
-        /// Logs a informational message by formatting it with the provided arguments
-        /// </summary>
-        /// <param name="message">The formatted log message</param>
-        /// <param name="args">The format arguments</param>
         public static void Info(string format, params object[] args)
         {
             Info(string.Format(format, args));
         }
 
-        /// <summary>
-        /// Logs a warning message
-        /// </summary>
-        /// <param name="message">The log message</param>
         public static void Warning(string message)
         {
             message = FormatMessage("Warning", message);
@@ -148,20 +89,11 @@ namespace WorkshopMonitor
             LogToFile(message);
         }
 
-        /// <summary>
-        /// Logs a warning message by formatting it with the provided arguments
-        /// </summary>
-        /// <param name="message">The formatted log message</param>
-        /// <param name="args">The format arguments</param>
         public static void Warning(string format, params object[] args)
         {
             Warning(string.Format(format, args));
         }
 
-        /// <summary>
-        /// Logs an error message
-        /// </summary>
-        /// <param name="message">The log message</param>
         public static void Error(string message)
         {
             message = FormatMessage("Error", message);
@@ -171,20 +103,11 @@ namespace WorkshopMonitor
             LogToFile(message);
         }
 
-        /// <summary>
-        /// Logs an error message by formatting it with the provided arguments
-        /// </summary>
-        /// <param name="message">The formatted log message</param>
-        /// <param name="args">The format arguments</param>
         public static void Error(string format, params object[] args)
         {
             Error(string.Format(format, args));
         }
 
-        /// <summary>
-        /// Logs an exception
-        /// </summary>
-        /// <param name="message">The exception</param>
         public static void Exception(Exception exception)
         {
             StringBuilder message = new StringBuilder();
@@ -213,14 +136,28 @@ namespace WorkshopMonitor
             Debug(objectDetails.ToString());
         }
 
+        private static void LogToUnity(Action<object> logFunc, string message)
+        {
+            logFunc(message);
+        }
+
+        private static void LogToDebugOutputPanel(PluginManager.MessageType messageType, string message)
+        {
+            DebugOutputPanel.AddMessage(messageType, message);
+        }
+
+        private static void LogToFile(string message)
+        {
+            string logFileName = ModPaths.GetLogFilePath();
+            File.AppendAllText(logFileName, message);
+            File.AppendAllText(logFileName, Environment.NewLine);
+        }
+
         private static string FormatMessage(string type, string message)
         {
             return string.Format("[WorkshopMonitor] - {0} {1} - {2}", type, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss.fff"), message);
         }
 
-        /// <summary>
-        /// Clears the contents of the log file
-        /// </summary>
         private static void clearLog()
         {
             string fileName = ModPaths.GetLogFilePath();

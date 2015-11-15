@@ -52,7 +52,7 @@
     <Compile Include="Workshop\WorkshopItem.cs" />
     <Compile Include="Workshop\WorkshopItemMonitor.cs" />
     <Compile Include="Workshop\WorkshopItemMonitorLoader.cs" />
-    <Compile Include="Workshop\WorkshopItemList.cs" />
+    <Compile Include="Workshop\WorkshopItemListState.cs" />
     <Compile Include="Workshop\WorkshopEnums.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Contracts\IUserModConfiguration.cs" />
