@@ -227,7 +227,7 @@ namespace WorkshopMonitor.UI
         private void PopulateWorkshopItems()
         {
             var workshopItems = _workshopItemListState.GetCurrentList();
-            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i], i / 2 == 0));
+            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i], i % 2 == 0));
         }
 
         private void ClearWorkshopItems()
