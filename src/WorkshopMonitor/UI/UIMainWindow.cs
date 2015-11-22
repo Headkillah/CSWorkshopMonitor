@@ -218,7 +218,7 @@ namespace WorkshopMonitor.UI
             Enumerable.Range(0, workshopItemCount).ForEach(i =>
             {
                 var workshopItemObject = new GameObject("WorkshopItemObject");
-                var workshopItemRow = workshopItemObject.AddComponent<UIWorkshopItemRow>();
+                workshopItemObject.AddComponent<UIWorkshopItemRow>();
                 _scrollablePanel.AttachUIComponent(workshopItemObject);
                 _workshopItemObjects.Add(workshopItemObject);
             });
