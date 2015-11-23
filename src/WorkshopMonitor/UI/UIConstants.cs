@@ -24,7 +24,8 @@ namespace WorkshopMonitor.UI
         public const int WorkshopItemTypeLabelXOffset = 10;
         public const int WorkshopItemTypeIconXOffset = 18;
         public const int WorkshopItemTypeYOffset = 3;
-        public const int WorkshopItemNameLabelXOffset = WorkshopItemTypeLabelXOffset + 70;
+        public const int WorkshopItemWorkshopIdLabelXOffset = WorkshopItemTypeLabelXOffset + 60;
+        public const int WorkshopItemNameLabelXOffset = WorkshopItemWorkshopIdLabelXOffset + 100;
         public const int NumberUsedLabelXOffset = WorkshopItemNameLabelXOffset + 500;
         public const int LabelYOffset = 6;
         public const int WorkshopItemInfoButtonXOffset = MainWindowWidth - 60;

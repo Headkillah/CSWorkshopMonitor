@@ -10,6 +10,7 @@ namespace WorkshopMonitor.Workshop
         Invalid = 0,
         ItemType,
         InstanceCount,
+        WorkshopId,
         Name
     }
 }

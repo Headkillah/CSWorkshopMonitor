@@ -40,6 +40,7 @@ namespace WorkshopMonitor.UI
             base.Start();
 
             createLabel(UIConstants.WorkshopItemTypeLabelXOffset, UITexts.WorkshopItemTypeColumnLabel, SortableWorkshopItemField.ItemType);
+            createLabel(UIConstants.WorkshopItemWorkshopIdLabelXOffset, UITexts.WorkshopItemWorkshopIdColumnLabel, SortableWorkshopItemField.WorkshopId);
             createLabel(UIConstants.WorkshopItemNameLabelXOffset, UITexts.WorkshopItemNameColumnLabel, SortableWorkshopItemField.Name);
             createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableWorkshopItemField.InstanceCount);
             

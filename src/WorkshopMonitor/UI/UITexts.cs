@@ -27,9 +27,14 @@ namespace WorkshopMonitor.UI
             get { return "Type"; }
         }
 
+        public static string WorkshopItemWorkshopIdColumnLabel
+        {
+            get { return "ID"; }
+        }
+
         public static string WorkshopItemNameColumnLabel
         {
-            get { return "Workshop Name"; }
+            get { return "Name"; }
         }
 
         public static string NumberUsedColumnLabel

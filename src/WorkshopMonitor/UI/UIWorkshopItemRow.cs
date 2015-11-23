@@ -37,6 +37,7 @@ namespace WorkshopMonitor.UI
     public class UIWorkshopItemRow : UIPanel
     {
         private UISprite _workshopItemTypeIcon;
+        private UILabel _workshopIdLabel;
         private UILabel _workshopItemNameLabel;
         private UILabel _numberUseLabel;
         private UICustomButton _workshopItemShowInfoButton;
@@ -63,6 +64,7 @@ namespace WorkshopMonitor.UI
             width = UIConstants.WorkshopItemRowWidth;
 
             _workshopItemTypeIcon = CreateCellIcon(UIConstants.WorkshopItemTypeIconXOffset, UIConstants.WorkshopItemTypeYOffset);
+            _workshopIdLabel = CreateCellLabel(UIConstants.WorkshopItemWorkshopIdLabelXOffset, UIConstants.LabelYOffset, string.Empty);
             _workshopItemNameLabel = CreateCellLabel(UIConstants.WorkshopItemNameLabelXOffset, UIConstants.LabelYOffset, string.Empty);
             _numberUseLabel = CreateCellLabel(UIConstants.NumberUsedLabelXOffset, UIConstants.LabelYOffset, 0.ToString());
             _workshopItemShowInfoButton = CreateInfoCellButton();
@@ -161,6 +163,8 @@ namespace WorkshopMonitor.UI
         {
             if (_workshopItemNameLabel.text != _workshopItem.ReadableName)
                 _workshopItemNameLabel.text = _workshopItem.ReadableName;
+            if (_workshopIdLabel.text != _workshopItem.WorkshopId.ToString())
+                _workshopIdLabel.text = _workshopItem.WorkshopId.ToString();
             string instanceCount = _workshopItem.InstanceCount.ToString();
             if (_numberUseLabel.text != instanceCount)
                 _numberUseLabel.text = instanceCount;
