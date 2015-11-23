@@ -76,5 +76,20 @@ namespace WorkshopMonitor.UI
         {
             get { return "none"; }
         }
+
+        public static string WorkshopItemUnsubscribeButtonToolTip
+        {
+            get { return "Unsubscribe"; }
+        }
+
+        public static string WorkshopItemAskUnsubscribeTitle
+        {
+            get { return "Unsubscribe"; }
+        }
+
+        public static string WorkshopItemAskUnsubscribeMessage
+        {
+            get { return "Are you sure you want to unsubscribe?"; }
+        }
     }
 }

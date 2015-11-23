@@ -43,7 +43,7 @@ namespace WorkshopMonitor.UI
         private UIBuildingTypeFilterPanel _filterPanel;
         private UICaptionPanel _captionPanel;
 
-        private List<GameObject> _workshopItemObjects;
+        private List<UIWorkshopItemRow> _rows;
 
         private WorkshopItemListState _workshopItemListState;
 
@@ -53,7 +53,10 @@ namespace WorkshopMonitor.UI
 
             base.Start();
 
-            _workshopItemObjects = new List<GameObject>();
+            // Register this window instance with the commandfactory
+            CommandFactory.Instance.SetMainWindow(this);
+
+            _rows = new List<UIWorkshopItemRow>();
             _workshopItemListState = new WorkshopItemListState();
 
             // Make the window invisible by default
@@ -113,6 +116,8 @@ namespace WorkshopMonitor.UI
 
             _filterPanel.FilterChanged -= filterPanel_FilterChanged;
             _captionPanel.Sort -= captionPanel_Sort;
+
+            CommandFactory.Instance.SetMainWindow(null);
         }
 
         protected override void OnKeyDown(UIKeyEventParameter p)
@@ -127,6 +132,30 @@ namespace WorkshopMonitor.UI
                 ModLogger.Debug("WorkshopMonitor window hidden");
             }
             base.OnKeyDown(p);
+        }
+
+        public void RemoveRow(WorkshopItem workshopItem)
+        {
+            try
+            {
+                ModLogger.Debug("Trying to remove row");
+                var row = _rows.FirstOrDefault(r => r.WorkshopId == workshopItem.WorkshopId);
+                if (row != null)
+                {
+                    ModLogger.Debug("Removing row '{0}'", workshopItem.ReadableName);
+                    _scrollablePanel.RemoveUIComponent(row);
+                    _rows.Remove(row);
+                }
+                else
+                    ModLogger.Debug("Row '{0}' not found", workshopItem.ReadableName);
+
+                ClearWorkshopItems();
+                PopulateWorkshopItems();
+            }
+            catch (Exception ex)
+            {
+                ModLogger.Exception(ex);
+            }
         }
 
         private void SetupPanels()
@@ -214,25 +243,18 @@ namespace WorkshopMonitor.UI
         {
             var workshopItemCount = WorkshopItemMonitor.Instance.GetWorkshopItemCount();
             ModLogger.Debug("{0} workshop items found", workshopItemCount);
-
-            Enumerable.Range(0, workshopItemCount).ForEach(i =>
-            {
-                var workshopItemObject = new GameObject("WorkshopItemObject");
-                workshopItemObject.AddComponent<UIWorkshopItemRow>();
-                _scrollablePanel.AttachUIComponent(workshopItemObject);
-                _workshopItemObjects.Add(workshopItemObject);
-            });
+            Enumerable.Range(0, workshopItemCount).ForEach(i => _rows.Add(_scrollablePanel.AddUIComponent<UIWorkshopItemRow>()));
         }
 
         private void PopulateWorkshopItems()
         {
             var workshopItems = _workshopItemListState.GetCurrentList();
-            Enumerable.Range(0, workshopItems.Count).ForEach(i => _workshopItemObjects[i].GetComponent<UIWorkshopItemRow>().Load(workshopItems[i], i % 2 == 0));
+            Enumerable.Range(0, workshopItems.Count).ForEach(i => _rows[i].Load(workshopItems[i], i % 2 == 0));
         }
 
         private void ClearWorkshopItems()
         {
-            _workshopItemObjects.ForEach(ao => ao.GetComponent<UIWorkshopItemRow>().Unload());
+            _rows.ForEach(row => row.Unload());
         }
 
         private void showWindow()

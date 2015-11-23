@@ -39,9 +39,21 @@ namespace WorkshopMonitor.UI
         private UISprite _workshopItemTypeIcon;
         private UILabel _workshopItemNameLabel;
         private UILabel _numberUseLabel;
-        private UIButton _workshopItemInfoButton;
+        private UICustomButton _workshopItemShowInfoButton;
+        private UICustomButton _workshopItemUnsubscribeButton;
 
         private WorkshopItem _workshopItem;
+
+        public ulong WorkshopId
+        {
+            get
+            {
+                ulong result = 0;
+                if (_workshopItem != null)
+                    result = _workshopItem.WorkshopId;
+                return result;
+            }
+        }
 
         public override void Awake()
         {
@@ -53,7 +65,8 @@ namespace WorkshopMonitor.UI
             _workshopItemTypeIcon = CreateCellIcon(UIConstants.WorkshopItemTypeIconXOffset, UIConstants.WorkshopItemTypeYOffset);
             _workshopItemNameLabel = CreateCellLabel(UIConstants.WorkshopItemNameLabelXOffset, UIConstants.LabelYOffset, string.Empty);
             _numberUseLabel = CreateCellLabel(UIConstants.NumberUsedLabelXOffset, UIConstants.LabelYOffset, 0.ToString());
-            _workshopItemInfoButton = CreateCellButton(UIConstants.WorkshopItemInfoButtonXOffset, UIConstants.ButtonFieldYOffset);
+            _workshopItemShowInfoButton = CreateInfoCellButton();
+            _workshopItemUnsubscribeButton = CreateUnsubscribeCellButton();
 
             // zebra stripes background
             backgroundSprite = UIConstants.WorkshopItemRowBackgroundSprite;
@@ -65,8 +78,6 @@ namespace WorkshopMonitor.UI
         public override void OnDestroy()
         {
             // Make sure eventhandlers are destroyed when the panel is destroyed by unity
-            if (_workshopItemInfoButton != null)
-                _workshopItemInfoButton.eventClick -= WorkshopItemInfoButton_eventClick;
             if (_workshopItem != null)
                 _workshopItem.InstanceCountUpdated -= WorkshopItemEntry_InstanceCountUpdated;
             base.OnDestroy();
@@ -80,7 +91,11 @@ namespace WorkshopMonitor.UI
         {
             _workshopItem = workshopItem;
             _workshopItem.InstanceCountUpdated += WorkshopItemEntry_InstanceCountUpdated;
+            _workshopItemShowInfoButton.SetCommand(CommandFactory.Instance.CreateShowWorkshopItemInfoCommand(_workshopItem));
+            _workshopItemUnsubscribeButton.SetCommand(CommandFactory.Instance.CreateUnsubscribeWorkshopItemCommand(_workshopItem));
+
             SetValuesToUI();
+
             color = isOdd ? UIConstants.WorkshopItemRowOddColor : UIConstants.WorkshopItemRowEvenColor;
             isVisible = true;
         }
@@ -114,27 +129,32 @@ namespace WorkshopMonitor.UI
             return result;
         }
 
-        private UIButton CreateCellButton(int columnPosition, int rowPosition)
+        private UICustomButton CreateInfoCellButton()
         {
-            var result = AddUIComponent<UIButton>();
+            var result = AddUIComponent<UICustomButton>();
             result.size = new Vector2(UIConstants.WorkshopItemInfoButtonSize, UIConstants.WorkshopItemInfoButtonSize);
-            result.relativePosition = new Vector3(columnPosition, rowPosition);
+            result.relativePosition = new Vector3(UIConstants.WorkshopItemInfoButtonXOffset, UIConstants.RowButtonFieldYOffset);
             result.tooltip = UITexts.WorkshopItemInfoButtonToolTip;
             result.normalFgSprite = UIConstants.WorkshopItemInfoButtonNormalSprite;
             result.pressedFgSprite = UIConstants.WorkshopItemInfoButtonPressedSprite;
             result.hoveredFgSprite = UIConstants.WorkshopItemInfoButtonHoveredSprite;
             result.isVisible = true;
-            result.eventClick += WorkshopItemInfoButton_eventClick;
+
             return result;
         }
 
-        private void ShowModalCallback(UIComponent component, int result)
+        private UICustomButton CreateUnsubscribeCellButton()
         {
-            if (result != 0)
-            {
-                string workshopUrl = string.Format("http://steamcommunity.com/sharedfiles/filedetails/?id={0}", _workshopItem.WorkshopId);
-                Process.Start(workshopUrl);
-            }
+            var result = AddUIComponent<UICustomButton>();
+            result.size = new Vector2(UIConstants.WorkshopItemUnsubscribeButtonSize, UIConstants.WorkshopItemUnsubscribeButtonSize);
+            result.relativePosition = new Vector3(UIConstants.WorkshopItemUnsubscribeButtonXOffset, UIConstants.RowButtonFieldYOffset);
+            result.tooltip = UITexts.WorkshopItemUnsubscribeButtonToolTip;
+            result.normalFgSprite = UIConstants.WorkshopItemUnsubscribeButtonNormalSprite;
+            result.pressedFgSprite = UIConstants.WorkshopItemUnsubscribeButtonPressedSprite;
+            result.hoveredFgSprite = UIConstants.WorkshopItemUnsubscribeButtonHoveredSprite;
+            result.isVisible = true;
+
+            return result;
         }
 
         private void SetValuesToUI()
@@ -144,16 +164,10 @@ namespace WorkshopMonitor.UI
             string instanceCount = _workshopItem.InstanceCount.ToString();
             if (_numberUseLabel.text != instanceCount)
                 _numberUseLabel.text = instanceCount;
+            if (_workshopItemUnsubscribeButton != null)
+                _workshopItemUnsubscribeButton.isVisible = _workshopItem.InstanceCount <= 0;
             _workshopItemTypeIcon.spriteName = UIConstants.GetBuildingTypeSprite(_workshopItem.BuildingType);
             _workshopItemTypeIcon.color = UIConstants.GetBuildingTypeColor(_workshopItem.BuildingType);
-        }
-
-        private void WorkshopItemInfoButton_eventClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (Steam.IsOverlayEnabled() && _workshopItem.WorkshopId > 0)
-                Steam.ActivateGameOverlayToWorkshopItem(new PublishedFileId(_workshopItem.WorkshopId));
-            else
-                ConfirmPanel.ShowModal(UITexts.WorkshopItemInfoOpenInBrowserTitle, UITexts.WorkshopItemInfoOpenInBrowserMessage, ShowModalCallback);
         }
 
         private void WorkshopItemEntry_InstanceCountUpdated(object sender, EventArgs e)

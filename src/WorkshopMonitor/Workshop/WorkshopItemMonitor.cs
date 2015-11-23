@@ -88,6 +88,11 @@ namespace WorkshopMonitor.Workshop
             return _workshopItems.AsEnumerable();
         }
 
+        public void Remove(WorkshopItem workshopItem)
+        {
+            _workshopItems.RemoveAll(w => w.Id == workshopItem.Id);
+        }
+
         public void Update()
         {
             try

@@ -49,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\Regex.cs" />
+    <Compile Include="UI\Commands\CommandFactory.cs" />
+    <Compile Include="UI\Commands\ICommand.cs" />
+    <Compile Include="UI\Commands\ShowWorkshopItemInfoCommand.cs" />
+    <Compile Include="UI\Commands\UnsubscribeWorkshopItemCommand.cs" />
+    <Compile Include="UI\Controls\UICustomButton.cs" />
     <Compile Include="Workshop\WorkshopItem.cs" />
     <Compile Include="Workshop\WorkshopItemMonitor.cs" />
     <Compile Include="Workshop\WorkshopItemMonitorLoader.cs" />

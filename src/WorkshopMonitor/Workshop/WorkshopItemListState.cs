@@ -8,14 +8,12 @@ namespace WorkshopMonitor.Workshop
 {
     public class WorkshopItemListState
     {
-        private IEnumerable<WorkshopItem> _workshopItemList;
         private BuildingType _currentFilter;
         private SortableWorkshopItemField _currentSortField;
         private bool _descending;
 
         public WorkshopItemListState()
         {
-            _workshopItemList = WorkshopItemMonitor.Instance.GetWorkshopItems();
             _currentFilter = BuildingType.All;
             _currentSortField = SortableWorkshopItemField.Name;
         }
@@ -45,7 +43,7 @@ namespace WorkshopMonitor.Workshop
                 ModLogger.Debug("Creating workshop item list with filter {0} and sortfield {1}", _currentFilter, _currentSortField);
 
                 // Filter the current list and sort it
-                var result = _workshopItemList.Where(a => (a.BuildingType & _currentFilter) == a.BuildingType).ToList();
+                var result = WorkshopItemMonitor.Instance.GetWorkshopItems().Where(a => (a.BuildingType & _currentFilter) == a.BuildingType).ToList();
                 result.Sort(new WorkshopItemComparer(_currentSortField, _descending));
 
                 ModLogger.Debug("Created workshop item list with {0} items after filter", result.Count());

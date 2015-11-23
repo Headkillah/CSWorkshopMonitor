@@ -28,12 +28,8 @@ namespace WorkshopMonitor.UI
         public const int NumberUsedLabelXOffset = WorkshopItemNameLabelXOffset + 500;
         public const int LabelYOffset = 6;
         public const int WorkshopItemInfoButtonXOffset = MainWindowWidth - 60;
-        public const int ButtonFieldYOffset = 3;
-        public const string WorkshopItemInfoButtonNormalSprite = "CityInfo";
-        public const string WorkshopItemInfoButtonPressedSprite = "CityInfoPressed";
-        public const string WorkshopItemInfoButtonHoveredSprite = "CityInfoHovered";
-        public const int WorkshopItemInfoButtonSize = 25;
-        public const int WorkshopItemTypeIconSize = 25;
+        public const int WorkshopItemUnsubscribeButtonXOffset = WorkshopItemInfoButtonXOffset - 30;
+        public const int RowButtonFieldYOffset = 3;
 
         // Scrollbar
         public const int ScrollbarIncrementCount = 50;
@@ -106,6 +102,11 @@ namespace WorkshopMonitor.UI
         public const float FilterButtonTextScale = 0.85f;
         public const int FilterButtenWidth = 50;
         public const int FilterButtenHeight = 30;
+        public const string FilterPanelBackgroundSprite = "CursorInfoBack";
+
+        // Filter option
+        public const string CheckboxCheckedSprite = "AchievementCheckedTrue";
+        public const string CheckboxUnCheckedSprite = "AchievementCheckedFalse";
 
         // WorkshopItem row
         public const int WorkshopItemRowWidth = DefaultPanelWidth - 17;
@@ -116,13 +117,21 @@ namespace WorkshopMonitor.UI
         public static Color32 WorkshopItemRowEvenColor = new Color32(120, 130, 130, 255);
         public const string WorkshopItemRowBackgroundSprite = "GenericPanelLight";
 
-        // Filter option
-        public const string CheckboxCheckedSprite = "AchievementCheckedTrue";
-        public const string CheckboxUnCheckedSprite = "AchievementCheckedFalse";
+        // WorkshopItem Icon
+        public const int WorkshopItemTypeIconSize = 25;
 
-        // Filter panel
-        public const string FilterPanelBackgroundSprite = "CursorInfoBack";
-
+        // WorkshopItem Info Button
+        public const string WorkshopItemInfoButtonNormalSprite = "CityInfo";
+        public const string WorkshopItemInfoButtonPressedSprite = "CityInfoPressed";
+        public const string WorkshopItemInfoButtonHoveredSprite = "CityInfoHovered";
+        public const int WorkshopItemInfoButtonSize = 25;
+        
+        // WorkshopItemUnsubscribe Button
+        public const string WorkshopItemUnsubscribeButtonNormalSprite = "buttonclose";
+        public const string WorkshopItemUnsubscribeButtonPressedSprite = "buttonclosepressed";
+        public const string WorkshopItemUnsubscribeButtonHoveredSprite = "buttonclosehover";
+        public const int WorkshopItemUnsubscribeButtonSize = 25;
+        
         public static string GetBuildingTypeSprite(BuildingType buildingType)
         {
             switch (buildingType)
