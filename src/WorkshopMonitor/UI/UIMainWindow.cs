@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using WorkshopMonitor.Overwatch;
 using WorkshopMonitor.Workshop;
 
 namespace WorkshopMonitor.UI
@@ -40,12 +41,12 @@ namespace WorkshopMonitor.UI
         private UIScrollablePanel _scrollablePanel;
 
         private UITitlePanel _titlePanel;
-        private UIBuildingTypeFilterPanel _filterPanel;
+        private UIAssetTypeFilterPanel _filterPanel;
         private UICaptionPanel _captionPanel;
 
-        private List<UIWorkshopItemRow> _rows;
+        private List<UIWorkshopAssetRow> _rows;
 
-        private WorkshopItemListState _workshopItemListState;
+        private WorkshopAssetListState _workshopAssetListState;
 
         public override void Start()
         {
@@ -56,8 +57,8 @@ namespace WorkshopMonitor.UI
             // Register this window instance with the commandfactory
             CommandFactory.Instance.SetMainWindow(this);
 
-            _rows = new List<UIWorkshopItemRow>();
-            _workshopItemListState = new WorkshopItemListState();
+            _rows = new List<UIWorkshopAssetRow>();
+            _workshopAssetListState = new WorkshopAssetListState(AssetType.All);
 
             // Make the window invisible by default
             Hide();
@@ -82,13 +83,13 @@ namespace WorkshopMonitor.UI
             autoLayoutPadding = UIConstants.AutoLayoutPadding;
             autoLayoutStart = LayoutStart.TopLeft;
 
-            // Create the window panels, scrollpanel and workshopitemrows
+            // Create the window panels, scrollpanel and workshopassetrows
             SetupPanels();
             SetupScrollPanel();
-            SetupWorkshopItemRows();
+            SetupWorkshopAssetRows();
 
-            // Populate the workshopitem with workshopitem data
-            PopulateWorkshopItems();
+            // Populate the workshopasset with workshopasset data
+            PopulateWorkshopAssets();
 
             ModLogger.Debug("WorkshopMonitor window started");
         }
@@ -102,7 +103,7 @@ namespace WorkshopMonitor.UI
                 ModLogger.Debug("Displaying WorkshopMonitor window");
 
                 // Always update the workshop monitor before showing the main window to ensure that the latest statistics are loaded
-                WorkshopItemMonitor.Instance.Update();
+                WorkshopAssetMonitor.Instance.Update();
 
                 showWindow();
 
@@ -134,23 +135,23 @@ namespace WorkshopMonitor.UI
             base.OnKeyDown(p);
         }
 
-        public void RemoveRow(WorkshopItem workshopItem)
+        public void RemoveRow(IUIWorkshopAssetRowData workshopAssetRowData)
         {
             try
             {
                 ModLogger.Debug("Trying to remove row");
-                var row = _rows.FirstOrDefault(r => r.WorkshopId == workshopItem.WorkshopId);
+                var row = _rows.FirstOrDefault(r => r.WorkshopId == workshopAssetRowData.WorkshopId);
                 if (row != null)
                 {
-                    ModLogger.Debug("Removing row '{0}'", workshopItem.ReadableName);
+                    ModLogger.Debug("Removing row '{0}'", workshopAssetRowData.ReadableName);
                     _scrollablePanel.RemoveUIComponent(row);
                     _rows.Remove(row);
                 }
                 else
-                    ModLogger.Debug("Row '{0}' not found", workshopItem.ReadableName);
+                    ModLogger.Debug("Row '{0}' not found", workshopAssetRowData.ReadableName);
 
-                ClearWorkshopItems();
-                PopulateWorkshopItems();
+                ClearWorkshopAssets();
+                PopulateWorkshopAssets();
             }
             catch (Exception ex)
             {
@@ -167,7 +168,7 @@ namespace WorkshopMonitor.UI
             _titlePanel.Parent = this;
 
             // Create and add the filter panel
-            _filterPanel = AddUIComponent<UIBuildingTypeFilterPanel>();
+            _filterPanel = AddUIComponent<UIAssetTypeFilterPanel>();
             _filterPanel.FilterChanged += filterPanel_FilterChanged;
 
             // Create and add the caption panel
@@ -239,20 +240,21 @@ namespace WorkshopMonitor.UI
             ModLogger.Debug("Scroll panel set up");
         }
 
-        private void SetupWorkshopItemRows()
+        private void SetupWorkshopAssetRows()
         {
-            var workshopItemCount = WorkshopItemMonitor.Instance.GetWorkshopItemCount();
-            ModLogger.Debug("{0} workshop items found", workshopItemCount);
-            Enumerable.Range(0, workshopItemCount).ForEach(i => _rows.Add(_scrollablePanel.AddUIComponent<UIWorkshopItemRow>()));
+            var workshopAssetCount = WorkshopAssetMonitor.Instance.GetWorkshopAssetCount();
+            ModLogger.Debug("{0} workshop assets found", workshopAssetCount);
+            Enumerable.Range(0, workshopAssetCount).ForEach(i => _rows.Add(_scrollablePanel.AddUIComponent<UIWorkshopAssetRow>()));
         }
 
-        private void PopulateWorkshopItems()
+        private void PopulateWorkshopAssets()
         {
-            var workshopItems = _workshopItemListState.GetCurrentList();
-            Enumerable.Range(0, workshopItems.Count).ForEach(i => _rows[i].Load(workshopItems[i], i % 2 == 0));
+            var workshopAssetRowDatas = _workshopAssetListState.GetCurrentList();
+            ModLogger.Debug("Populate " + workshopAssetRowDatas.Count());
+            Enumerable.Range(0, workshopAssetRowDatas.Count).ForEach(i => _rows[i].Load(workshopAssetRowDatas[i], i % 2 == 0));
         }
 
-        private void ClearWorkshopItems()
+        private void ClearWorkshopAssets()
         {
             _rows.ForEach(row => row.Unload());
         }
@@ -276,9 +278,9 @@ namespace WorkshopMonitor.UI
         private void captionPanel_Sort(object sender, SortEventArgs e)
         {
             ModLogger.Debug("Sorting data on {0}", e.SortField);
-            ClearWorkshopItems();
-            _workshopItemListState.SetSortField(e.SortField);
-            PopulateWorkshopItems();
+            ClearWorkshopAssets();
+            _workshopAssetListState.SetSortField(e.SortField);
+            PopulateWorkshopAssets();
             ModLogger.Debug("Sorted data on {0}", e.SortField);
         }
 
@@ -287,9 +289,9 @@ namespace WorkshopMonitor.UI
             try
             {
                 ModLogger.Debug("Changing filter to {0}", e.NewFilter);
-                ClearWorkshopItems();
-                _workshopItemListState.SetFilter(e.NewFilter);
-                PopulateWorkshopItems();
+                ClearWorkshopAssets();
+                _workshopAssetListState.SetFilter(e.NewFilter);
+                PopulateWorkshopAssets();
                 ModLogger.Debug("Changed filter to {0}", e.NewFilter);
             }
             catch (Exception ex)

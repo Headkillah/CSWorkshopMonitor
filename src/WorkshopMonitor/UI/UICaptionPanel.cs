@@ -39,16 +39,16 @@ namespace WorkshopMonitor.UI
         {
             base.Start();
 
-            createLabel(UIConstants.WorkshopItemTypeLabelXOffset, UITexts.WorkshopItemTypeColumnLabel, SortableWorkshopItemField.ItemType);
-            createLabel(UIConstants.WorkshopItemWorkshopIdLabelXOffset, UITexts.WorkshopItemWorkshopIdColumnLabel, SortableWorkshopItemField.WorkshopId);
-            createLabel(UIConstants.WorkshopItemNameLabelXOffset, UITexts.WorkshopItemNameColumnLabel, SortableWorkshopItemField.Name);
-            createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableWorkshopItemField.InstanceCount);
+            createLabel(UIConstants.WorkshopAssetTypeLabelXOffset, UITexts.WorkshopAssetTypeColumnLabel, SortableWorkshopAssetField.ItemType);
+            createLabel(UIConstants.WorkshopAssetWorkshopIdLabelXOffset, UITexts.WorkshopAssetWorkshopIdColumnLabel, SortableWorkshopAssetField.WorkshopId);
+            createLabel(UIConstants.WorkshopAssetNameLabelXOffset, UITexts.WorkshopAssetNameColumnLabel, SortableWorkshopAssetField.Name);
+            createLabel(UIConstants.NumberUsedLabelXOffset, UITexts.NumberUsedColumnLabel, SortableWorkshopAssetField.InstanceCount);
             
             width = UIConstants.CaptionPanelWidth;
             height = UIConstants.CaptionPanelHeight;
         }
 
-        private UILabel createLabel(int columnPosition, string text, SortableWorkshopItemField sortField)
+        private UILabel createLabel(int columnPosition, string text, SortableWorkshopAssetField sortField)
         {
             var result = AddUIComponent<UILabel>();
             result.relativePosition = new Vector3(columnPosition, UIConstants.CaptionPanelLabelOffset);
@@ -58,7 +58,7 @@ namespace WorkshopMonitor.UI
             return result;
         }
 
-        protected virtual void OnSort(SortableWorkshopItemField sortField)
+        protected virtual void OnSort(SortableWorkshopAssetField sortField)
         {
             var handler = Sort;
             if (handler != null)

@@ -8,11 +8,11 @@ namespace WorkshopMonitor.UI
 {
     public class FilterChangedEventArgs : EventArgs
     {
-        public FilterChangedEventArgs(BuildingType newFilter)
+        public FilterChangedEventArgs(AssetType newFilter)
         {
             NewFilter = newFilter;
         }
 
-        public BuildingType NewFilter { get; private set; }
+        public AssetType NewFilter { get; private set; }
     }
 }

@@ -6,18 +6,18 @@ using System.Text;
 
 namespace WorkshopMonitor.Workshop
 {
-    public class WorkshopItemMonitorLoader : LoadingExtensionBase
+    public class WorkshopAssetMonitorLoader : LoadingExtensionBase
     {
         private LoadMode _mode;
 
         public override void OnCreated(ILoading loading)
         {
-            ModLogger.Debug("WorkshopItemMonitorLoader created");
+            ModLogger.Debug("WorkshopAssetMonitorLoader created");
         }
 
         public override void OnReleased()
         {
-            ModLogger.Debug("WorkshopItemMonitorLoader Released");
+            ModLogger.Debug("WorkshopAssetMonitorLoader Released");
         }
 
         public override void OnLevelLoaded(LoadMode mode)
@@ -30,13 +30,13 @@ namespace WorkshopMonitor.Workshop
 
             try
             {
-                ModLogger.Debug("Starting WorkshopItemMonitor");
-                WorkshopItemMonitor.Instance.Start();
-                ModLogger.Debug("WorkshopItemMonitor started");
+                ModLogger.Debug("Starting WorkshopAssetMonitor");
+                WorkshopAssetMonitor.Instance.Start();
+                ModLogger.Debug("WorkshopAssetMonitor started");
             }
             catch (Exception ex)
             {
-                ModLogger.Error("An error occured while starting the WorkshopItemMonitor");
+                ModLogger.Error("An error occured while starting the WorkshopAssetMonitor");
                 ModLogger.Exception(ex);
             }
         }
@@ -49,13 +49,13 @@ namespace WorkshopMonitor.Workshop
 
             try
             {
-                ModLogger.Debug("Stopping WorkshopItemMonitor");
-                WorkshopItemMonitor.Instance.Stop();
-                ModLogger.Debug("WorkshopItemMonitor stopped");
+                ModLogger.Debug("Stopping WorkshopAssetMonitor");
+                WorkshopAssetMonitor.Instance.Stop();
+                ModLogger.Debug("WorkshopAssetMonitor stopped");
             }
             catch (Exception ex)
             {
-                ModLogger.Error("An error occured while stopping the WorkshopItemMonitor");
+                ModLogger.Error("An error occured while stopping the WorkshopAssetMonitor");
                 ModLogger.Exception(ex);
             }
         }

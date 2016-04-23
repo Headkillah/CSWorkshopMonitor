@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkshopMonitor.Workshop
 {
-    public enum SortableWorkshopItemField
+    public enum SortableWorkshopAssetField
     {
         Invalid = 0,
         ItemType,

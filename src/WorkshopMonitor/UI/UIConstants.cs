@@ -14,22 +14,22 @@ namespace WorkshopMonitor.UI
         public const float MainWindowScrollablePanelWidthOffset = 5f;
         public static Color32 MainWindowColor = new Color32(58, 88, 104, 255);
         public const string MainWindowBackgroundSprite = "MenuPanel2";
-        public const int MainWindowWidth = 1100;
+        public const int MainWindowWidth = 1300;
         public const int MainWindowHeight = 600;
         
         // Defaults
         public const int DefaultPanelWidth = MainWindowWidth - 15;
 
         // Columns/rows
-        public const int WorkshopItemTypeLabelXOffset = 10;
-        public const int WorkshopItemTypeIconXOffset = 18;
-        public const int WorkshopItemTypeYOffset = 3;
-        public const int WorkshopItemWorkshopIdLabelXOffset = WorkshopItemTypeLabelXOffset + 60;
-        public const int WorkshopItemNameLabelXOffset = WorkshopItemWorkshopIdLabelXOffset + 100;
-        public const int NumberUsedLabelXOffset = WorkshopItemNameLabelXOffset + 500;
+        public const int WorkshopAssetTypeLabelXOffset = 10;
+        public const int WorkshopAssetTypeIconXOffset = 18;
+        public const int WorkshopAssetTypeYOffset = 3;
+        public const int WorkshopAssetWorkshopIdLabelXOffset = WorkshopAssetTypeLabelXOffset + 60;
+        public const int WorkshopAssetNameLabelXOffset = WorkshopAssetWorkshopIdLabelXOffset + 100;
+        public const int NumberUsedLabelXOffset = WorkshopAssetNameLabelXOffset + 500;
         public const int LabelYOffset = 6;
-        public const int WorkshopItemInfoButtonXOffset = MainWindowWidth - 60;
-        public const int WorkshopItemUnsubscribeButtonXOffset = WorkshopItemInfoButtonXOffset - 30;
+        public const int WorkshopAssetInfoButtonXOffset = MainWindowWidth - 60;
+        public const int WorkshopAssetUnsubscribeButtonXOffset = WorkshopAssetInfoButtonXOffset - 30;
         public const int RowButtonFieldYOffset = 3;
 
         // Scrollbar
@@ -76,13 +76,15 @@ namespace WorkshopMonitor.UI
         public const string FilterSpritePolice = "ToolbarIconPolice";
         public const string FilterSpriteEducation = "ToolbarIconEducation";
         public const string FilterSpritePublicTransport = "ToolbarIconPublicTransport";
-        public const string FilterSpriteBeautification = "ToolbarIconBeautification";
+        public const string FilterSpriteParksnPlazas = "SubBarBeautificationParksnPlazas";
         public const string FilterSpriteMonuments = "ToolbarIconMonuments";
         public const string FilterSpriteRoads = "ToolbarIconRoads";
         public const string FilterSpriteResidential = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteCommercial = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteIndustrial = "InfoIconOutsideConnectionsPressed";
         public const string FilterSpriteOffice = "InfoIconOutsideConnectionsPressed";
+        public const string FilterSpriteTrees = "ToolbarIconBeautification";
+        public const string FilterSpriteProps = "ToolbarIconProps";
         public const string FilterSpriteOther = "ToolbarIconHelp";
         public static Color FilterColorResidential = Color.green;
         public static Color FilterColorCommercial = new Color32(100, 100, 255, 255);
@@ -109,81 +111,85 @@ namespace WorkshopMonitor.UI
         public const string CheckboxCheckedSprite = "AchievementCheckedTrue";
         public const string CheckboxUnCheckedSprite = "AchievementCheckedFalse";
 
-        // WorkshopItem row
-        public const int WorkshopItemRowWidth = DefaultPanelWidth - 17;
-        public const int WorkshopItemRowHeight = 30;
-        public const float WorkshopItemRowTextScale = 1f;
-        public static Color32 WorkshopItemRowTextColor = new Color32(185, 221, 254, 255);
-        public static Color32 WorkshopItemRowOddColor = new Color32(150, 150, 150, 255);
-        public static Color32 WorkshopItemRowEvenColor = new Color32(120, 130, 130, 255);
-        public const string WorkshopItemRowBackgroundSprite = "GenericPanelLight";
+        // WorkshopAsset row
+        public const int WorkshopAssetRowWidth = DefaultPanelWidth - 17;
+        public const int WorkshopAssetRowHeight = 30;
+        public const float WorkshopAssetRowTextScale = 1f;
+        public static Color32 WorkshopAssetRowTextColor = new Color32(185, 221, 254, 255);
+        public static Color32 WorkshopAssetRowOddColor = new Color32(150, 150, 150, 255);
+        public static Color32 WorkshopAssetRowEvenColor = new Color32(120, 130, 130, 255);
+        public const string WorkshopAssetRowBackgroundSprite = "GenericPanelLight";
 
-        // WorkshopItem Icon
-        public const int WorkshopItemTypeIconSize = 25;
+        // WorkshopAsset Icon
+        public const int WorkshopAssetTypeIconSize = 25;
 
-        // WorkshopItem Info Button
-        public const string WorkshopItemInfoButtonNormalSprite = "CityInfo";
-        public const string WorkshopItemInfoButtonPressedSprite = "CityInfoPressed";
-        public const string WorkshopItemInfoButtonHoveredSprite = "CityInfoHovered";
-        public const int WorkshopItemInfoButtonSize = 25;
+        // WorkshopAsset Info Button
+        public const string WorkshopAssetInfoButtonNormalSprite = "CityInfo";
+        public const string WorkshopAssetInfoButtonPressedSprite = "CityInfoPressed";
+        public const string WorkshopAssetInfoButtonHoveredSprite = "CityInfoHovered";
+        public const int WorkshopAssetInfoButtonSize = 25;
         
-        // WorkshopItemUnsubscribe Button
-        public const string WorkshopItemUnsubscribeButtonNormalSprite = "buttonclose";
-        public const string WorkshopItemUnsubscribeButtonPressedSprite = "buttonclosepressed";
-        public const string WorkshopItemUnsubscribeButtonHoveredSprite = "buttonclosehover";
-        public const int WorkshopItemUnsubscribeButtonSize = 25;
+        // WorkshopAssetUnsubscribe Button
+        public const string WorkshopAssetUnsubscribeButtonNormalSprite = "buttonclose";
+        public const string WorkshopAssetUnsubscribeButtonPressedSprite = "buttonclosepressed";
+        public const string WorkshopAssetUnsubscribeButtonHoveredSprite = "buttonclosehover";
+        public const int WorkshopAssetUnsubscribeButtonSize = 25;
         
-        public static string GetBuildingTypeSprite(BuildingType buildingType)
+        public static string GetAssetTypeSprite(AssetType assetType)
         {
-            switch (buildingType)
+            switch (assetType)
             {
-                case BuildingType.Electricity:
+                case AssetType.Electricity:
                     return FilterSpriteElectricity;
-                case BuildingType.WaterAndSewage:
+                case AssetType.WaterAndSewage:
                     return FilterSpriteWaterAndSewage;
-                case BuildingType.Garbage:
+                case AssetType.Garbage:
                     return FilterSpriteGarbage;
-                case BuildingType.Healthcare:
+                case AssetType.Healthcare:
                     return FilterSpriteHealthcare;
-                case BuildingType.FireDepartment:
+                case AssetType.FireDepartment:
                     return FilterSpriteFireDepartment;
-                case BuildingType.Police:
+                case AssetType.Police:
                     return FilterSpritePolice;
-                case BuildingType.Education:
+                case AssetType.Education:
                     return FilterSpriteEducation;
-                case BuildingType.PublicTransport:
+                case AssetType.PublicTransport:
                     return FilterSpritePublicTransport;
-                case BuildingType.Beautification:
-                    return FilterSpriteBeautification;
-                case BuildingType.Monuments:
+                case AssetType.Beautification:
+                    return FilterSpriteParksnPlazas;
+                case AssetType.Monuments:
                     return FilterSpriteMonuments;
-                case BuildingType.Roads:
+                case AssetType.Roads:
                     return FilterSpriteRoads;
-                case BuildingType.Residential:
+                case AssetType.Residential:
                     return FilterSpriteResidential;
-                case BuildingType.Commercial:
+                case AssetType.Commercial:
                     return FilterSpriteCommercial;
-                case BuildingType.Industrial:
+                case AssetType.Industrial:
                     return FilterSpriteIndustrial;
-                case BuildingType.Office:
+                case AssetType.Office:
                     return FilterSpriteOffice;
-                case BuildingType.Other:
+                case AssetType.Prop:
+                    return FilterSpriteProps;
+                case AssetType.Tree:
+                    return FilterSpriteTrees;
+                case AssetType.Other:
                     return FilterSpriteOther;
                 default: return string.Empty;
             }
         }
 
-        public static Color32 GetBuildingTypeColor(BuildingType buildingType)
+        public static Color32 GetAssetTypeColor(AssetType AssetType)
         {
-            switch (buildingType)
+            switch (AssetType)
             {
-                case BuildingType.Residential:
+                case AssetType.Residential:
                     return FilterColorResidential;
-                case BuildingType.Commercial:
+                case AssetType.Commercial:
                     return FilterColorCommercial;
-                case BuildingType.Industrial:
+                case AssetType.Industrial:
                     return FilterColorIndustrial;
-                case BuildingType.Office:
+                case AssetType.Office:
                     return FilterColorOffice;
                 default:
                     return new Color32(255, 255, 255, 255);

@@ -23,43 +23,44 @@
 
     https://github.com/justacid/Skylines-ExtendedPublicTransport
 */
- 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using WorkshopMonitor.UI;
 
 namespace WorkshopMonitor.Workshop
 {
-    public class WorkshopItemComparer : Comparer<WorkshopItem>
+    public class WorkshopAssetComparer : Comparer<IUIWorkshopAssetRowData>
     {
-        private SortableWorkshopItemField _sortField;
+        private SortableWorkshopAssetField _sortField;
         private bool _descending;
 
-        public WorkshopItemComparer(SortableWorkshopItemField sortField, bool descending) : base()
+        public WorkshopAssetComparer(SortableWorkshopAssetField sortField, bool descending) : base()
         {
             _sortField = sortField;
             _descending = descending;
         }
 
-        public override int Compare(WorkshopItem x, WorkshopItem y)
+        public override int Compare(IUIWorkshopAssetRowData x, IUIWorkshopAssetRowData y)
         {
             object xPropertyValue = null;
             object yPropertyValue = null;
 
             switch (_sortField)
             {
-                case SortableWorkshopItemField.ItemType:
-                    xPropertyValue = (int)x.BuildingType;
-                    yPropertyValue = (int)y.BuildingType;
+                case SortableWorkshopAssetField.ItemType:
+                    xPropertyValue = (int)x.AssetType;
+                    yPropertyValue = (int)y.AssetType;
                     break;
-                case SortableWorkshopItemField.InstanceCount:
+                case SortableWorkshopAssetField.InstanceCount:
                     xPropertyValue = x.InstanceCount;
                     yPropertyValue = y.InstanceCount;
                     break;
-                case SortableWorkshopItemField.Name:
+                case SortableWorkshopAssetField.Name:
                     xPropertyValue = x.ReadableName;
                     yPropertyValue = y.ReadableName;
                     break;

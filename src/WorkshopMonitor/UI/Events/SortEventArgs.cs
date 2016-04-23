@@ -8,11 +8,11 @@ namespace WorkshopMonitor.UI
 {
     public class SortEventArgs : EventArgs
     {
-        public SortEventArgs(SortableWorkshopItemField sortField)
+        public SortEventArgs(SortableWorkshopAssetField sortField)
         {
             SortField = sortField;
         }
 
-        public SortableWorkshopItemField SortField { get; private set; }
+        public SortableWorkshopAssetField SortField { get; private set; }
     }
 }

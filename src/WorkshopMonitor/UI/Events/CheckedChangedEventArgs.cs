@@ -8,13 +8,13 @@ namespace WorkshopMonitor.UI
 {
     public class CheckedChangedEventArgs : EventArgs
     {
-        public CheckedChangedEventArgs(BuildingType buildingType, bool @checked)
+        public CheckedChangedEventArgs(AssetType assetType, bool @checked)
         {
-            BuildingType = buildingType;
+            AssetType = assetType;
             Checked = @checked;
         }
 
-        public BuildingType BuildingType { get; private set; }
+        public AssetType AssetType { get; private set; }
 
         public bool Checked { get; private set; }
     }

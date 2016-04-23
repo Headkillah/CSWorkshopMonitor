@@ -39,6 +39,8 @@ namespace WorkshopMonitor.Overwatch
         private static readonly OverwatchControl _instance = new OverwatchControl();
 
         private bool _buildingMonitorSpun;
+        private bool _propMonitorSpun;
+        private bool _treeMonitorSpun;
         private bool _gameLoaded;
 
         /// <summary>
@@ -48,6 +50,8 @@ namespace WorkshopMonitor.Overwatch
         {
             _gameLoaded = false;
             _buildingMonitorSpun = false;
+            _propMonitorSpun = false;
+            _treeMonitorSpun = false;
         }
 
         /// <summary>
@@ -62,6 +66,18 @@ namespace WorkshopMonitor.Overwatch
         {
             get { return GameLoaded && _buildingMonitorSpun; }
             set { _buildingMonitorSpun = GameLoaded ? value : false; }
+        }
+
+        public bool PropMonitorSpun
+        {
+            get { return GameLoaded && _propMonitorSpun; }
+            set { _propMonitorSpun = GameLoaded ? value : false; }
+        }
+
+        public bool TreeMonitorSpun
+        {
+            get { return GameLoaded && _treeMonitorSpun; }
+            set { _treeMonitorSpun = GameLoaded ? value : false; }
         }
 
         public void StartGame()

@@ -22,17 +22,17 @@ namespace WorkshopMonitor.UI
             get { return "Id"; }
         }
 
-        public static string WorkshopItemTypeColumnLabel
+        public static string WorkshopAssetTypeColumnLabel
         {
             get { return "Type"; }
         }
 
-        public static string WorkshopItemWorkshopIdColumnLabel
+        public static string WorkshopAssetWorkshopIdColumnLabel
         {
             get { return "ID"; }
         }
 
-        public static string WorkshopItemNameColumnLabel
+        public static string WorkshopAssetNameColumnLabel
         {
             get { return "Name"; }
         }
@@ -47,7 +47,7 @@ namespace WorkshopMonitor.UI
             get { return "Workshop Monitor"; }
         }
 
-        public static string WorkshopItemInfoButtonToolTip
+        public static string WorkshopAssetInfoButtonToolTip
         {
             get { return "Open in workshop"; }
         }
@@ -62,12 +62,12 @@ namespace WorkshopMonitor.UI
             get { return "Enable debug logging (for advanced usage only)"; }
         }
 
-        public static string WorkshopItemInfoOpenInBrowserTitle
+        public static string WorkshopAssetInfoOpenInBrowserTitle
         {
             get { return "Open in browser"; }
         }
 
-        public static string WorkshopItemInfoOpenInBrowserMessage
+        public static string WorkshopAssetInfoOpenInBrowserMessage
         {
             get { return "Could not open the workshop item in the in-game workshop. Do you want to open the workshop item in a browser?"; }
         }
@@ -82,17 +82,17 @@ namespace WorkshopMonitor.UI
             get { return "none"; }
         }
 
-        public static string WorkshopItemUnsubscribeButtonToolTip
+        public static string WorkshopAssetUnsubscribeButtonToolTip
         {
             get { return "Unsubscribe"; }
         }
 
-        public static string WorkshopItemAskUnsubscribeTitle
+        public static string WorkshopAssetAskUnsubscribeTitle
         {
             get { return "Unsubscribe"; }
         }
 
-        public static string WorkshopItemAskUnsubscribeMessage
+        public static string WorkshopAssetAskUnsubscribeMessage
         {
             get { return "Are you sure you want to unsubscribe?"; }
         }

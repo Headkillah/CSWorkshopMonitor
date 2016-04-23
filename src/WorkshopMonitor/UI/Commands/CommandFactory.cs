@@ -24,14 +24,14 @@ namespace WorkshopMonitor.UI
             _mainWindow = mainWindow;
         }
 
-        public ICommand CreateShowWorkshopItemInfoCommand(WorkshopItem workshopItem)
+        public ICommand CreateShowWorkshopAssetInfoCommand(IUIWorkshopAssetRowData workshopAssetRowData)
         {
-            return new ShowWorkshopItemInfoCommand(workshopItem);
+            return new ShowWorkshopAssetInfoCommand(workshopAssetRowData);
         }
 
-        public ICommand CreateUnsubscribeWorkshopItemCommand(WorkshopItem workshopItem)
+        public ICommand CreateUnsubscribeWorkshopAssetCommand(IUIWorkshopAssetRowData workshopAssetRowData)
         {
-            return new UnsubscribeWorkshopItemCommand(_mainWindow, workshopItem);
+            return new UnsubscribeWorkshopAssetCommand(_mainWindow, workshopAssetRowData);
         }
     }
 }

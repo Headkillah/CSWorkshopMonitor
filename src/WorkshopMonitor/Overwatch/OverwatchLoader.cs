@@ -58,7 +58,7 @@ namespace WorkshopMonitor.Overwatch
             if (_mode != LoadMode.NewGame && _mode != LoadMode.LoadGame) return;
 
             OverwatchControl.Instance.StopGame();
-            OverwatchContainer.Instance.ClearCache();
+            OverwatchBuildingContainer.Instance.ClearCache();
         }
     }
 }

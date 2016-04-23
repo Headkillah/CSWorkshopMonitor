@@ -6,38 +6,41 @@ using System.Text;
 namespace WorkshopMonitor.Overwatch
 {
     [Flags]
-    public enum BuildingType
+    public enum AssetType : int
     {
         None = 0,
 
         // Player buildings
         Electricity = 1,
-        WaterAndSewage = 2,
-        Garbage = 4,
-        Healthcare = 8,
-        FireDepartment = 16,
-        Police = 32,
-        Education = 64,
-        PublicTransport = 128,
-        Beautification = 256,
-        Monuments = 512,
-        PlayerOther = 1024,
-        Roads = 2048,
+        WaterAndSewage = Electricity * 2,
+        Garbage = WaterAndSewage * 2,
+        Healthcare = Garbage * 2,
+        FireDepartment = Healthcare * 2,
+        Police = FireDepartment * 2,
+        Education = Police * 2,
+        PublicTransport = Education * 2,
+        Beautification = PublicTransport * 2,
+        Monuments = Beautification * 2,
+        PlayerOther = Monuments * 2,
+        Roads = PlayerOther * 2,
 
         // Zoned buildings
-        Residential = 4096,
-        Commercial = 8192,
-        Industrial = 16384,
-        Office = 32768,
-        ZonedOther = 65536,
+        Residential = Roads * 2,
+        Commercial = Residential * 2,
+        Industrial = Commercial * 2,
+        Office = Industrial * 2,
+        ZonedOther = Office * 2,
 
-        // Other
-        Other = 131072,
+        Prop = ZonedOther * 2,
+        Tree = Prop * 2,
+
+        Other = Tree * 2,
 
         // Combinations
         PlayerBuilding = Electricity | WaterAndSewage | Garbage | Healthcare | FireDepartment | Police | Education | PublicTransport | Beautification | Monuments | PlayerOther,
         ZonedBuilding = Residential | Commercial | Industrial | Office | ZonedOther,
 
-        All = PlayerBuilding | ZonedBuilding | Other,
+        All = PlayerBuilding | ZonedBuilding | Prop | Tree | Other,
     }
+    
 }
